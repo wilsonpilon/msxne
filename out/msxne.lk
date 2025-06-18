@@ -1,13 +1,13 @@
 -mjwx
--i E:\MSXgl\projects\msxedit/out/msxne.ihx
+-i E:\MSXgl\projects\msxne/out/msxne.ihx
 -b _CODE = 0x8000
 -b _DATA = 0x0000
 -k E:\MSXgl\tools/sdcc/lib/z80
 -k E:\MSXgl\tools/sdcc/bin\..\lib\z80
--l E:\MSXgl\projects\msxedit/out/msxgl.lib
+-l E:\MSXgl\projects\msxne/out/msxgl.lib
 -l z80
-E:\MSXgl\projects\msxedit/out/crt0_basic.rel
-E:\MSXgl\projects\msxedit/out/msxne.rel
-E:\MSXgl\projects\msxedit/out/thebios.rel
+E:\MSXgl\projects\msxne/out/crt0_basic.rel
+E:\MSXgl\projects\msxne/out/msxne.rel
+E:\MSXgl\projects\msxne/out/thebios.rel
 
 -e

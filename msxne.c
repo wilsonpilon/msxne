@@ -6,37 +6,36 @@
 //  Hello world sample
 //─────────────────────────────────────────────────────────────────────────────
 #include "msxgl.h"
+#include <string.h>
 #include "thebios.h"
 #include "msxne.h"
+
+
+struct editorConfig E;
+
 //-----------------------------------------------------------------------------
 // Program entry point
 void main()
 {
-	u8 cursorx=1, cursory=1;
-	Bios_InitScreen0();
-	Bios_SetScreen0();
-	Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
-	Bios_ClearScreen();
+	startUp();
 
-	Bios_SetCursorPosition(cursorx,cursory);
 	while(1)
 	{
-		refresh_screen();
 		c8 key = Bios_GetCharacter();
 		if (!Char_IsControl(key))
 		{
-			Bios_SetCursorPosition(cursorx, cursory);
+			Bios_SetCursorPosition(E.cursorx, E.cursory);
 			Bios_TextPrintChar(key);
-			cursorx += 1;
+			E.cursorx += 1;
 		}
 		else
-			process_control(key, &cursorx, &cursory);
+			process_control(key);
 	}
 }
 
 void die(const c8* s)
 {
-	u8 msgx=1, msgy=24;
+	u8 msgx=2, msgy=24;
 	Bios_PrintTextAt(msgx, msgy, s);
 	sleep(2000);
 	Bios_Beep();
@@ -44,7 +43,7 @@ void die(const c8* s)
 	Bios_Exit(0);
 }
 
-bool process_control(c8 chr, u8* cursorx, u8* cursory)
+bool process_control(c8 chr)
 {
 	switch(chr)
 	{
@@ -52,29 +51,67 @@ bool process_control(c8 chr, u8* cursorx, u8* cursory)
 			die("Encerrando");
 			break;
 		case 13:
-			*cursory += 1;
-			*cursorx = 1;
+			E.cursory += 1;
+			E.cursorx = 2;
 			break;
 		default:
 			Bios_Beep();
 	}
-	Bios_SetCursorPosition(*cursorx, *cursory);
+	Bios_SetCursorPosition(E.cursorx, E.cursory);
 	return true;
 }
 
 void refresh_screen()
 {
 	Bios_ClearScreen();
-	Bios_SetCursorPosition(1,1);
+	Bios_SetCursorPosition(2,3);
 	draw_rows();
-	Bios_SetCursorPosition(1,1);
+	Bios_SetCursorPosition(2,3);
 }
 
 void draw_rows()
 {
-	for(u8 y=1; y<25; y++)
+	for(u8 y=3; y<23; y++)
 	{
-		Bios_SetCursorPosition(1,y);
+		Bios_SetCursorPosition(2,y);
 		Bios_TextPrintChar('~');
 	}
+}
+
+void startUp()
+{
+	__builtin_strcpy(E.name,"MSX Norton Editor");
+	Bios_InitScreen0();
+	Bios_SetScreen0();
+	Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
+	refresh_screen();
+	Bios_PrintTextAt(1,1,E.name);
+	Bios_SetCursorPosition(E.cursorx,E.cursory);
+	drawFrame();
+
+	E.cursorx=2, E.cursory=3;
+
+}
+
+void drawFrame()
+{
+	u8 x,y;
+	x=1;
+	Bios_SetCursorPosition(1,2);
+	Bios_TextPrintChar('+');
+	for(x=2;x<40;x++)
+		Bios_TextPrintChar('-');
+	Bios_TextPrintChar('+');
+	for(y=3;y<23;y++)
+	{
+		Bios_SetCursorPosition(1,y);
+		Bios_TextPrintChar('|');
+		Bios_SetCursorPosition(40,y);
+		Bios_TextPrintChar('|');
+	}
+	Bios_SetCursorPosition(1,23);
+	Bios_TextPrintChar('+');
+	for(x=2;x<40;x++)
+		Bios_TextPrintChar('-');
+	Bios_TextPrintChar('+');
 }

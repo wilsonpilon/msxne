@@ -16,6 +16,7 @@
 	.globl _Bios_ClearScreen
 	.globl _Bios_ChangeColor
 	.globl _Bios_Exit
+	.globl _E
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -223,6 +224,8 @@
 	.globl _process_control
 	.globl _refresh_screen
 	.globl _draw_rows
+	.globl _startUp
+	.globl _drawFrame
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -291,6 +294,8 @@ _g_LOGOPR	=	0xfb02
 _g_GRPACX	=	0xfcb7
 _g_GRPACY	=	0xfcb9
 _g_SLTSL	=	0xffff
+_E::
+	.ds 34
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -315,78 +320,53 @@ _g_SLTSL	=	0xffff
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;./msxne.c:13: void main()
+;./msxne.c:18: void main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-;./msxne.c:15: u8 cursorx=1, cursory=1;
-	ld	-2 (ix), #0x01
-	ld	-1 (ix), #0x01
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x006c
-	call	0x0078
-;./msxne.c:18: Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
-	ld	a, #0x02
-	push	af
-	inc	sp
-	ld	l, #0x02
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_ChangeColor
-;./msxne.c:19: Bios_ClearScreen();
-	call	_Bios_ClearScreen
-;./msxne.c:21: Bios_SetCursorPosition(cursorx,cursory);
-	ld	l, -1 (ix)
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, -2 (ix)
-	call	_Bios_SetCursorPosition
+;./msxne.c:20: startUp();
+	call	_startUp
 ;./msxne.c:22: while(1)
 00105$:
-;./msxne.c:24: refresh_screen();
-	call	_refresh_screen
-;./msxne.c:25: c8 key = Bios_GetCharacter();
+;./msxne.c:24: c8 key = Bios_GetCharacter();
 	call	0x009f
 	ld	c, a
-;./msxne.c:26: if (!Char_IsControl(key))
+;./msxne.c:25: if (!Char_IsControl(key))
 	push	bc
 	ld	a, c
 	call	_Char_IsControl
 	pop	bc
 	or	a, a
 	jr	NZ, 00102$
-;./msxne.c:28: Bios_SetCursorPosition(cursorx, cursory);
+;./msxne.c:27: Bios_SetCursorPosition(E.cursorx, E.cursory);
+	ld	hl, #_E + 33
+	ld	l, (hl)
+;	spillPairReg hl
+	ld	de, #_E + 32
+	ld	a, (de)
+	ld	b, a
 	push	bc
-	ld	l, -1 (ix)
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, -2 (ix)
+	push	de
+	ld	a, b
 	call	_Bios_SetCursorPosition
+	pop	de
 	pop	bc
 ;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	push	de
 	ld	a, c
 	call	0x00a2
-;./msxne.c:30: cursorx += 1;
-	inc	-2 (ix)
-	ld	a, -2 (ix)
+	pop	de
+;./msxne.c:29: E.cursorx += 1;
+	ld	a, (de)
+	inc	a
+	ld	(de), a
 	jp	00105$
 00102$:
-;./msxne.c:33: process_control(key, &cursorx, &cursory);
-	ld	hl, #1
-	add	hl, sp
-	push	hl
-	ld	hl, #2
-	add	hl, sp
-	ex	de, hl
+;./msxne.c:32: process_control(key);
 	ld	a, c
 	call	_process_control
-;./msxne.c:35: }
+;./msxne.c:34: }
 	jp	00105$
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -552,134 +532,119 @@ _g_RAMAD2	=	0xf343
 _g_RAMAD3	=	0xf344
 _g_MASTER	=	0xf348
 _g_BDOS	=	0xf37d
-;./msxne.c:37: void die(const c8* s)
+;./msxne.c:36: void die(const c8* s)
 ;	---------------------------------
 ; Function die
 ; ---------------------------------
 _die::
-;./msxne.c:40: Bios_PrintTextAt(msgx, msgy, s);
+;./msxne.c:39: Bios_PrintTextAt(msgx, msgy, s);
 	push	hl
 	ld	l, #0x18
 ;	spillPairReg hl
 ;	spillPairReg hl
-	ld	a, #0x01
+	ld	a, #0x02
 	call	_Bios_PrintTextAt
-;./msxne.c:41: sleep(2000);
+;./msxne.c:40: sleep(2000);
 	ld	a, #0xd0
 	call	_sleep
 ;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
 	call	0x00c0
-;./msxne.c:43: Bios_ClearScreen();
+;./msxne.c:42: Bios_ClearScreen();
 	call	_Bios_ClearScreen
-;./msxne.c:44: Bios_Exit(0);
+;./msxne.c:43: Bios_Exit(0);
 	xor	a, a
-;./msxne.c:45: }
+;./msxne.c:44: }
 	jp	_Bios_Exit
-;./msxne.c:47: bool process_control(c8 chr, u8* cursorx, u8* cursory)
+;./msxne.c:46: bool process_control(c8 chr)
 ;	---------------------------------
 ; Function process_control
 ; ---------------------------------
 _process_control::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-;./msxne.c:55: *cursory += 1;
-	ld	c, 4 (ix)
-	ld	b, 5 (ix)
-;./msxne.c:49: switch(chr)
-	ld	a,l
-	cp	a,#0x0d
+;./msxne.c:48: switch(chr)
+	ld	c, a
+	sub	a, #0x0d
 	jr	Z, 00102$
+	ld	a, c
 	sub	a, #0x11
 	jr	NZ, 00103$
-;./msxne.c:52: die("Encerrando");
-	push	bc
-	push	de
+;./msxne.c:51: die("Encerrando");
 	ld	hl, #___str_0
 	call	_die
-	pop	de
-	pop	bc
-;./msxne.c:53: break;
+;./msxne.c:52: break;
 	jp	00104$
-;./msxne.c:54: case 13:
+;./msxne.c:53: case 13:
 00102$:
-;./msxne.c:55: *cursory += 1;
+;./msxne.c:54: E.cursory += 1;
+	ld	bc, #_E + 33
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;./msxne.c:56: *cursorx = 1;
-	ld	a, #0x01
-	ld	(de), a
-;./msxne.c:57: break;
+;./msxne.c:55: E.cursorx = 2;
+	ld	hl, #(_E + 32)
+	ld	(hl), #0x02
+;./msxne.c:56: break;
 	jp	00104$
-;./msxne.c:58: default:
+;./msxne.c:57: default:
 00103$:
 ;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	push	bc
-	push	de
 	call	0x00c0
-	pop	de
-	pop	bc
-;./msxne.c:60: }
+;./msxne.c:59: }
 00104$:
-;./msxne.c:61: Bios_SetCursorPosition(*cursorx, *cursory);
-	ld	a, (bc)
-	ld	l, a
+;./msxne.c:60: Bios_SetCursorPosition(E.cursorx, E.cursory);
+	ld	hl, #_E + 33
+	ld	c, (hl)
+	ld	hl, #_E + 32
+	ld	b, (hl)
+	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
-	ld	a, (de)
+	ld	a, b
 	call	_Bios_SetCursorPosition
-;./msxne.c:62: return true;
+;./msxne.c:61: return true;
 	ld	a, #0x01
-;./msxne.c:63: }
-	pop	ix
-	pop	hl
-	pop	bc
-	jp	(hl)
+;./msxne.c:62: }
+	ret
 ___str_0:
 	.ascii "Encerrando"
 	.db 0x00
-;./msxne.c:65: void refresh_screen()
+;./msxne.c:64: void refresh_screen()
 ;	---------------------------------
 ; Function refresh_screen
 ; ---------------------------------
 _refresh_screen::
-;./msxne.c:67: Bios_ClearScreen();
+;./msxne.c:66: Bios_ClearScreen();
 	call	_Bios_ClearScreen
-;./msxne.c:68: Bios_SetCursorPosition(1,1);
+;./msxne.c:67: Bios_SetCursorPosition(2,3);
+	ld	l, #0x03
 ;	spillPairReg hl
 ;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
+	ld	a, #0x02
 	call	_Bios_SetCursorPosition
-;./msxne.c:69: draw_rows();
+;./msxne.c:68: draw_rows();
 	call	_draw_rows
-;./msxne.c:70: Bios_SetCursorPosition(1,1);
+;./msxne.c:69: Bios_SetCursorPosition(2,3);
+	ld	l, #0x03
 ;	spillPairReg hl
 ;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
-;./msxne.c:71: }
+	ld	a, #0x02
+;./msxne.c:70: }
 	jp	_Bios_SetCursorPosition
-;./msxne.c:73: void draw_rows()
+;./msxne.c:72: void draw_rows()
 ;	---------------------------------
 ; Function draw_rows
 ; ---------------------------------
 _draw_rows::
-;./msxne.c:75: for(u8 y=1; y<25; y++)
-	ld	l, #0x01
+;./msxne.c:74: for(u8 y=3; y<23; y++)
+	ld	l, #0x03
 ;	spillPairReg hl
 ;	spillPairReg hl
 00104$:
 	ld	a, l
-	sub	a, #0x19
+	sub	a, #0x17
 	ret	NC
-;./msxne.c:77: Bios_SetCursorPosition(1,y);
+;./msxne.c:76: Bios_SetCursorPosition(2,y);
 	push	hl
-	ld	a, #0x01
+	ld	a, #0x02
 	call	_Bios_SetCursorPosition
 	pop	hl
 ;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
@@ -687,10 +652,154 @@ _draw_rows::
 	ld	a, #0x7e
 	call	0x00a2
 	pop	hl
-;./msxne.c:75: for(u8 y=1; y<25; y++)
+;./msxne.c:74: for(u8 y=3; y<23; y++)
 	inc	l
-;./msxne.c:80: }
+;./msxne.c:79: }
 	jp	00104$
+;./msxne.c:81: void startUp()
+;	---------------------------------
+; Function startUp
+; ---------------------------------
+_startUp::
+;./msxne.c:83: __builtin_strcpy(E.name,"MSX Norton Editor");
+	ld	de, #_E
+	ld	hl, #___str_1
+	xor	a, a
+00107$:
+	cp	a, (hl)
+	ldi
+	jr	NZ, 00107$
+;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+	call	0x006c
+	call	0x0078
+;./msxne.c:86: Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
+	ld	a, #0x02
+	push	af
+	inc	sp
+	ld	l, #0x02
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x01
+	call	_Bios_ChangeColor
+;./msxne.c:87: refresh_screen();
+	call	_refresh_screen
+;./msxne.c:88: Bios_PrintTextAt(1,1,E.name);
+	ld	hl, #_E
+	push	hl
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a,#0x01
+	ld	l,a
+	call	_Bios_PrintTextAt
+;./msxne.c:89: Bios_SetCursorPosition(E.cursorx,E.cursory);
+	ld	hl, #(_E + 33)
+	ld	b, (hl)
+	ld	hl, #(_E + 32)
+	ld	c, (hl)
+	ld	l, b
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, c
+	call	_Bios_SetCursorPosition
+;./msxne.c:90: drawFrame();
+	call	_drawFrame
+;./msxne.c:92: E.cursorx=2, E.cursory=3;
+	ld	hl, #(_E + 32)
+	ld	(hl), #0x02
+	ld	hl, #(_E + 33)
+	ld	(hl), #0x03
+;./msxne.c:94: }
+	ret
+___str_1:
+	.ascii "MSX Norton Editor"
+	.db 0x00
+;./msxne.c:96: void drawFrame()
+;	---------------------------------
+; Function drawFrame
+; ---------------------------------
+_drawFrame::
+;./msxne.c:100: Bios_SetCursorPosition(1,2);
+	ld	l, #0x02
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x01
+	call	_Bios_SetCursorPosition
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	ld	a, #0x2b
+	call	0x00a2
+;./msxne.c:102: for(x=2;x<40;x++)
+	ld	c, #0x02
+00112$:
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	push	bc
+	ld	a, #0x2d
+	call	0x00a2
+	pop	bc
+;./msxne.c:102: for(x=2;x<40;x++)
+	inc	c
+	ld	a, c
+	sub	a, #0x28
+	jr	C, 00112$
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	ld	a, #0x2b
+	call	0x00a2
+;./msxne.c:105: for(y=3;y<23;y++)
+	ld	l, #0x03
+;	spillPairReg hl
+;	spillPairReg hl
+00114$:
+;./msxne.c:107: Bios_SetCursorPosition(1,y);
+	push	hl
+	ld	a, #0x01
+	call	_Bios_SetCursorPosition
+	pop	hl
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	push	hl
+	ld	a, #0x7c
+	call	0x00a2
+	pop	hl
+;./msxne.c:109: Bios_SetCursorPosition(40,y);
+	push	hl
+	ld	a, #0x28
+	call	_Bios_SetCursorPosition
+	pop	hl
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	push	hl
+	ld	a, #0x7c
+	call	0x00a2
+	pop	hl
+;./msxne.c:105: for(y=3;y<23;y++)
+	inc	l
+	ld	a, l
+	sub	a, #0x17
+	jr	C, 00114$
+;./msxne.c:112: Bios_SetCursorPosition(1,23);
+	ld	l, #0x17
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x01
+	call	_Bios_SetCursorPosition
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	ld	a, #0x2b
+	call	0x00a2
+;./msxne.c:114: for(x=2;x<40;x++)
+	ld	c, #0x02
+00116$:
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	push	bc
+	ld	a, #0x2d
+	call	0x00a2
+	pop	bc
+;./msxne.c:114: for(x=2;x<40;x++)
+	inc	c
+	ld	a, c
+	sub	a, #0x28
+	jr	C, 00116$
+;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
+	ld	a, #0x2b
+;./msxne.c:116: Bios_TextPrintChar('+');
+;./msxne.c:117: }
+	jp	0x00a2
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)
