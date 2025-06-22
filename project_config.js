@@ -43,7 +43,7 @@ Emulator  = `${ToolsDir}openMSX/openmsx`;
 //*****************************************************************************
 
 //-- Project name (string). Will be use for output filename
-ProjName = "msxne";
+ProjName = "ne";
 
 //-- List of project modules to build (array). If empty, ProjName will be added
 ProjModules = [ ProjName ];
@@ -52,10 +52,10 @@ ProjModules = [ ProjName ];
 // ProjSegments = ProjName;
 
 //-- List of library modules to build (array)
-LibModules = [ "system", "bios", "vdp", "print", "input", "memory" ];
+LibModules = [ "system", "bios", "vdp", "print", "input", "memory", "dos", "string" ];
 
 //-- Additional sources to be compiled and linked with the project (array)
-AddSources = ["thebios.c"];
+AddSources = ["extra.c"];
 
 //-- Target MSX machine version (string)
 //   - 1        MSX1
@@ -94,7 +94,7 @@ Machine = "1";
 //   - ROM_KONAMI_SCC   .rom    Konami MegaROM SCC (aka Konami5): 8 KB segments for a total of 64 KB to 2 MB
 //   - ROM_NEO8         .rom    NEO-8: 8 KB segments for a total of 1 MB to 32 MB
 //   - ROM_NEO16        .rom    NEO-16: 16 KB segments for a total of 1 MB to 64 MB
-Target = "BIN_DISK";
+Target = "DOS1";
 
 //-- ROM mapper total size in KB (number). Must be a multiple of 8 or 16 depending on the mapper type (from 64 to 4096)
 // ROMSize = 128;

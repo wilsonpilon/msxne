@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _Sys_GetPageSlot
+	.globl _DOS_TPAUpperAddr
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -303,6 +304,7 @@ _g_LOGOPR	=	0xfb02
 _g_GRPACX	=	0xfcb7
 _g_GRPACY	=	0xfcb9
 _g_SLTSL	=	0xffff
+_DOS_TPAUpperAddr	=	0x0006
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -332,12 +334,21 @@ _g_SLTSL	=	0xffff
 ; Function Bios_Exit
 ; ---------------------------------
 _Bios_Exit::
-;E:\MSXgl\engine/src/bios.c:67: __endasm;
+;E:\MSXgl\engine/src/bios.c:51: __endasm;
+	push	af
 	ld	a, #2
-	call	0x005F
-	call	0x00D2
-	ld	ix, #0x409B
-	call	0x0159
+	ld	ix, #0x005F
+	ld	iy, (0xFCC1 -1)
+	call	0x001C
+	ld	ix, #0x00D2
+	ld	iy, (0xFCC1 -1)
+	call	0x001C
+	pop	af
+	ld	b, a
+	ld	c, #0x62
+	call	0x0005
+	ld	c, #0x00
+	jp	0x0005
 ;E:\MSXgl\engine/src/bios.c:76: }
 	ret
 _g_RDPRIM	=	0xf380

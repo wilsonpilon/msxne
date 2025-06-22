@@ -9,959 +9,970 @@
                                       9 ; Public variables in this module
                                      10 ;--------------------------------------------------------
                                      11 	.globl _Sys_GetPageSlot
-                                     12 	.globl _g_SLTSL
-                                     13 	.globl _g_GRPACY
-                                     14 	.globl _g_GRPACX
-                                     15 	.globl _g_LOGOPR
-                                     16 	.globl _g_CMASK
-                                     17 	.globl _g_CLOC
-                                     18 	.globl _g_FNKSTR
-                                     19 	.globl _g_ATRBYT
-                                     20 	.globl _g_BDRCLR
-                                     21 	.globl _g_BAKCLR
-                                     22 	.globl _g_FORCLR
-                                     23 	.globl _g_CSRX
-                                     24 	.globl _g_CSRY
-                                     25 	.globl _g_CLIKSW
-                                     26 	.globl _g_MLTPAT
-                                     27 	.globl _g_MLTATR
-                                     28 	.globl _g_MLTCGP
-                                     29 	.globl _g_MLTCOL
-                                     30 	.globl _g_MLTNAM
-                                     31 	.globl _g_GRPPAT
-                                     32 	.globl _g_GRPATR
-                                     33 	.globl _g_GRPCGP
-                                     34 	.globl _g_GRPCOL
-                                     35 	.globl _g_GRPNAM
-                                     36 	.globl _g_T32PAT
-                                     37 	.globl _g_T32ATR
-                                     38 	.globl _g_T32CGP
-                                     39 	.globl _g_T32COL
-                                     40 	.globl _g_T32NAM
-                                     41 	.globl _g_TXTPAT
-                                     42 	.globl _g_TXTATR
-                                     43 	.globl _g_TXTCGP
-                                     44 	.globl _g_TXTCOL
-                                     45 	.globl _g_TXTNAM
-                                     46 	.globl _g_CLMLST
-                                     47 	.globl _g_CRTCNT
-                                     48 	.globl _g_LINLEN
-                                     49 	.globl _g_LINL32
-                                     50 	.globl _g_LINL40
-                                     51 	.globl _g_BDOS
-                                     52 	.globl _g_MASTER
-                                     53 	.globl _g_RAMAD3
-                                     54 	.globl _g_RAMAD2
-                                     55 	.globl _g_RAMAD1
-                                     56 	.globl _g_RAMAD0
-                                     57 	.globl _g_BREAKV
-                                     58 	.globl _g_DISKVE
-                                     59 	.globl _g_KANJTABLE
-                                     60 	.globl _g_STRSRC
-                                     61 	.globl _g_SUBRID
-                                     62 	.globl _g_CHAR_16
-                                     63 	.globl _g_MSXMID
-                                     64 	.globl _g_MSXVER
-                                     65 	.globl _g_ROMVersion
-                                     66 	.globl _g_BASRVN
-                                     67 	.globl _g_VDP_DW
-                                     68 	.globl _g_VDP_DR
-                                     69 	.globl _g_CGTABL
-                                     70 	.globl _g_SVFFFD
-                                     71 	.globl _g_RG27SAV
-                                     72 	.globl _g_RG26SAV
-                                     73 	.globl _g_RG25SAV
-                                     74 	.globl _g_SVFFF8
-                                     75 	.globl _g_MINROM
-                                     76 	.globl _g_RG23SAV
-                                     77 	.globl _g_RG22SAV
-                                     78 	.globl _g_RG21SAV
-                                     79 	.globl _g_RG20SAV
-                                     80 	.globl _g_RG19SAV
-                                     81 	.globl _g_RG18SAV
-                                     82 	.globl _g_RG17SAV
-                                     83 	.globl _g_RG16SAV
-                                     84 	.globl _g_RG15SAV
-                                     85 	.globl _g_RG14SAV
-                                     86 	.globl _g_RG13SAV
-                                     87 	.globl _g_RG12SAV
-                                     88 	.globl _g_RG11SAV
-                                     89 	.globl _g_RG10SAV
-                                     90 	.globl _g_RG09SAV
-                                     91 	.globl _g_RG08SAV
-                                     92 	.globl _g_PROCNM
-                                     93 	.globl _g_SLTWRK
-                                     94 	.globl _g_SLTATR
-                                     95 	.globl _g_SLTTBL
-                                     96 	.globl _g_EXPTBL
-                                     97 	.globl _g_MNROM
-                                     98 	.globl _g_DRWANG
-                                     99 	.globl _g_DRWSCL
-                                    100 	.globl _g_DRWFLG
-                                    101 	.globl _g_GYPOS
-                                    102 	.globl _g_GXPOS
-                                    103 	.globl _g_BRDATR
-                                    104 	.globl _g_CASPRV
-                                    105 	.globl _g_OLDSCR
-                                    106 	.globl _g_SCRMOD
-                                    107 	.globl _g_FLBMEM
-                                    108 	.globl _g_KANAMD
-                                    109 	.globl _g_KANAST
-                                    110 	.globl _g_CAPST
-                                    111 	.globl _g_CSTYLE
-                                    112 	.globl _g_CSRSW
-                                    113 	.globl _g_INSFLG
-                                    114 	.globl _g_ESCCNT
-                                    115 	.globl _g_GRPHED
-                                    116 	.globl _g_WINWID
-                                    117 	.globl _g_LOWLIM
-                                    118 	.globl _g_INTCNT
-                                    119 	.globl _g_INTVAL
-                                    120 	.globl _g_JIFFY
-                                    121 	.globl _g_PADX
-                                    122 	.globl _g_PADY
-                                    123 	.globl _g_INTFLG
-                                    124 	.globl _g_RTYCNT
-                                    125 	.globl _g_TRPTBL
-                                    126 	.globl _g_HIMEM
-                                    127 	.globl _g_BOTTOM
-                                    128 	.globl _g_PATWRK
-                                    129 	.globl _g_LINWRK
-                                    130 	.globl _g_KEYBUF
-                                    131 	.globl _g_NEWKEY
-                                    132 	.globl _g_OLDKEY
-                                    133 	.globl _g_CLIKFL
-                                    134 	.globl _g_ONGSBF
-                                    135 	.globl _g_FNKFLG
-                                    136 	.globl _g_FNKSWI
-                                    137 	.globl _g_CODSAV
-                                    138 	.globl _g_FSTPOS
-                                    139 	.globl _g_LINTTB
-                                    140 	.globl _g_BASROM
-                                    141 	.globl _g_ENSTOP
-                                    142 	.globl _g_VCBC
-                                    143 	.globl _g_VCBB
-                                    144 	.globl _g_VCBA
-                                    145 	.globl _g_PLYCNT
-                                    146 	.globl _g_MUSICF
-                                    147 	.globl _g_QUEUEN
-                                    148 	.globl _g_MCLPTR
-                                    149 	.globl _g_MCLLEN
-                                    150 	.globl _g_SAVVOL
-                                    151 	.globl _g_VOICEN
-                                    152 	.globl _g_SAVSP
-                                    153 	.globl _g_PRSCNT
-                                    154 	.globl _g_LSTMOD
-                                    155 	.globl _g_LSTCOM
-                                    156 	.globl _g_COMMSK
-                                    157 	.globl _g_ESTBLS
-                                    158 	.globl _g_FLAGS
-                                    159 	.globl _g_ERRORS
-                                    160 	.globl _g_DATCNT
-                                    161 	.globl _g_DEVNUM
-                                    162 	.globl _g_OLDINT
-                                    163 	.globl _g_OLDSTT
-                                    164 	.globl _g_MEXBIh
-                                    165 	.globl _g_RSIQLN
-                                    166 	.globl _g_RSFCB
-                                    167 	.globl _g_TOCNT
-                                    168 	.globl _g_RSTMP
-                                    169 	.globl _g_YSAVE
-                                    170 	.globl _g_XSAVE
-                                    171 	.globl _g_NORUSE
-                                    172 	.globl _g_MODE
-                                    173 	.globl _g_ROMA
-                                    174 	.globl _g_CHRCNT
-                                    175 	.globl _g_EXBRSA
-                                    176 	.globl _g_AVCSAV
-                                    177 	.globl _g_ACPAGE
-                                    178 	.globl _g_DPPAGE
-                                    179 	.globl _g_RS2IQ
-                                    180 	.globl _g_VOICCQ
-                                    181 	.globl _g_VOICBQ
-                                    182 	.globl _g_VOICAQ
-                                    183 	.globl _g_QUEBAK
-                                    184 	.globl _g_QUETAB
-                                    185 	.globl _g_ASPCT2
-                                    186 	.globl _g_ASPCT1
-                                    187 	.globl _g_HEADER
-                                    188 	.globl _g_HIGH
-                                    189 	.globl _g_LOW
-                                    190 	.globl _g_CS240
-                                    191 	.globl _g_CS120
-                                    192 	.globl _g_GETPNT
-                                    193 	.globl _g_PUTPNT
-                                    194 	.globl _g_REPCNT
-                                    195 	.globl _g_SCNCNT
-                                    196 	.globl _g_FRCNEW
-                                    197 	.globl _g_QUEUES
-                                    198 	.globl _g_MINUPD
-                                    199 	.globl _g_MAXUPD
-                                    200 	.globl _g_TRGFLG
-                                    201 	.globl _g_STATFL
-                                    202 	.globl _g_RG7SAV
-                                    203 	.globl _g_RG6SAV
-                                    204 	.globl _g_RG5SAV
-                                    205 	.globl _g_RG4SAV
-                                    206 	.globl _g_RG3SAV
-                                    207 	.globl _g_RG2SAV
-                                    208 	.globl _g_RG1SAV
-                                    209 	.globl _g_RG0SAV
-                                    210 	.globl _g_CNSDFG
-                                    211 	.globl _g_USRTAB
-                                    212 	.globl _g_CLPRIM
-                                    213 	.globl _g_WRPRIM
-                                    214 	.globl _g_RDPRIM
-                                    215 	.globl _Bios_Exit
-                                    216 	.globl _Bios_SetHookCallback
-                                    217 	.globl _Bios_InterSlotRead
-                                    218 	.globl _Bios_InterSlotWrite
-                                    219 	.globl _Bios_InterSlotCall
-                                    220 	.globl _Bios_SwitchSlot
-                                    221 	.globl _Bios_WriteVDP
-                                    222 	.globl _Bios_WriteVRAM
-                                    223 	.globl _Bios_FillVRAM
-                                    224 	.globl _Bios_TransfertVRAMtoRAM
-                                    225 	.globl _Bios_TransfertRAMtoVRAM
-                                    226 	.globl _Bios_ChangeColor
-                                    227 	.globl _Bios_InitScreen0Ex
-                                    228 	.globl _Bios_InitScreen1Ex
-                                    229 	.globl _Bios_InitScreen2Ex
-                                    230 	.globl _Bios_InitScreen3Ex
-                                    231 	.globl _Bios_GetPatternTableAddress
-                                    232 	.globl _Bios_GetAttributeTableAddress
-                                    233 	.globl _Bios_GraphPrintCharEx
-                                    234 	.globl _Bios_WritePSG
-                                    235 	.globl _Bios_HasCharacter
-                                    236 	.globl _Bios_ClearScreen
-                                    237 	.globl _Bios_SetCursorPosition
-                                    238 ;--------------------------------------------------------
-                                    239 ; special function registers
-                                    240 ;--------------------------------------------------------
-                         000000A8   241 _g_PortPrimarySlot	=	0x00a8
-                         000000A9   242 _g_PortReadKeyboard	=	0x00a9
-                         000000AA   243 _g_PortAccessKeyboard	=	0x00aa
-                         000000AB   244 _g_PortControl	=	0x00ab
-                         00000098   245 _g_VDP_DataPort	=	0x0098
-                         00000099   246 _g_VDP_RegPort	=	0x0099
-                         00000099   247 _g_VDP_AddrPort	=	0x0099
-                         00000099   248 _g_VDP_StatPort	=	0x0099
-                         000000A0   249 _g_PSG_RegPort	=	0x00a0
-                         000000A1   250 _g_PSG_DataPort	=	0x00a1
-                         000000A2   251 _g_PSG_StatPort	=	0x00a2
-                         00000010   252 _g_PSG_Ext_RegPort	=	0x0010
-                         00000011   253 _g_PSG_Ext_DataPort	=	0x0011
-                         00000012   254 _g_PSG_Ext_StatPort	=	0x0012
-                         0000007C   255 _g_MSXMusic_IndexPort	=	0x007c
-                         0000007D   256 _g_MSXMusic_DataPort	=	0x007d
-                         000000C0   257 _g_MSXAudio_IndexPort	=	0x00c0
-                         000000C1   258 _g_MSXAudio_DataPort	=	0x00c1
-                         000000C2   259 _g_MSXAudio_IndexPort2	=	0x00c2
-                         000000C3   260 _g_MSXAudio_DataPort2	=	0x00c3
-                         000000B4   261 _g_RTC_AddrPort	=	0x00b4
-                         000000B5   262 _g_RTC_DataPort	=	0x00b5
-                                    263 ;--------------------------------------------------------
-                                    264 ; ram data
-                                    265 ;--------------------------------------------------------
-                                    266 	.area _DATA
-                         0000F3AE   267 _g_LINL40	=	0xf3ae
-                         0000F3AF   268 _g_LINL32	=	0xf3af
-                         0000F3B0   269 _g_LINLEN	=	0xf3b0
-                         0000F3B1   270 _g_CRTCNT	=	0xf3b1
-                         0000F3B2   271 _g_CLMLST	=	0xf3b2
-                         0000F3B3   272 _g_TXTNAM	=	0xf3b3
-                         0000F3B5   273 _g_TXTCOL	=	0xf3b5
-                         0000F3B7   274 _g_TXTCGP	=	0xf3b7
-                         0000F3B9   275 _g_TXTATR	=	0xf3b9
-                         0000F3BB   276 _g_TXTPAT	=	0xf3bb
-                         0000F3BD   277 _g_T32NAM	=	0xf3bd
-                         0000F3BF   278 _g_T32COL	=	0xf3bf
-                         0000F3C1   279 _g_T32CGP	=	0xf3c1
-                         0000F3C3   280 _g_T32ATR	=	0xf3c3
-                         0000F3C5   281 _g_T32PAT	=	0xf3c5
-                         0000F3C7   282 _g_GRPNAM	=	0xf3c7
-                         0000F3C9   283 _g_GRPCOL	=	0xf3c9
-                         0000F3CB   284 _g_GRPCGP	=	0xf3cb
-                         0000F3CD   285 _g_GRPATR	=	0xf3cd
-                         0000F3CF   286 _g_GRPPAT	=	0xf3cf
-                         0000F3D1   287 _g_MLTNAM	=	0xf3d1
-                         0000F3D3   288 _g_MLTCOL	=	0xf3d3
-                         0000F3D5   289 _g_MLTCGP	=	0xf3d5
-                         0000F3D7   290 _g_MLTATR	=	0xf3d7
-                         0000F3D9   291 _g_MLTPAT	=	0xf3d9
-                         0000F3DB   292 _g_CLIKSW	=	0xf3db
-                         0000F3DC   293 _g_CSRY	=	0xf3dc
-                         0000F3DD   294 _g_CSRX	=	0xf3dd
-                         0000F3E9   295 _g_FORCLR	=	0xf3e9
-                         0000F3EA   296 _g_BAKCLR	=	0xf3ea
-                         0000F3EB   297 _g_BDRCLR	=	0xf3eb
-                         0000F3F2   298 _g_ATRBYT	=	0xf3f2
-                         0000F87F   299 _g_FNKSTR	=	0xf87f
-                         0000F92A   300 _g_CLOC	=	0xf92a
-                         0000F92C   301 _g_CMASK	=	0xf92c
-                         0000FB02   302 _g_LOGOPR	=	0xfb02
-                         0000FCB7   303 _g_GRPACX	=	0xfcb7
-                         0000FCB9   304 _g_GRPACY	=	0xfcb9
-                         0000FFFF   305 _g_SLTSL	=	0xffff
-                                    306 ;--------------------------------------------------------
-                                    307 ; ram data
+                                     12 	.globl _DOS_TPAUpperAddr
+                                     13 	.globl _g_SLTSL
+                                     14 	.globl _g_GRPACY
+                                     15 	.globl _g_GRPACX
+                                     16 	.globl _g_LOGOPR
+                                     17 	.globl _g_CMASK
+                                     18 	.globl _g_CLOC
+                                     19 	.globl _g_FNKSTR
+                                     20 	.globl _g_ATRBYT
+                                     21 	.globl _g_BDRCLR
+                                     22 	.globl _g_BAKCLR
+                                     23 	.globl _g_FORCLR
+                                     24 	.globl _g_CSRX
+                                     25 	.globl _g_CSRY
+                                     26 	.globl _g_CLIKSW
+                                     27 	.globl _g_MLTPAT
+                                     28 	.globl _g_MLTATR
+                                     29 	.globl _g_MLTCGP
+                                     30 	.globl _g_MLTCOL
+                                     31 	.globl _g_MLTNAM
+                                     32 	.globl _g_GRPPAT
+                                     33 	.globl _g_GRPATR
+                                     34 	.globl _g_GRPCGP
+                                     35 	.globl _g_GRPCOL
+                                     36 	.globl _g_GRPNAM
+                                     37 	.globl _g_T32PAT
+                                     38 	.globl _g_T32ATR
+                                     39 	.globl _g_T32CGP
+                                     40 	.globl _g_T32COL
+                                     41 	.globl _g_T32NAM
+                                     42 	.globl _g_TXTPAT
+                                     43 	.globl _g_TXTATR
+                                     44 	.globl _g_TXTCGP
+                                     45 	.globl _g_TXTCOL
+                                     46 	.globl _g_TXTNAM
+                                     47 	.globl _g_CLMLST
+                                     48 	.globl _g_CRTCNT
+                                     49 	.globl _g_LINLEN
+                                     50 	.globl _g_LINL32
+                                     51 	.globl _g_LINL40
+                                     52 	.globl _g_BDOS
+                                     53 	.globl _g_MASTER
+                                     54 	.globl _g_RAMAD3
+                                     55 	.globl _g_RAMAD2
+                                     56 	.globl _g_RAMAD1
+                                     57 	.globl _g_RAMAD0
+                                     58 	.globl _g_BREAKV
+                                     59 	.globl _g_DISKVE
+                                     60 	.globl _g_KANJTABLE
+                                     61 	.globl _g_STRSRC
+                                     62 	.globl _g_SUBRID
+                                     63 	.globl _g_CHAR_16
+                                     64 	.globl _g_MSXMID
+                                     65 	.globl _g_MSXVER
+                                     66 	.globl _g_ROMVersion
+                                     67 	.globl _g_BASRVN
+                                     68 	.globl _g_VDP_DW
+                                     69 	.globl _g_VDP_DR
+                                     70 	.globl _g_CGTABL
+                                     71 	.globl _g_SVFFFD
+                                     72 	.globl _g_RG27SAV
+                                     73 	.globl _g_RG26SAV
+                                     74 	.globl _g_RG25SAV
+                                     75 	.globl _g_SVFFF8
+                                     76 	.globl _g_MINROM
+                                     77 	.globl _g_RG23SAV
+                                     78 	.globl _g_RG22SAV
+                                     79 	.globl _g_RG21SAV
+                                     80 	.globl _g_RG20SAV
+                                     81 	.globl _g_RG19SAV
+                                     82 	.globl _g_RG18SAV
+                                     83 	.globl _g_RG17SAV
+                                     84 	.globl _g_RG16SAV
+                                     85 	.globl _g_RG15SAV
+                                     86 	.globl _g_RG14SAV
+                                     87 	.globl _g_RG13SAV
+                                     88 	.globl _g_RG12SAV
+                                     89 	.globl _g_RG11SAV
+                                     90 	.globl _g_RG10SAV
+                                     91 	.globl _g_RG09SAV
+                                     92 	.globl _g_RG08SAV
+                                     93 	.globl _g_PROCNM
+                                     94 	.globl _g_SLTWRK
+                                     95 	.globl _g_SLTATR
+                                     96 	.globl _g_SLTTBL
+                                     97 	.globl _g_EXPTBL
+                                     98 	.globl _g_MNROM
+                                     99 	.globl _g_DRWANG
+                                    100 	.globl _g_DRWSCL
+                                    101 	.globl _g_DRWFLG
+                                    102 	.globl _g_GYPOS
+                                    103 	.globl _g_GXPOS
+                                    104 	.globl _g_BRDATR
+                                    105 	.globl _g_CASPRV
+                                    106 	.globl _g_OLDSCR
+                                    107 	.globl _g_SCRMOD
+                                    108 	.globl _g_FLBMEM
+                                    109 	.globl _g_KANAMD
+                                    110 	.globl _g_KANAST
+                                    111 	.globl _g_CAPST
+                                    112 	.globl _g_CSTYLE
+                                    113 	.globl _g_CSRSW
+                                    114 	.globl _g_INSFLG
+                                    115 	.globl _g_ESCCNT
+                                    116 	.globl _g_GRPHED
+                                    117 	.globl _g_WINWID
+                                    118 	.globl _g_LOWLIM
+                                    119 	.globl _g_INTCNT
+                                    120 	.globl _g_INTVAL
+                                    121 	.globl _g_JIFFY
+                                    122 	.globl _g_PADX
+                                    123 	.globl _g_PADY
+                                    124 	.globl _g_INTFLG
+                                    125 	.globl _g_RTYCNT
+                                    126 	.globl _g_TRPTBL
+                                    127 	.globl _g_HIMEM
+                                    128 	.globl _g_BOTTOM
+                                    129 	.globl _g_PATWRK
+                                    130 	.globl _g_LINWRK
+                                    131 	.globl _g_KEYBUF
+                                    132 	.globl _g_NEWKEY
+                                    133 	.globl _g_OLDKEY
+                                    134 	.globl _g_CLIKFL
+                                    135 	.globl _g_ONGSBF
+                                    136 	.globl _g_FNKFLG
+                                    137 	.globl _g_FNKSWI
+                                    138 	.globl _g_CODSAV
+                                    139 	.globl _g_FSTPOS
+                                    140 	.globl _g_LINTTB
+                                    141 	.globl _g_BASROM
+                                    142 	.globl _g_ENSTOP
+                                    143 	.globl _g_VCBC
+                                    144 	.globl _g_VCBB
+                                    145 	.globl _g_VCBA
+                                    146 	.globl _g_PLYCNT
+                                    147 	.globl _g_MUSICF
+                                    148 	.globl _g_QUEUEN
+                                    149 	.globl _g_MCLPTR
+                                    150 	.globl _g_MCLLEN
+                                    151 	.globl _g_SAVVOL
+                                    152 	.globl _g_VOICEN
+                                    153 	.globl _g_SAVSP
+                                    154 	.globl _g_PRSCNT
+                                    155 	.globl _g_LSTMOD
+                                    156 	.globl _g_LSTCOM
+                                    157 	.globl _g_COMMSK
+                                    158 	.globl _g_ESTBLS
+                                    159 	.globl _g_FLAGS
+                                    160 	.globl _g_ERRORS
+                                    161 	.globl _g_DATCNT
+                                    162 	.globl _g_DEVNUM
+                                    163 	.globl _g_OLDINT
+                                    164 	.globl _g_OLDSTT
+                                    165 	.globl _g_MEXBIh
+                                    166 	.globl _g_RSIQLN
+                                    167 	.globl _g_RSFCB
+                                    168 	.globl _g_TOCNT
+                                    169 	.globl _g_RSTMP
+                                    170 	.globl _g_YSAVE
+                                    171 	.globl _g_XSAVE
+                                    172 	.globl _g_NORUSE
+                                    173 	.globl _g_MODE
+                                    174 	.globl _g_ROMA
+                                    175 	.globl _g_CHRCNT
+                                    176 	.globl _g_EXBRSA
+                                    177 	.globl _g_AVCSAV
+                                    178 	.globl _g_ACPAGE
+                                    179 	.globl _g_DPPAGE
+                                    180 	.globl _g_RS2IQ
+                                    181 	.globl _g_VOICCQ
+                                    182 	.globl _g_VOICBQ
+                                    183 	.globl _g_VOICAQ
+                                    184 	.globl _g_QUEBAK
+                                    185 	.globl _g_QUETAB
+                                    186 	.globl _g_ASPCT2
+                                    187 	.globl _g_ASPCT1
+                                    188 	.globl _g_HEADER
+                                    189 	.globl _g_HIGH
+                                    190 	.globl _g_LOW
+                                    191 	.globl _g_CS240
+                                    192 	.globl _g_CS120
+                                    193 	.globl _g_GETPNT
+                                    194 	.globl _g_PUTPNT
+                                    195 	.globl _g_REPCNT
+                                    196 	.globl _g_SCNCNT
+                                    197 	.globl _g_FRCNEW
+                                    198 	.globl _g_QUEUES
+                                    199 	.globl _g_MINUPD
+                                    200 	.globl _g_MAXUPD
+                                    201 	.globl _g_TRGFLG
+                                    202 	.globl _g_STATFL
+                                    203 	.globl _g_RG7SAV
+                                    204 	.globl _g_RG6SAV
+                                    205 	.globl _g_RG5SAV
+                                    206 	.globl _g_RG4SAV
+                                    207 	.globl _g_RG3SAV
+                                    208 	.globl _g_RG2SAV
+                                    209 	.globl _g_RG1SAV
+                                    210 	.globl _g_RG0SAV
+                                    211 	.globl _g_CNSDFG
+                                    212 	.globl _g_USRTAB
+                                    213 	.globl _g_CLPRIM
+                                    214 	.globl _g_WRPRIM
+                                    215 	.globl _g_RDPRIM
+                                    216 	.globl _Bios_Exit
+                                    217 	.globl _Bios_SetHookCallback
+                                    218 	.globl _Bios_InterSlotRead
+                                    219 	.globl _Bios_InterSlotWrite
+                                    220 	.globl _Bios_InterSlotCall
+                                    221 	.globl _Bios_SwitchSlot
+                                    222 	.globl _Bios_WriteVDP
+                                    223 	.globl _Bios_WriteVRAM
+                                    224 	.globl _Bios_FillVRAM
+                                    225 	.globl _Bios_TransfertVRAMtoRAM
+                                    226 	.globl _Bios_TransfertRAMtoVRAM
+                                    227 	.globl _Bios_ChangeColor
+                                    228 	.globl _Bios_InitScreen0Ex
+                                    229 	.globl _Bios_InitScreen1Ex
+                                    230 	.globl _Bios_InitScreen2Ex
+                                    231 	.globl _Bios_InitScreen3Ex
+                                    232 	.globl _Bios_GetPatternTableAddress
+                                    233 	.globl _Bios_GetAttributeTableAddress
+                                    234 	.globl _Bios_GraphPrintCharEx
+                                    235 	.globl _Bios_WritePSG
+                                    236 	.globl _Bios_HasCharacter
+                                    237 	.globl _Bios_ClearScreen
+                                    238 	.globl _Bios_SetCursorPosition
+                                    239 ;--------------------------------------------------------
+                                    240 ; special function registers
+                                    241 ;--------------------------------------------------------
+                         000000A8   242 _g_PortPrimarySlot	=	0x00a8
+                         000000A9   243 _g_PortReadKeyboard	=	0x00a9
+                         000000AA   244 _g_PortAccessKeyboard	=	0x00aa
+                         000000AB   245 _g_PortControl	=	0x00ab
+                         00000098   246 _g_VDP_DataPort	=	0x0098
+                         00000099   247 _g_VDP_RegPort	=	0x0099
+                         00000099   248 _g_VDP_AddrPort	=	0x0099
+                         00000099   249 _g_VDP_StatPort	=	0x0099
+                         000000A0   250 _g_PSG_RegPort	=	0x00a0
+                         000000A1   251 _g_PSG_DataPort	=	0x00a1
+                         000000A2   252 _g_PSG_StatPort	=	0x00a2
+                         00000010   253 _g_PSG_Ext_RegPort	=	0x0010
+                         00000011   254 _g_PSG_Ext_DataPort	=	0x0011
+                         00000012   255 _g_PSG_Ext_StatPort	=	0x0012
+                         0000007C   256 _g_MSXMusic_IndexPort	=	0x007c
+                         0000007D   257 _g_MSXMusic_DataPort	=	0x007d
+                         000000C0   258 _g_MSXAudio_IndexPort	=	0x00c0
+                         000000C1   259 _g_MSXAudio_DataPort	=	0x00c1
+                         000000C2   260 _g_MSXAudio_IndexPort2	=	0x00c2
+                         000000C3   261 _g_MSXAudio_DataPort2	=	0x00c3
+                         000000B4   262 _g_RTC_AddrPort	=	0x00b4
+                         000000B5   263 _g_RTC_DataPort	=	0x00b5
+                                    264 ;--------------------------------------------------------
+                                    265 ; ram data
+                                    266 ;--------------------------------------------------------
+                                    267 	.area _DATA
+                         0000F3AE   268 _g_LINL40	=	0xf3ae
+                         0000F3AF   269 _g_LINL32	=	0xf3af
+                         0000F3B0   270 _g_LINLEN	=	0xf3b0
+                         0000F3B1   271 _g_CRTCNT	=	0xf3b1
+                         0000F3B2   272 _g_CLMLST	=	0xf3b2
+                         0000F3B3   273 _g_TXTNAM	=	0xf3b3
+                         0000F3B5   274 _g_TXTCOL	=	0xf3b5
+                         0000F3B7   275 _g_TXTCGP	=	0xf3b7
+                         0000F3B9   276 _g_TXTATR	=	0xf3b9
+                         0000F3BB   277 _g_TXTPAT	=	0xf3bb
+                         0000F3BD   278 _g_T32NAM	=	0xf3bd
+                         0000F3BF   279 _g_T32COL	=	0xf3bf
+                         0000F3C1   280 _g_T32CGP	=	0xf3c1
+                         0000F3C3   281 _g_T32ATR	=	0xf3c3
+                         0000F3C5   282 _g_T32PAT	=	0xf3c5
+                         0000F3C7   283 _g_GRPNAM	=	0xf3c7
+                         0000F3C9   284 _g_GRPCOL	=	0xf3c9
+                         0000F3CB   285 _g_GRPCGP	=	0xf3cb
+                         0000F3CD   286 _g_GRPATR	=	0xf3cd
+                         0000F3CF   287 _g_GRPPAT	=	0xf3cf
+                         0000F3D1   288 _g_MLTNAM	=	0xf3d1
+                         0000F3D3   289 _g_MLTCOL	=	0xf3d3
+                         0000F3D5   290 _g_MLTCGP	=	0xf3d5
+                         0000F3D7   291 _g_MLTATR	=	0xf3d7
+                         0000F3D9   292 _g_MLTPAT	=	0xf3d9
+                         0000F3DB   293 _g_CLIKSW	=	0xf3db
+                         0000F3DC   294 _g_CSRY	=	0xf3dc
+                         0000F3DD   295 _g_CSRX	=	0xf3dd
+                         0000F3E9   296 _g_FORCLR	=	0xf3e9
+                         0000F3EA   297 _g_BAKCLR	=	0xf3ea
+                         0000F3EB   298 _g_BDRCLR	=	0xf3eb
+                         0000F3F2   299 _g_ATRBYT	=	0xf3f2
+                         0000F87F   300 _g_FNKSTR	=	0xf87f
+                         0000F92A   301 _g_CLOC	=	0xf92a
+                         0000F92C   302 _g_CMASK	=	0xf92c
+                         0000FB02   303 _g_LOGOPR	=	0xfb02
+                         0000FCB7   304 _g_GRPACX	=	0xfcb7
+                         0000FCB9   305 _g_GRPACY	=	0xfcb9
+                         0000FFFF   306 _g_SLTSL	=	0xffff
+                         00000006   307 _DOS_TPAUpperAddr	=	0x0006
                                     308 ;--------------------------------------------------------
-                                    309 	.area _INITIALIZED
+                                    309 ; ram data
                                     310 ;--------------------------------------------------------
-                                    311 ; absolute external ram data
+                                    311 	.area _INITIALIZED
                                     312 ;--------------------------------------------------------
-                                    313 	.area _DABS (ABS)
+                                    313 ; absolute external ram data
                                     314 ;--------------------------------------------------------
-                                    315 ; global & static initialisations
+                                    315 	.area _DABS (ABS)
                                     316 ;--------------------------------------------------------
-                                    317 	.area _HOME
-                                    318 	.area _GSINIT
-                                    319 	.area _GSFINAL
+                                    317 ; global & static initialisations
+                                    318 ;--------------------------------------------------------
+                                    319 	.area _HOME
                                     320 	.area _GSINIT
-                                    321 ;--------------------------------------------------------
-                                    322 ; Home
+                                    321 	.area _GSFINAL
+                                    322 	.area _GSINIT
                                     323 ;--------------------------------------------------------
-                                    324 	.area _HOME
-                                    325 	.area _HOME
-                                    326 ;--------------------------------------------------------
-                                    327 ; code
+                                    324 ; Home
+                                    325 ;--------------------------------------------------------
+                                    326 	.area _HOME
+                                    327 	.area _HOME
                                     328 ;--------------------------------------------------------
-                                    329 	.area _CODE
-                                    330 ;E:\MSXgl\engine/src/bios.c:27: void Bios_Exit(u8 ret)
-                                    331 ;	---------------------------------
-                                    332 ; Function Bios_Exit
-                                    333 ; ---------------------------------
-    00000000                        334 _Bios_Exit::
-                                    335 ;E:\MSXgl\engine/src/bios.c:67: __endasm;
-    00000000 3E 02            [ 7]  336 	ld	a, #2
-    00000002 CD 5F 00         [17]  337 	call	0x005F
-    00000005 CD D2 00         [17]  338 	call	0x00D2
-    00000008 DD 21 9B 40      [14]  339 	ld	ix, #0x409B
-    0000000C CD 59 01         [17]  340 	call	0x0159
-                                    341 ;E:\MSXgl\engine/src/bios.c:76: }
-    0000000F C9               [10]  342 	ret
-                         0000F380   343 _g_RDPRIM	=	0xf380
-                         0000F385   344 _g_WRPRIM	=	0xf385
-                         0000F38C   345 _g_CLPRIM	=	0xf38c
-                         0000F39A   346 _g_USRTAB	=	0xf39a
-                         0000F3DE   347 _g_CNSDFG	=	0xf3de
-                         0000F3DF   348 _g_RG0SAV	=	0xf3df
-                         0000F3E0   349 _g_RG1SAV	=	0xf3e0
-                         0000F3E1   350 _g_RG2SAV	=	0xf3e1
-                         0000F3E2   351 _g_RG3SAV	=	0xf3e2
-                         0000F3E3   352 _g_RG4SAV	=	0xf3e3
-                         0000F3E4   353 _g_RG5SAV	=	0xf3e4
-                         0000F3E5   354 _g_RG6SAV	=	0xf3e5
-                         0000F3E6   355 _g_RG7SAV	=	0xf3e6
-                         0000F3E7   356 _g_STATFL	=	0xf3e7
-                         0000F3E8   357 _g_TRGFLG	=	0xf3e8
-                         0000F3EC   358 _g_MAXUPD	=	0xf3ec
-                         0000F3EF   359 _g_MINUPD	=	0xf3ef
-                         0000F3F3   360 _g_QUEUES	=	0xf3f3
-                         0000F3F5   361 _g_FRCNEW	=	0xf3f5
-                         0000F3F6   362 _g_SCNCNT	=	0xf3f6
-                         0000F3F7   363 _g_REPCNT	=	0xf3f7
-                         0000F3F8   364 _g_PUTPNT	=	0xf3f8
-                         0000F3FA   365 _g_GETPNT	=	0xf3fa
-                         0000F3FC   366 _g_CS120	=	0xf3fc
-                         0000F401   367 _g_CS240	=	0xf401
-                         0000F406   368 _g_LOW	=	0xf406
-                         0000F408   369 _g_HIGH	=	0xf408
-                         0000F40A   370 _g_HEADER	=	0xf40a
-                         0000F40B   371 _g_ASPCT1	=	0xf40b
-                         0000F40D   372 _g_ASPCT2	=	0xf40d
-                         0000F959   373 _g_QUETAB	=	0xf959
-                         0000F971   374 _g_QUEBAK	=	0xf971
-                         0000F975   375 _g_VOICAQ	=	0xf975
-                         0000F9F5   376 _g_VOICBQ	=	0xf9f5
-                         0000FA75   377 _g_VOICCQ	=	0xfa75
-                         0000FAF5   378 _g_RS2IQ	=	0xfaf5
-                         0000FAF5   379 _g_DPPAGE	=	0xfaf5
-                         0000FAF6   380 _g_ACPAGE	=	0xfaf6
-                         0000FAF7   381 _g_AVCSAV	=	0xfaf7
-                         0000FAF8   382 _g_EXBRSA	=	0xfaf8
-                         0000FAF9   383 _g_CHRCNT	=	0xfaf9
-                         0000FAFA   384 _g_ROMA	=	0xfafa
-                         0000FAFC   385 _g_MODE	=	0xfafc
-                         0000FAFD   386 _g_NORUSE	=	0xfafd
-                         0000FAFE   387 _g_XSAVE	=	0xfafe
-                         0000FB00   388 _g_YSAVE	=	0xfb00
-                         0000FB03   389 _g_RSTMP	=	0xfb03
-                         0000FB03   390 _g_TOCNT	=	0xfb03
-                         0000FB04   391 _g_RSFCB	=	0xfb04
-                         0000FB06   392 _g_RSIQLN	=	0xfb06
-                         0000FB07   393 _g_MEXBIh	=	0xfb07
-                         0000FB0C   394 _g_OLDSTT	=	0xfb0c
-                         0000FB0C   395 _g_OLDINT	=	0xfb0c
-                         0000FB16   396 _g_DEVNUM	=	0xfb16
-                         0000FB17   397 _g_DATCNT	=	0xfb17
-                         0000FB1A   398 _g_ERRORS	=	0xfb1a
-                         0000FB1B   399 _g_FLAGS	=	0xfb1b
-                         0000FB1C   400 _g_ESTBLS	=	0xfb1c
-                         0000FB1D   401 _g_COMMSK	=	0xfb1d
-                         0000FB1E   402 _g_LSTCOM	=	0xfb1e
-                         0000FB1F   403 _g_LSTMOD	=	0xfb1f
-                         0000FB35   404 _g_PRSCNT	=	0xfb35
-                         0000FB36   405 _g_SAVSP	=	0xfb36
-                         0000FB38   406 _g_VOICEN	=	0xfb38
-                         0000FB39   407 _g_SAVVOL	=	0xfb39
-                         0000FB3B   408 _g_MCLLEN	=	0xfb3b
-                         0000FB3C   409 _g_MCLPTR	=	0xfb3c
-                         0000FB3E   410 _g_QUEUEN	=	0xfb3e
-                         0000FB3F   411 _g_MUSICF	=	0xfb3f
-                         0000FB40   412 _g_PLYCNT	=	0xfb40
-                         0000FB41   413 _g_VCBA	=	0xfb41
-                         0000FB66   414 _g_VCBB	=	0xfb66
-                         0000FB8B   415 _g_VCBC	=	0xfb8b
-                         0000FBB0   416 _g_ENSTOP	=	0xfbb0
-                         0000FBB1   417 _g_BASROM	=	0xfbb1
-                         0000FBB2   418 _g_LINTTB	=	0xfbb2
-                         0000FBCA   419 _g_FSTPOS	=	0xfbca
-                         0000FBCC   420 _g_CODSAV	=	0xfbcc
-                         0000FBCD   421 _g_FNKSWI	=	0xfbcd
-                         0000FBCE   422 _g_FNKFLG	=	0xfbce
-                         0000FBD8   423 _g_ONGSBF	=	0xfbd8
-                         0000FBD9   424 _g_CLIKFL	=	0xfbd9
-                         0000FBDA   425 _g_OLDKEY	=	0xfbda
-                         0000FBE5   426 _g_NEWKEY	=	0xfbe5
-                         0000FBF0   427 _g_KEYBUF	=	0xfbf0
-                         0000FC18   428 _g_LINWRK	=	0xfc18
-                         0000FC40   429 _g_PATWRK	=	0xfc40
-                         0000FC48   430 _g_BOTTOM	=	0xfc48
-                         0000FC4A   431 _g_HIMEM	=	0xfc4a
-                         0000FC4C   432 _g_TRPTBL	=	0xfc4c
-                         0000FC9A   433 _g_RTYCNT	=	0xfc9a
-                         0000FC9B   434 _g_INTFLG	=	0xfc9b
-                         0000FC9C   435 _g_PADY	=	0xfc9c
-                         0000FC9D   436 _g_PADX	=	0xfc9d
-                         0000FC9E   437 _g_JIFFY	=	0xfc9e
-                         0000FCA0   438 _g_INTVAL	=	0xfca0
-                         0000FCA2   439 _g_INTCNT	=	0xfca2
-                         0000FCA4   440 _g_LOWLIM	=	0xfca4
-                         0000FCA5   441 _g_WINWID	=	0xfca5
-                         0000FCA6   442 _g_GRPHED	=	0xfca6
-                         0000FCA7   443 _g_ESCCNT	=	0xfca7
-                         0000FCA8   444 _g_INSFLG	=	0xfca8
-                         0000FCA9   445 _g_CSRSW	=	0xfca9
-                         0000FCAA   446 _g_CSTYLE	=	0xfcaa
-                         0000FCAB   447 _g_CAPST	=	0xfcab
-                         0000FCAC   448 _g_KANAST	=	0xfcac
-                         0000FCAD   449 _g_KANAMD	=	0xfcad
-                         0000FCAE   450 _g_FLBMEM	=	0xfcae
-                         0000FCAF   451 _g_SCRMOD	=	0xfcaf
-                         0000FCB0   452 _g_OLDSCR	=	0xfcb0
-                         0000FCB1   453 _g_CASPRV	=	0xfcb1
-                         0000FCB2   454 _g_BRDATR	=	0xfcb2
-                         0000FCB3   455 _g_GXPOS	=	0xfcb3
-                         0000FCB5   456 _g_GYPOS	=	0xfcb5
-                         0000FCBB   457 _g_DRWFLG	=	0xfcbb
-                         0000FCBC   458 _g_DRWSCL	=	0xfcbc
-                         0000FCBD   459 _g_DRWANG	=	0xfcbd
-                         0000FCC1   460 _g_MNROM	=	0xfcc1
-                         0000FCC1   461 _g_EXPTBL	=	0xfcc1
-                         0000FCC5   462 _g_SLTTBL	=	0xfcc5
-                         0000FCC9   463 _g_SLTATR	=	0xfcc9
-                         0000FD09   464 _g_SLTWRK	=	0xfd09
-                         0000FD89   465 _g_PROCNM	=	0xfd89
-                         0000FFE7   466 _g_RG08SAV	=	0xffe7
-                         0000FFE8   467 _g_RG09SAV	=	0xffe8
-                         0000FFE9   468 _g_RG10SAV	=	0xffe9
-                         0000FFEA   469 _g_RG11SAV	=	0xffea
-                         0000FFEB   470 _g_RG12SAV	=	0xffeb
-                         0000FFEC   471 _g_RG13SAV	=	0xffec
-                         0000FFED   472 _g_RG14SAV	=	0xffed
-                         0000FFEE   473 _g_RG15SAV	=	0xffee
-                         0000FFEF   474 _g_RG16SAV	=	0xffef
-                         0000FFF0   475 _g_RG17SAV	=	0xfff0
-                         0000FFF1   476 _g_RG18SAV	=	0xfff1
-                         0000FFF2   477 _g_RG19SAV	=	0xfff2
-                         0000FFF3   478 _g_RG20SAV	=	0xfff3
-                         0000FFF4   479 _g_RG21SAV	=	0xfff4
-                         0000FFF5   480 _g_RG22SAV	=	0xfff5
-                         0000FFF6   481 _g_RG23SAV	=	0xfff6
-                         0000FFF7   482 _g_MINROM	=	0xfff7
-                         0000FFF8   483 _g_SVFFF8	=	0xfff8
-                         0000FFFA   484 _g_RG25SAV	=	0xfffa
-                         0000FFFB   485 _g_RG26SAV	=	0xfffb
-                         0000FFFC   486 _g_RG27SAV	=	0xfffc
-                         0000FFFD   487 _g_SVFFFD	=	0xfffd
-                         00000004   488 _g_CGTABL	=	0x0004
-                         00000006   489 _g_VDP_DR	=	0x0006
-                         00000007   490 _g_VDP_DW	=	0x0007
-                         0000002B   491 _g_BASRVN	=	0x002b
-                         0000002B   492 _g_ROMVersion	=	0x002b
-                         0000002D   493 _g_MSXVER	=	0x002d
-                         0000002E   494 _g_MSXMID	=	0x002e
-                         00000034   495 _g_CHAR_16	=	0x0034
-                         00000000   496 _g_SUBRID	=	0x0000
-                         00000002   497 _g_STRSRC	=	0x0002
-                         0000F30F   498 _g_KANJTABLE	=	0xf30f
-                         0000F323   499 _g_DISKVE	=	0xf323
-                         0000F325   500 _g_BREAKV	=	0xf325
-                         0000F341   501 _g_RAMAD0	=	0xf341
-                         0000F342   502 _g_RAMAD1	=	0xf342
-                         0000F343   503 _g_RAMAD2	=	0xf343
-                         0000F344   504 _g_RAMAD3	=	0xf344
-                         0000F348   505 _g_MASTER	=	0xf348
-                         0000F37D   506 _g_BDOS	=	0xf37d
-    00000010                        507 ___str_0:
-    00000010 0A                     508 	.db 0x0a
-    00000011 0D                     509 	.db 0x0d
-    00000012 24                     510 	.ascii "$"
-    00000013 00                     511 	.db 0x00
-                                    512 ;E:\MSXgl\engine/src/bios.c:81: void Bios_SetHookCallback(u16 hook, callback cb)
-                                    513 ;	---------------------------------
-                                    514 ; Function Bios_SetHookCallback
-                                    515 ; ---------------------------------
-    00000014                        516 _Bios_SetHookCallback::
-    00000014 4D               [ 4]  517 	ld	c, l
-    00000015 44               [ 4]  518 	ld	b, h
-                                    519 ;E:\MSXgl\engine/src/bios.c:83: u8 slot = Sys_GetPageSlot((u16)cb >> 14);
-                                    520 ;	spillPairReg hl
-                                    521 ;	spillPairReg hl
-                                    522 ;	spillPairReg hl
-                                    523 ;	spillPairReg hl
-    00000016 7A               [ 4]  524 	ld	a, d
-    00000017 07               [ 4]  525 	rlca
-    00000018 07               [ 4]  526 	rlca
-    00000019 E6 03            [ 7]  527 	and	a, #0x03
-    0000001B 6F               [ 4]  528 	ld	l, a
-                                    529 ;	spillPairReg hl
-                                    530 ;	spillPairReg hl
+                                    329 ; code
+                                    330 ;--------------------------------------------------------
+                                    331 	.area _CODE
+                                    332 ;E:\MSXgl\engine/src/bios.c:27: void Bios_Exit(u8 ret)
+                                    333 ;	---------------------------------
+                                    334 ; Function Bios_Exit
+                                    335 ; ---------------------------------
+    00000000                        336 _Bios_Exit::
+                                    337 ;E:\MSXgl\engine/src/bios.c:51: __endasm;
+    00000000 F5               [11]  338 	push	af
+    00000001 3E 02            [ 7]  339 	ld	a, #2
+    00000003 DD 21 5F 00      [14]  340 	ld	ix, #0x005F
+    00000007 FD 2A C0 FC      [20]  341 	ld	iy, (0xFCC1 -1)
+    0000000B CD 1C 00         [17]  342 	call	0x001C
+    0000000E DD 21 D2 00      [14]  343 	ld	ix, #0x00D2
+    00000012 FD 2A C0 FC      [20]  344 	ld	iy, (0xFCC1 -1)
+    00000016 CD 1C 00         [17]  345 	call	0x001C
+    00000019 F1               [10]  346 	pop	af
+    0000001A 47               [ 4]  347 	ld	b, a
+    0000001B 0E 62            [ 7]  348 	ld	c, #0x62
+    0000001D CD 05 00         [17]  349 	call	0x0005
+    00000020 0E 00            [ 7]  350 	ld	c, #0x00
+    00000022 C3 05 00         [10]  351 	jp	0x0005
+                                    352 ;E:\MSXgl\engine/src/bios.c:76: }
+    00000025 C9               [10]  353 	ret
+                         0000F380   354 _g_RDPRIM	=	0xf380
+                         0000F385   355 _g_WRPRIM	=	0xf385
+                         0000F38C   356 _g_CLPRIM	=	0xf38c
+                         0000F39A   357 _g_USRTAB	=	0xf39a
+                         0000F3DE   358 _g_CNSDFG	=	0xf3de
+                         0000F3DF   359 _g_RG0SAV	=	0xf3df
+                         0000F3E0   360 _g_RG1SAV	=	0xf3e0
+                         0000F3E1   361 _g_RG2SAV	=	0xf3e1
+                         0000F3E2   362 _g_RG3SAV	=	0xf3e2
+                         0000F3E3   363 _g_RG4SAV	=	0xf3e3
+                         0000F3E4   364 _g_RG5SAV	=	0xf3e4
+                         0000F3E5   365 _g_RG6SAV	=	0xf3e5
+                         0000F3E6   366 _g_RG7SAV	=	0xf3e6
+                         0000F3E7   367 _g_STATFL	=	0xf3e7
+                         0000F3E8   368 _g_TRGFLG	=	0xf3e8
+                         0000F3EC   369 _g_MAXUPD	=	0xf3ec
+                         0000F3EF   370 _g_MINUPD	=	0xf3ef
+                         0000F3F3   371 _g_QUEUES	=	0xf3f3
+                         0000F3F5   372 _g_FRCNEW	=	0xf3f5
+                         0000F3F6   373 _g_SCNCNT	=	0xf3f6
+                         0000F3F7   374 _g_REPCNT	=	0xf3f7
+                         0000F3F8   375 _g_PUTPNT	=	0xf3f8
+                         0000F3FA   376 _g_GETPNT	=	0xf3fa
+                         0000F3FC   377 _g_CS120	=	0xf3fc
+                         0000F401   378 _g_CS240	=	0xf401
+                         0000F406   379 _g_LOW	=	0xf406
+                         0000F408   380 _g_HIGH	=	0xf408
+                         0000F40A   381 _g_HEADER	=	0xf40a
+                         0000F40B   382 _g_ASPCT1	=	0xf40b
+                         0000F40D   383 _g_ASPCT2	=	0xf40d
+                         0000F959   384 _g_QUETAB	=	0xf959
+                         0000F971   385 _g_QUEBAK	=	0xf971
+                         0000F975   386 _g_VOICAQ	=	0xf975
+                         0000F9F5   387 _g_VOICBQ	=	0xf9f5
+                         0000FA75   388 _g_VOICCQ	=	0xfa75
+                         0000FAF5   389 _g_RS2IQ	=	0xfaf5
+                         0000FAF5   390 _g_DPPAGE	=	0xfaf5
+                         0000FAF6   391 _g_ACPAGE	=	0xfaf6
+                         0000FAF7   392 _g_AVCSAV	=	0xfaf7
+                         0000FAF8   393 _g_EXBRSA	=	0xfaf8
+                         0000FAF9   394 _g_CHRCNT	=	0xfaf9
+                         0000FAFA   395 _g_ROMA	=	0xfafa
+                         0000FAFC   396 _g_MODE	=	0xfafc
+                         0000FAFD   397 _g_NORUSE	=	0xfafd
+                         0000FAFE   398 _g_XSAVE	=	0xfafe
+                         0000FB00   399 _g_YSAVE	=	0xfb00
+                         0000FB03   400 _g_RSTMP	=	0xfb03
+                         0000FB03   401 _g_TOCNT	=	0xfb03
+                         0000FB04   402 _g_RSFCB	=	0xfb04
+                         0000FB06   403 _g_RSIQLN	=	0xfb06
+                         0000FB07   404 _g_MEXBIh	=	0xfb07
+                         0000FB0C   405 _g_OLDSTT	=	0xfb0c
+                         0000FB0C   406 _g_OLDINT	=	0xfb0c
+                         0000FB16   407 _g_DEVNUM	=	0xfb16
+                         0000FB17   408 _g_DATCNT	=	0xfb17
+                         0000FB1A   409 _g_ERRORS	=	0xfb1a
+                         0000FB1B   410 _g_FLAGS	=	0xfb1b
+                         0000FB1C   411 _g_ESTBLS	=	0xfb1c
+                         0000FB1D   412 _g_COMMSK	=	0xfb1d
+                         0000FB1E   413 _g_LSTCOM	=	0xfb1e
+                         0000FB1F   414 _g_LSTMOD	=	0xfb1f
+                         0000FB35   415 _g_PRSCNT	=	0xfb35
+                         0000FB36   416 _g_SAVSP	=	0xfb36
+                         0000FB38   417 _g_VOICEN	=	0xfb38
+                         0000FB39   418 _g_SAVVOL	=	0xfb39
+                         0000FB3B   419 _g_MCLLEN	=	0xfb3b
+                         0000FB3C   420 _g_MCLPTR	=	0xfb3c
+                         0000FB3E   421 _g_QUEUEN	=	0xfb3e
+                         0000FB3F   422 _g_MUSICF	=	0xfb3f
+                         0000FB40   423 _g_PLYCNT	=	0xfb40
+                         0000FB41   424 _g_VCBA	=	0xfb41
+                         0000FB66   425 _g_VCBB	=	0xfb66
+                         0000FB8B   426 _g_VCBC	=	0xfb8b
+                         0000FBB0   427 _g_ENSTOP	=	0xfbb0
+                         0000FBB1   428 _g_BASROM	=	0xfbb1
+                         0000FBB2   429 _g_LINTTB	=	0xfbb2
+                         0000FBCA   430 _g_FSTPOS	=	0xfbca
+                         0000FBCC   431 _g_CODSAV	=	0xfbcc
+                         0000FBCD   432 _g_FNKSWI	=	0xfbcd
+                         0000FBCE   433 _g_FNKFLG	=	0xfbce
+                         0000FBD8   434 _g_ONGSBF	=	0xfbd8
+                         0000FBD9   435 _g_CLIKFL	=	0xfbd9
+                         0000FBDA   436 _g_OLDKEY	=	0xfbda
+                         0000FBE5   437 _g_NEWKEY	=	0xfbe5
+                         0000FBF0   438 _g_KEYBUF	=	0xfbf0
+                         0000FC18   439 _g_LINWRK	=	0xfc18
+                         0000FC40   440 _g_PATWRK	=	0xfc40
+                         0000FC48   441 _g_BOTTOM	=	0xfc48
+                         0000FC4A   442 _g_HIMEM	=	0xfc4a
+                         0000FC4C   443 _g_TRPTBL	=	0xfc4c
+                         0000FC9A   444 _g_RTYCNT	=	0xfc9a
+                         0000FC9B   445 _g_INTFLG	=	0xfc9b
+                         0000FC9C   446 _g_PADY	=	0xfc9c
+                         0000FC9D   447 _g_PADX	=	0xfc9d
+                         0000FC9E   448 _g_JIFFY	=	0xfc9e
+                         0000FCA0   449 _g_INTVAL	=	0xfca0
+                         0000FCA2   450 _g_INTCNT	=	0xfca2
+                         0000FCA4   451 _g_LOWLIM	=	0xfca4
+                         0000FCA5   452 _g_WINWID	=	0xfca5
+                         0000FCA6   453 _g_GRPHED	=	0xfca6
+                         0000FCA7   454 _g_ESCCNT	=	0xfca7
+                         0000FCA8   455 _g_INSFLG	=	0xfca8
+                         0000FCA9   456 _g_CSRSW	=	0xfca9
+                         0000FCAA   457 _g_CSTYLE	=	0xfcaa
+                         0000FCAB   458 _g_CAPST	=	0xfcab
+                         0000FCAC   459 _g_KANAST	=	0xfcac
+                         0000FCAD   460 _g_KANAMD	=	0xfcad
+                         0000FCAE   461 _g_FLBMEM	=	0xfcae
+                         0000FCAF   462 _g_SCRMOD	=	0xfcaf
+                         0000FCB0   463 _g_OLDSCR	=	0xfcb0
+                         0000FCB1   464 _g_CASPRV	=	0xfcb1
+                         0000FCB2   465 _g_BRDATR	=	0xfcb2
+                         0000FCB3   466 _g_GXPOS	=	0xfcb3
+                         0000FCB5   467 _g_GYPOS	=	0xfcb5
+                         0000FCBB   468 _g_DRWFLG	=	0xfcbb
+                         0000FCBC   469 _g_DRWSCL	=	0xfcbc
+                         0000FCBD   470 _g_DRWANG	=	0xfcbd
+                         0000FCC1   471 _g_MNROM	=	0xfcc1
+                         0000FCC1   472 _g_EXPTBL	=	0xfcc1
+                         0000FCC5   473 _g_SLTTBL	=	0xfcc5
+                         0000FCC9   474 _g_SLTATR	=	0xfcc9
+                         0000FD09   475 _g_SLTWRK	=	0xfd09
+                         0000FD89   476 _g_PROCNM	=	0xfd89
+                         0000FFE7   477 _g_RG08SAV	=	0xffe7
+                         0000FFE8   478 _g_RG09SAV	=	0xffe8
+                         0000FFE9   479 _g_RG10SAV	=	0xffe9
+                         0000FFEA   480 _g_RG11SAV	=	0xffea
+                         0000FFEB   481 _g_RG12SAV	=	0xffeb
+                         0000FFEC   482 _g_RG13SAV	=	0xffec
+                         0000FFED   483 _g_RG14SAV	=	0xffed
+                         0000FFEE   484 _g_RG15SAV	=	0xffee
+                         0000FFEF   485 _g_RG16SAV	=	0xffef
+                         0000FFF0   486 _g_RG17SAV	=	0xfff0
+                         0000FFF1   487 _g_RG18SAV	=	0xfff1
+                         0000FFF2   488 _g_RG19SAV	=	0xfff2
+                         0000FFF3   489 _g_RG20SAV	=	0xfff3
+                         0000FFF4   490 _g_RG21SAV	=	0xfff4
+                         0000FFF5   491 _g_RG22SAV	=	0xfff5
+                         0000FFF6   492 _g_RG23SAV	=	0xfff6
+                         0000FFF7   493 _g_MINROM	=	0xfff7
+                         0000FFF8   494 _g_SVFFF8	=	0xfff8
+                         0000FFFA   495 _g_RG25SAV	=	0xfffa
+                         0000FFFB   496 _g_RG26SAV	=	0xfffb
+                         0000FFFC   497 _g_RG27SAV	=	0xfffc
+                         0000FFFD   498 _g_SVFFFD	=	0xfffd
+                         00000004   499 _g_CGTABL	=	0x0004
+                         00000006   500 _g_VDP_DR	=	0x0006
+                         00000007   501 _g_VDP_DW	=	0x0007
+                         0000002B   502 _g_BASRVN	=	0x002b
+                         0000002B   503 _g_ROMVersion	=	0x002b
+                         0000002D   504 _g_MSXVER	=	0x002d
+                         0000002E   505 _g_MSXMID	=	0x002e
+                         00000034   506 _g_CHAR_16	=	0x0034
+                         00000000   507 _g_SUBRID	=	0x0000
+                         00000002   508 _g_STRSRC	=	0x0002
+                         0000F30F   509 _g_KANJTABLE	=	0xf30f
+                         0000F323   510 _g_DISKVE	=	0xf323
+                         0000F325   511 _g_BREAKV	=	0xf325
+                         0000F341   512 _g_RAMAD0	=	0xf341
+                         0000F342   513 _g_RAMAD1	=	0xf342
+                         0000F343   514 _g_RAMAD2	=	0xf343
+                         0000F344   515 _g_RAMAD3	=	0xf344
+                         0000F348   516 _g_MASTER	=	0xf348
+                         0000F37D   517 _g_BDOS	=	0xf37d
+    00000026                        518 ___str_0:
+    00000026 0A                     519 	.db 0x0a
+    00000027 0D                     520 	.db 0x0d
+    00000028 24                     521 	.ascii "$"
+    00000029 00                     522 	.db 0x00
+                                    523 ;E:\MSXgl\engine/src/bios.c:81: void Bios_SetHookCallback(u16 hook, callback cb)
+                                    524 ;	---------------------------------
+                                    525 ; Function Bios_SetHookCallback
+                                    526 ; ---------------------------------
+    0000002A                        527 _Bios_SetHookCallback::
+    0000002A 4D               [ 4]  528 	ld	c, l
+    0000002B 44               [ 4]  529 	ld	b, h
+                                    530 ;E:\MSXgl\engine/src/bios.c:83: u8 slot = Sys_GetPageSlot((u16)cb >> 14);
                                     531 ;	spillPairReg hl
                                     532 ;	spillPairReg hl
-    0000001C C5               [11]  533 	push	bc
-    0000001D D5               [11]  534 	push	de
-    0000001E 7D               [ 4]  535 	ld	a, l
-    0000001F CDr00r00         [17]  536 	call	_Sys_GetPageSlot
-    00000022 D1               [10]  537 	pop	de
-    00000023 C1               [10]  538 	pop	bc
-                                    539 ;E:\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
-                                    540 ;E:\MSXgl\engine/src/bios_hook.h:50: *((u8*)hook) = 0xF7; // RST #30
-    00000024 69               [ 4]  541 	ld	l, c
+                                    533 ;	spillPairReg hl
+                                    534 ;	spillPairReg hl
+    0000002C 7A               [ 4]  535 	ld	a, d
+    0000002D 07               [ 4]  536 	rlca
+    0000002E 07               [ 4]  537 	rlca
+    0000002F E6 03            [ 7]  538 	and	a, #0x03
+    00000031 6F               [ 4]  539 	ld	l, a
+                                    540 ;	spillPairReg hl
+                                    541 ;	spillPairReg hl
                                     542 ;	spillPairReg hl
                                     543 ;	spillPairReg hl
-    00000025 60               [ 4]  544 	ld	h, b
-                                    545 ;	spillPairReg hl
-                                    546 ;	spillPairReg hl
-    00000026 36 F7            [10]  547 	ld	(hl), #0xf7
-                                    548 ;E:\MSXgl\engine/src/bios_hook.h:51: *((u8*)++hook) = slot; // Slot ID
-    00000028 03               [ 6]  549 	inc	bc
-    00000029 69               [ 4]  550 	ld	l, c
-                                    551 ;	spillPairReg hl
-                                    552 ;	spillPairReg hl
-    0000002A 60               [ 4]  553 	ld	h, b
+    00000032 C5               [11]  544 	push	bc
+    00000033 D5               [11]  545 	push	de
+    00000034 7D               [ 4]  546 	ld	a, l
+    00000035 CDr00r00         [17]  547 	call	_Sys_GetPageSlot
+    00000038 D1               [10]  548 	pop	de
+    00000039 C1               [10]  549 	pop	bc
+                                    550 ;E:\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
+                                    551 ;E:\MSXgl\engine/src/bios_hook.h:50: *((u8*)hook) = 0xF7; // RST #30
+    0000003A 69               [ 4]  552 	ld	l, c
+                                    553 ;	spillPairReg hl
                                     554 ;	spillPairReg hl
-                                    555 ;	spillPairReg hl
-    0000002B 77               [ 7]  556 	ld	(hl), a
-                                    557 ;E:\MSXgl\engine/src/bios_hook.h:52: *((callback*)++hook) = cb; // Callback address
-    0000002C 03               [ 6]  558 	inc	bc
-    0000002D 7B               [ 4]  559 	ld	a, e
-    0000002E 02               [ 7]  560 	ld	(bc), a
-    0000002F 03               [ 6]  561 	inc	bc
-    00000030 7A               [ 4]  562 	ld	a, d
-    00000031 02               [ 7]  563 	ld	(bc), a
-                                    564 ;E:\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
-                                    565 ;E:\MSXgl\engine/src/bios.c:85: }
-    00000032 C9               [10]  566 	ret
-                                    567 ;E:\MSXgl\engine/src/bios.c:134: u8 Bios_InterSlotRead(u8 slot, u16 addr)
-                                    568 ;	---------------------------------
-                                    569 ; Function Bios_InterSlotRead
-                                    570 ; ---------------------------------
-    00000033                        571 _Bios_InterSlotRead::
-                                    572 ;E:\MSXgl\engine/src/bios.c:143: __endasm;
-    00000033 6B               [ 4]  573 	ld	l, e
-    00000034 62               [ 4]  574 	ld	h, d
-    00000035 CD 0C 00         [17]  575 	call	0x000C
-                                    576 ;E:\MSXgl\engine/src/bios.c:144: }
-    00000038 C9               [10]  577 	ret
-                                    578 ;E:\MSXgl\engine/src/bios.c:172: void Bios_InterSlotWrite(u8 slot, u16 addr, u8 value)
+    0000003B 60               [ 4]  555 	ld	h, b
+                                    556 ;	spillPairReg hl
+                                    557 ;	spillPairReg hl
+    0000003C 36 F7            [10]  558 	ld	(hl), #0xf7
+                                    559 ;E:\MSXgl\engine/src/bios_hook.h:51: *((u8*)++hook) = slot; // Slot ID
+    0000003E 03               [ 6]  560 	inc	bc
+    0000003F 69               [ 4]  561 	ld	l, c
+                                    562 ;	spillPairReg hl
+                                    563 ;	spillPairReg hl
+    00000040 60               [ 4]  564 	ld	h, b
+                                    565 ;	spillPairReg hl
+                                    566 ;	spillPairReg hl
+    00000041 77               [ 7]  567 	ld	(hl), a
+                                    568 ;E:\MSXgl\engine/src/bios_hook.h:52: *((callback*)++hook) = cb; // Callback address
+    00000042 03               [ 6]  569 	inc	bc
+    00000043 7B               [ 4]  570 	ld	a, e
+    00000044 02               [ 7]  571 	ld	(bc), a
+    00000045 03               [ 6]  572 	inc	bc
+    00000046 7A               [ 4]  573 	ld	a, d
+    00000047 02               [ 7]  574 	ld	(bc), a
+                                    575 ;E:\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
+                                    576 ;E:\MSXgl\engine/src/bios.c:85: }
+    00000048 C9               [10]  577 	ret
+                                    578 ;E:\MSXgl\engine/src/bios.c:134: u8 Bios_InterSlotRead(u8 slot, u16 addr)
                                     579 ;	---------------------------------
-                                    580 ; Function Bios_InterSlotWrite
+                                    580 ; Function Bios_InterSlotRead
                                     581 ; ---------------------------------
-    00000039                        582 _Bios_InterSlotWrite::
-                                    583 ;E:\MSXgl\engine/src/bios.c:188: __endasm;
-    00000039 FD E5            [15]  584 	push	iy
-    0000003B FD 21 04 00      [14]  585 	ld	iy, #4
-    0000003F FD 39            [15]  586 	add	iy, sp
-    00000041 6B               [ 4]  587 	ld	l, e
-    00000042 62               [ 4]  588 	ld	h, d
-    00000043 FD 5E 00         [19]  589 	ld	e, 0(iy)
-    00000046 CD 14 00         [17]  590 	call	0x0014
-    00000049 FD E1            [14]  591 	pop	iy
-                                    592 ;E:\MSXgl\engine/src/bios.c:189: }
-    0000004B E1               [10]  593 	pop	hl
-    0000004C 33               [ 6]  594 	inc	sp
-    0000004D E9               [ 4]  595 	jp	(hl)
-                                    596 ;E:\MSXgl\engine/src/bios.c:208: void Bios_InterSlotCall(u8 slot, u16 addr)
-                                    597 ;	---------------------------------
-                                    598 ; Function Bios_InterSlotCall
-                                    599 ; ---------------------------------
-    0000004E                        600 _Bios_InterSlotCall::
-                                    601 ;E:\MSXgl\engine/src/bios.c:227: __endasm;
-    0000004E DD E5            [15]  602 	push	ix
-    00000050 2E 00            [ 7]  603 	ld	l, #0
-    00000052 67               [ 4]  604 	ld	h, a
-    00000053 E5               [11]  605 	push	hl
-    00000054 FD E1            [14]  606 	pop	iy
-    00000056 D5               [11]  607 	push	de
-    00000057 DD E1            [14]  608 	pop	ix
-    00000059 CD 1C 00         [17]  609 	call	0x001C
-    0000005C FB               [ 4]  610 	ei
-    0000005D DD E1            [14]  611 	pop	ix
-                                    612 ;E:\MSXgl\engine/src/bios.c:228: }
-    0000005F C9               [10]  613 	ret
-                                    614 ;E:\MSXgl\engine/src/bios.c:248: void Bios_SwitchSlot(u8 page, u8 slot)
-                                    615 ;	---------------------------------
-                                    616 ; Function Bios_SwitchSlot
-                                    617 ; ---------------------------------
-    00000060                        618 _Bios_SwitchSlot::
-                                    619 ;E:\MSXgl\engine/src/bios.c:260: __endasm;
-    00000060 0F               [ 4]  620 	rrca	
-    00000061 0F               [ 4]  621 	rrca 
-    00000062 E6 C0            [ 7]  622 	and a, #0xC0
-    00000064 44               [ 4]  623 	ld	b, h
-    00000065 67               [ 4]  624 	ld	h, a
-    00000066 78               [ 4]  625 	ld	a, b
-    00000067 CD 24 00         [17]  626 	call	0x0024
-                                    627 ;E:\MSXgl\engine/src/bios.c:261: }
-    0000006A C9               [10]  628 	ret
-                                    629 ;E:\MSXgl\engine/src/bios.c:341: void Bios_WriteVDP(u8 reg, u8 value)
-                                    630 ;	---------------------------------
-                                    631 ; Function Bios_WriteVDP
-                                    632 ; ---------------------------------
-    0000006B                        633 _Bios_WriteVDP::
-                                    634 ;E:\MSXgl\engine/src/bios.c:350: __endasm;
-    0000006B 4F               [ 4]  635 	ld	c, a
-    0000006C 45               [ 4]  636 	ld	b, l
-    0000006D CD 47 00         [17]  637 	call	0x0047
-                                    638 ;E:\MSXgl\engine/src/bios.c:351: }
-    00000070 C9               [10]  639 	ret
-                                    640 ;E:\MSXgl\engine/src/bios.c:372: void Bios_WriteVRAM(u16 addr, u8 value)
+    00000049                        582 _Bios_InterSlotRead::
+                                    583 ;E:\MSXgl\engine/src/bios.c:143: __endasm;
+    00000049 6B               [ 4]  584 	ld	l, e
+    0000004A 62               [ 4]  585 	ld	h, d
+    0000004B CD 0C 00         [17]  586 	call	0x000C
+                                    587 ;E:\MSXgl\engine/src/bios.c:144: }
+    0000004E C9               [10]  588 	ret
+                                    589 ;E:\MSXgl\engine/src/bios.c:172: void Bios_InterSlotWrite(u8 slot, u16 addr, u8 value)
+                                    590 ;	---------------------------------
+                                    591 ; Function Bios_InterSlotWrite
+                                    592 ; ---------------------------------
+    0000004F                        593 _Bios_InterSlotWrite::
+                                    594 ;E:\MSXgl\engine/src/bios.c:188: __endasm;
+    0000004F FD E5            [15]  595 	push	iy
+    00000051 FD 21 04 00      [14]  596 	ld	iy, #4
+    00000055 FD 39            [15]  597 	add	iy, sp
+    00000057 6B               [ 4]  598 	ld	l, e
+    00000058 62               [ 4]  599 	ld	h, d
+    00000059 FD 5E 00         [19]  600 	ld	e, 0(iy)
+    0000005C CD 14 00         [17]  601 	call	0x0014
+    0000005F FD E1            [14]  602 	pop	iy
+                                    603 ;E:\MSXgl\engine/src/bios.c:189: }
+    00000061 E1               [10]  604 	pop	hl
+    00000062 33               [ 6]  605 	inc	sp
+    00000063 E9               [ 4]  606 	jp	(hl)
+                                    607 ;E:\MSXgl\engine/src/bios.c:208: void Bios_InterSlotCall(u8 slot, u16 addr)
+                                    608 ;	---------------------------------
+                                    609 ; Function Bios_InterSlotCall
+                                    610 ; ---------------------------------
+    00000064                        611 _Bios_InterSlotCall::
+                                    612 ;E:\MSXgl\engine/src/bios.c:227: __endasm;
+    00000064 DD E5            [15]  613 	push	ix
+    00000066 2E 00            [ 7]  614 	ld	l, #0
+    00000068 67               [ 4]  615 	ld	h, a
+    00000069 E5               [11]  616 	push	hl
+    0000006A FD E1            [14]  617 	pop	iy
+    0000006C D5               [11]  618 	push	de
+    0000006D DD E1            [14]  619 	pop	ix
+    0000006F CD 1C 00         [17]  620 	call	0x001C
+    00000072 FB               [ 4]  621 	ei
+    00000073 DD E1            [14]  622 	pop	ix
+                                    623 ;E:\MSXgl\engine/src/bios.c:228: }
+    00000075 C9               [10]  624 	ret
+                                    625 ;E:\MSXgl\engine/src/bios.c:248: void Bios_SwitchSlot(u8 page, u8 slot)
+                                    626 ;	---------------------------------
+                                    627 ; Function Bios_SwitchSlot
+                                    628 ; ---------------------------------
+    00000076                        629 _Bios_SwitchSlot::
+                                    630 ;E:\MSXgl\engine/src/bios.c:260: __endasm;
+    00000076 0F               [ 4]  631 	rrca	
+    00000077 0F               [ 4]  632 	rrca 
+    00000078 E6 C0            [ 7]  633 	and a, #0xC0
+    0000007A 44               [ 4]  634 	ld	b, h
+    0000007B 67               [ 4]  635 	ld	h, a
+    0000007C 78               [ 4]  636 	ld	a, b
+    0000007D CD 24 00         [17]  637 	call	0x0024
+                                    638 ;E:\MSXgl\engine/src/bios.c:261: }
+    00000080 C9               [10]  639 	ret
+                                    640 ;E:\MSXgl\engine/src/bios.c:341: void Bios_WriteVDP(u8 reg, u8 value)
                                     641 ;	---------------------------------
-                                    642 ; Function Bios_WriteVRAM
+                                    642 ; Function Bios_WriteVDP
                                     643 ; ---------------------------------
-    00000071                        644 _Bios_WriteVRAM::
-                                    645 ;E:\MSXgl\engine/src/bios.c:383: __endasm;
-    00000071 FD 21 04 00      [14]  646 	ld	iy, #4
-    00000075 FD 39            [15]  647 	add	iy, sp
-    00000077 FD 7E 00         [19]  648 	ld	a, 0(iy)
-    0000007A CD 4D 00         [17]  649 	call	0x004D
-                                    650 ;E:\MSXgl\engine/src/bios.c:384: }
-    0000007D E1               [10]  651 	pop	hl
-    0000007E 33               [ 6]  652 	inc	sp
-    0000007F E9               [ 4]  653 	jp	(hl)
-                                    654 ;E:\MSXgl\engine/src/bios.c:416: void Bios_FillVRAM(u16 addr, u16 length, u8 value)
-                                    655 ;	---------------------------------
-                                    656 ; Function Bios_FillVRAM
-                                    657 ; ---------------------------------
-    00000080                        658 _Bios_FillVRAM::
-                                    659 ;E:\MSXgl\engine/src/bios.c:430: __endasm;
-    00000080 FD 21 04 00      [14]  660 	ld	iy, #4
-    00000084 FD 39            [15]  661 	add	iy, sp
-    00000086 4B               [ 4]  662 	ld	c, e
-    00000087 42               [ 4]  663 	ld	b, d
-    00000088 FD 7E 00         [19]  664 	ld	a, 0(iy)
-    0000008B CD 56 00         [17]  665 	call	0x0056
-                                    666 ;E:\MSXgl\engine/src/bios.c:431: }
-    0000008E E1               [10]  667 	pop	hl
-    0000008F 33               [ 6]  668 	inc	sp
-    00000090 E9               [ 4]  669 	jp	(hl)
-                                    670 ;E:\MSXgl\engine/src/bios.c:442: void Bios_TransfertVRAMtoRAM(u16 vram, u16 ram, u16 length)
-                                    671 ;	---------------------------------
-                                    672 ; Function Bios_TransfertVRAMtoRAM
-                                    673 ; ---------------------------------
-    00000091                        674 _Bios_TransfertVRAMtoRAM::
-                                    675 ;E:\MSXgl\engine/src/bios.c:455: __endasm;
-    00000091 FD 21 04 00      [14]  676 	ld	iy, #4
-    00000095 FD 39            [15]  677 	add	iy, sp
-    00000097 FD 4E 00         [19]  678 	ld	c, 0(iy)
-    0000009A FD 46 01         [19]  679 	ld	b, 1(iy)
-    0000009D CD 59 00         [17]  680 	call	0x0059
-                                    681 ;E:\MSXgl\engine/src/bios.c:456: }
-    000000A0 E1               [10]  682 	pop	hl
-    000000A1 F1               [10]  683 	pop	af
-    000000A2 E9               [ 4]  684 	jp	(hl)
-                                    685 ;E:\MSXgl\engine/src/bios.c:467: void Bios_TransfertRAMtoVRAM(u16 ram, u16 vram, u16 length)
-                                    686 ;	---------------------------------
-                                    687 ; Function Bios_TransfertRAMtoVRAM
-                                    688 ; ---------------------------------
-    000000A3                        689 _Bios_TransfertRAMtoVRAM::
-                                    690 ;E:\MSXgl\engine/src/bios.c:480: __endasm;
-    000000A3 FD 21 04 00      [14]  691 	ld	iy, #4
-    000000A7 FD 39            [15]  692 	add	iy, sp
-    000000A9 FD 4E 00         [19]  693 	ld	c, 0(iy)
-    000000AC FD 46 01         [19]  694 	ld	b, 1(iy)
-    000000AF CD 5C 00         [17]  695 	call	0x005C
-                                    696 ;E:\MSXgl\engine/src/bios.c:481: }
-    000000B2 E1               [10]  697 	pop	hl
-    000000B3 F1               [10]  698 	pop	af
-    000000B4 E9               [ 4]  699 	jp	(hl)
-                                    700 ;E:\MSXgl\engine/src/bios.c:502: void Bios_ChangeColor(u8 text, u8 back, u8 border)
-                                    701 ;	---------------------------------
-                                    702 ; Function Bios_ChangeColor
-                                    703 ; ---------------------------------
-    000000B5                        704 _Bios_ChangeColor::
-                                    705 ;E:\MSXgl\engine/src/bios.c:517: __endasm;
-    000000B5 FD 21 04 00      [14]  706 	ld	iy, #4
-    000000B9 FD 39            [15]  707 	add	iy, sp
-    000000BB 32 E9 F3         [13]  708 	ld	(0xF3E9), a
-    000000BE 7D               [ 4]  709 	ld	a, l
-    000000BF 32 EA F3         [13]  710 	ld	(0xF3EA), a
-    000000C2 FD 7E 00         [19]  711 	ld	a, 0(iy)
-    000000C5 32 EB F3         [13]  712 	ld	(0xF3EB), a
-    000000C8 CD 62 00         [17]  713 	call	0x0062
-                                    714 ;E:\MSXgl\engine/src/bios.c:518: }
-    000000CB E1               [10]  715 	pop	hl
-    000000CC 33               [ 6]  716 	inc	sp
-    000000CD E9               [ 4]  717 	jp	(hl)
-                                    718 ;E:\MSXgl\engine/src/bios.c:544: void Bios_InitScreen0Ex(u16 pnt, u16 pgt, u8 width, u8 text, u8 bg, u8 border)
-                                    719 ;	---------------------------------
-                                    720 ; Function Bios_InitScreen0Ex
-                                    721 ; ---------------------------------
-    000000CE                        722 _Bios_InitScreen0Ex::
-    000000CE 22 B3 F3         [16]  723 	ld	(_g_TXTNAM), hl
-    000000D1 ED 53 B7 F3      [20]  724 	ld	(_g_TXTCGP), de
-                                    725 ;E:\MSXgl\engine/src/bios.c:548: g_LINL40 = width;  // Character per line
-    000000D5 FD 21 02 00      [14]  726 	ld	iy, #2
-    000000D9 FD 39            [15]  727 	add	iy, sp
-    000000DB FD 7E 00         [19]  728 	ld	a, 0 (iy)
-    000000DE 32 AE F3         [13]  729 	ld	(_g_LINL40+0), a
-                                    730 ;E:\MSXgl\engine/src/bios.c:549: g_FORCLR = text;   // Text color
-    000000E1 FD 7E 01         [19]  731 	ld	a, 1 (iy)
-    000000E4 FD 23            [10]  732 	inc	iy
-    000000E6 32 E9 F3         [13]  733 	ld	(_g_FORCLR+0), a
-                                    734 ;E:\MSXgl\engine/src/bios.c:550: g_BAKCLR = bg;     // Background color
-    000000E9 FD 7E 01         [19]  735 	ld	a, 1 (iy)
-    000000EC FD 23            [10]  736 	inc	iy
-    000000EE 32 EA F3         [13]  737 	ld	(_g_BAKCLR+0), a
-                                    738 ;E:\MSXgl\engine/src/bios.c:551: g_BDRCLR = border; // Border colour
-    000000F1 FD 7E 01         [19]  739 	ld	a, 1 (iy)
-    000000F4 32 EB F3         [13]  740 	ld	(_g_BDRCLR+0), a
-                                    741 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-    000000F7 CD 6C 00         [17]  742 	call	0x006c
-                                    743 ;E:\MSXgl\engine/src/bios.c:552: Call(R_INITXT);
-                                    744 ;E:\MSXgl\engine/src/bios.c:553: }
-    000000FA E1               [10]  745 	pop	hl
-    000000FB F1               [10]  746 	pop	af
-    000000FC F1               [10]  747 	pop	af
-    000000FD E9               [ 4]  748 	jp	(hl)
-                                    749 ;E:\MSXgl\engine/src/bios.c:569: void Bios_InitScreen1Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
-                                    750 ;	---------------------------------
-                                    751 ; Function Bios_InitScreen1Ex
-                                    752 ; ---------------------------------
-    000000FE                        753 _Bios_InitScreen1Ex::
-    000000FE DD E5            [15]  754 	push	ix
-    00000100 DD 21 00 00      [14]  755 	ld	ix,#0
-    00000104 DD 39            [15]  756 	add	ix,sp
-    00000106 22 BD F3         [16]  757 	ld	(_g_T32NAM), hl
-    00000109 ED 53 BF F3      [20]  758 	ld	(_g_T32COL), de
-                                    759 ;E:\MSXgl\engine/src/bios.c:573: g_T32CGP = pgt;    // Address of pattern generator table
-    0000010D DD 6E 04         [19]  760 	ld	l, 4 (ix)
-    00000110 DD 66 05         [19]  761 	ld	h, 5 (ix)
-    00000113 22 C1 F3         [16]  762 	ld	(_g_T32CGP), hl
-                                    763 ;E:\MSXgl\engine/src/bios.c:574: g_T32ATR = sat;    // Address of sprite attribute table
-    00000116 DD 6E 06         [19]  764 	ld	l, 6 (ix)
-    00000119 DD 66 07         [19]  765 	ld	h, 7 (ix)
-    0000011C 22 C3 F3         [16]  766 	ld	(_g_T32ATR), hl
-                                    767 ;E:\MSXgl\engine/src/bios.c:575: g_T32PAT = sgt;    // Address of sprite generator table
-    0000011F DD 6E 08         [19]  768 	ld	l, 8 (ix)
-    00000122 DD 66 09         [19]  769 	ld	h, 9 (ix)
-    00000125 22 C5 F3         [16]  770 	ld	(_g_T32PAT), hl
-                                    771 ;E:\MSXgl\engine/src/bios.c:576: g_FORCLR = text;   // Text color
-    00000128 DD 7E 0A         [19]  772 	ld	a, 10 (ix)
-    0000012B 32 E9 F3         [13]  773 	ld	(_g_FORCLR+0), a
-                                    774 ;E:\MSXgl\engine/src/bios.c:577: g_BAKCLR = bg;     // Background color
-    0000012E DD 7E 0B         [19]  775 	ld	a, 11 (ix)
-    00000131 32 EA F3         [13]  776 	ld	(_g_BAKCLR+0), a
-                                    777 ;E:\MSXgl\engine/src/bios.c:578: g_BDRCLR = border; // Border color
-    00000134 DD 7E 0C         [19]  778 	ld	a, 12 (ix)
-    00000137 32 EB F3         [13]  779 	ld	(_g_BDRCLR+0), a
-                                    780 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-    0000013A CD 6F 00         [17]  781 	call	0x006f
-                                    782 ;E:\MSXgl\engine/src/bios.c:579: Call(R_INIT32);
-                                    783 ;E:\MSXgl\engine/src/bios.c:580: }
-    0000013D DD E1            [14]  784 	pop	ix
-    0000013F E1               [10]  785 	pop	hl
-    00000140 FD 21 09 00      [14]  786 	ld	iy, #9
-    00000144 FD 39            [15]  787 	add	iy, sp
-    00000146 FD F9            [10]  788 	ld	sp, iy
-    00000148 E9               [ 4]  789 	jp	(hl)
-                                    790 ;E:\MSXgl\engine/src/bios.c:596: void Bios_InitScreen2Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
-                                    791 ;	---------------------------------
-                                    792 ; Function Bios_InitScreen2Ex
-                                    793 ; ---------------------------------
-    00000149                        794 _Bios_InitScreen2Ex::
-    00000149 DD E5            [15]  795 	push	ix
-    0000014B DD 21 00 00      [14]  796 	ld	ix,#0
-    0000014F DD 39            [15]  797 	add	ix,sp
-    00000151 22 C7 F3         [16]  798 	ld	(_g_GRPNAM), hl
-    00000154 ED 53 C9 F3      [20]  799 	ld	(_g_GRPCOL), de
-                                    800 ;E:\MSXgl\engine/src/bios.c:600: g_GRPCGP = pgt;    // Address of pattern generator table
-    00000158 DD 6E 04         [19]  801 	ld	l, 4 (ix)
-    0000015B DD 66 05         [19]  802 	ld	h, 5 (ix)
-    0000015E 22 CB F3         [16]  803 	ld	(_g_GRPCGP), hl
-                                    804 ;E:\MSXgl\engine/src/bios.c:601: g_GRPATR = sat;    // Address of sprite attribute table
-    00000161 DD 6E 06         [19]  805 	ld	l, 6 (ix)
-    00000164 DD 66 07         [19]  806 	ld	h, 7 (ix)
-    00000167 22 CD F3         [16]  807 	ld	(_g_GRPATR), hl
-                                    808 ;E:\MSXgl\engine/src/bios.c:602: g_GRPPAT = sgt;    // Address of sprite generator table
-    0000016A DD 6E 08         [19]  809 	ld	l, 8 (ix)
-    0000016D DD 66 09         [19]  810 	ld	h, 9 (ix)
-    00000170 22 CF F3         [16]  811 	ld	(_g_GRPPAT), hl
-                                    812 ;E:\MSXgl\engine/src/bios.c:603: g_FORCLR = text;   // Text color
-    00000173 DD 7E 0A         [19]  813 	ld	a, 10 (ix)
-    00000176 32 E9 F3         [13]  814 	ld	(_g_FORCLR+0), a
-                                    815 ;E:\MSXgl\engine/src/bios.c:604: g_BAKCLR = bg;     // Background color
-    00000179 DD 7E 0B         [19]  816 	ld	a, 11 (ix)
-    0000017C 32 EA F3         [13]  817 	ld	(_g_BAKCLR+0), a
-                                    818 ;E:\MSXgl\engine/src/bios.c:605: g_BDRCLR = border; // Border color
-    0000017F DD 7E 0C         [19]  819 	ld	a, 12 (ix)
-    00000182 32 EB F3         [13]  820 	ld	(_g_BDRCLR+0), a
-                                    821 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-    00000185 CD 72 00         [17]  822 	call	0x0072
-                                    823 ;E:\MSXgl\engine/src/bios.c:606: Call(R_INIGRP);
-                                    824 ;E:\MSXgl\engine/src/bios.c:607: }
-    00000188 DD E1            [14]  825 	pop	ix
-    0000018A E1               [10]  826 	pop	hl
-    0000018B FD 21 09 00      [14]  827 	ld	iy, #9
-    0000018F FD 39            [15]  828 	add	iy, sp
-    00000191 FD F9            [10]  829 	ld	sp, iy
-    00000193 E9               [ 4]  830 	jp	(hl)
-                                    831 ;E:\MSXgl\engine/src/bios.c:623: void Bios_InitScreen3Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
-                                    832 ;	---------------------------------
-                                    833 ; Function Bios_InitScreen3Ex
-                                    834 ; ---------------------------------
-    00000194                        835 _Bios_InitScreen3Ex::
-    00000194 DD E5            [15]  836 	push	ix
-    00000196 DD 21 00 00      [14]  837 	ld	ix,#0
-    0000019A DD 39            [15]  838 	add	ix,sp
-    0000019C 22 D1 F3         [16]  839 	ld	(_g_MLTNAM), hl
-    0000019F ED 53 D3 F3      [20]  840 	ld	(_g_MLTCOL), de
-                                    841 ;E:\MSXgl\engine/src/bios.c:627: g_MLTCGP = pgt;    // Address of pattern generator table
-    000001A3 DD 6E 04         [19]  842 	ld	l, 4 (ix)
-    000001A6 DD 66 05         [19]  843 	ld	h, 5 (ix)
-    000001A9 22 D5 F3         [16]  844 	ld	(_g_MLTCGP), hl
-                                    845 ;E:\MSXgl\engine/src/bios.c:628: g_MLTATR = sat;    // Address of sprite attribute table
-    000001AC DD 6E 06         [19]  846 	ld	l, 6 (ix)
-    000001AF DD 66 07         [19]  847 	ld	h, 7 (ix)
-    000001B2 22 D7 F3         [16]  848 	ld	(_g_MLTATR), hl
-                                    849 ;E:\MSXgl\engine/src/bios.c:629: g_MLTPAT = sgt;    // Address of sprite generator table
-    000001B5 DD 6E 08         [19]  850 	ld	l, 8 (ix)
-    000001B8 DD 66 09         [19]  851 	ld	h, 9 (ix)
-    000001BB 22 D9 F3         [16]  852 	ld	(_g_MLTPAT), hl
-                                    853 ;E:\MSXgl\engine/src/bios.c:630: g_FORCLR = text;   // Text color
-    000001BE DD 7E 0A         [19]  854 	ld	a, 10 (ix)
-    000001C1 32 E9 F3         [13]  855 	ld	(_g_FORCLR+0), a
-                                    856 ;E:\MSXgl\engine/src/bios.c:631: g_BAKCLR = bg;     // Background color
-    000001C4 DD 7E 0B         [19]  857 	ld	a, 11 (ix)
-    000001C7 32 EA F3         [13]  858 	ld	(_g_BAKCLR+0), a
-                                    859 ;E:\MSXgl\engine/src/bios.c:632: g_BDRCLR = border; // Border color
-    000001CA DD 7E 0C         [19]  860 	ld	a, 12 (ix)
-    000001CD 32 EB F3         [13]  861 	ld	(_g_BDRCLR+0), a
-                                    862 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-    000001D0 CD 75 00         [17]  863 	call	0x0075
-                                    864 ;E:\MSXgl\engine/src/bios.c:633: Call(R_INIMLT);
-                                    865 ;E:\MSXgl\engine/src/bios.c:634: }
-    000001D3 DD E1            [14]  866 	pop	ix
-    000001D5 E1               [10]  867 	pop	hl
-    000001D6 FD 21 09 00      [14]  868 	ld	iy, #9
-    000001DA FD 39            [15]  869 	add	iy, sp
-    000001DC FD F9            [10]  870 	ld	sp, iy
-    000001DE E9               [ 4]  871 	jp	(hl)
-                                    872 ;E:\MSXgl\engine/src/bios.c:675: u16 Bios_GetPatternTableAddress(u8 id) __FASTCALL
-                                    873 ;	---------------------------------
-                                    874 ; Function Bios_GetPatternTableAddress
-                                    875 ; ---------------------------------
-    000001DF                        876 _Bios_GetPatternTableAddress::
-                                    877 ;E:\MSXgl\engine/src/bios.c:682: __endasm;
-    000001DF 7D               [ 4]  878 	ld	a, l
-    000001E0 CD 84 00         [17]  879 	call	0x0084
-                                    880 ;E:\MSXgl\engine/src/bios.c:683: }
-    000001E3 C9               [10]  881 	ret
-                                    882 ;E:\MSXgl\engine/src/bios.c:692: u16 Bios_GetAttributeTableAddress(u8 id) __FASTCALL
-                                    883 ;	---------------------------------
-                                    884 ; Function Bios_GetAttributeTableAddress
-                                    885 ; ---------------------------------
-    000001E4                        886 _Bios_GetAttributeTableAddress::
-                                    887 ;E:\MSXgl\engine/src/bios.c:699: __endasm;
-    000001E4 7D               [ 4]  888 	ld	a, l
-    000001E5 CD 87 00         [17]  889 	call	0x0087
-                                    890 ;E:\MSXgl\engine/src/bios.c:700: }
-    000001E8 C9               [10]  891 	ret
-                                    892 ;E:\MSXgl\engine/src/bios.c:724: void Bios_GraphPrintCharEx(u8 chr, u16 x, u8 y, u8 color, u8 op)
-                                    893 ;	---------------------------------
-                                    894 ; Function Bios_GraphPrintCharEx
-                                    895 ; ---------------------------------
-    000001E9                        896 _Bios_GraphPrintCharEx::
-    000001E9 4F               [ 4]  897 	ld	c, a
-                                    898 ;E:\MSXgl\engine/src/bios.c:726: g_GRPACX = x;
-    000001EA 21 B7 FC         [10]  899 	ld	hl, #_g_GRPACX
-    000001ED 73               [ 7]  900 	ld	(hl), e
-                                    901 ;E:\MSXgl\engine/src/bios.c:727: g_GRPACY = y;
-    000001EE FD 21 02 00      [14]  902 	ld	iy, #2
-    000001F2 FD 39            [15]  903 	add	iy, sp
-    000001F4 FD 7E 00         [19]  904 	ld	a, 0 (iy)
-    000001F7 32 B9 FC         [13]  905 	ld	(_g_GRPACY+0), a
-                                    906 ;E:\MSXgl\engine/src/bios.c:728: g_ATRBYT = color;
-    000001FA FD 7E 01         [19]  907 	ld	a, 1 (iy)
-    000001FD FD 23            [10]  908 	inc	iy
-    000001FF 32 F2 F3         [13]  909 	ld	(_g_ATRBYT+0), a
-                                    910 ;E:\MSXgl\engine/src/bios.c:729: g_LOGOPR = op;
-    00000202 FD 7E 01         [19]  911 	ld	a, 1 (iy)
-    00000205 32 02 FB         [13]  912 	ld	(_g_LOGOPR+0), a
-                                    913 ;E:\MSXgl\engine/src/bios.h:271: inline void Bios_GraphPrintChar(u8 chr) { ((void(*)(u8))R_GRPPRT)(chr); }
-    00000208 79               [ 4]  914 	ld	a, c
-    00000209 CD 8D 00         [17]  915 	call	0x008d
-                                    916 ;E:\MSXgl\engine/src/bios.c:730: Bios_GraphPrintChar(chr);
-                                    917 ;E:\MSXgl\engine/src/bios.c:731: }
-    0000020C E1               [10]  918 	pop	hl
-    0000020D F1               [10]  919 	pop	af
-    0000020E 33               [ 6]  920 	inc	sp
-    0000020F E9               [ 4]  921 	jp	(hl)
-                                    922 ;E:\MSXgl\engine/src/bios.c:759: void Bios_WritePSG(u8 reg, u8 value)
-                                    923 ;	---------------------------------
-                                    924 ; Function Bios_WritePSG
-                                    925 ; ---------------------------------
-    00000210                        926 _Bios_WritePSG::
-                                    927 ;E:\MSXgl\engine/src/bios.c:767: __endasm;	
-    00000210 5D               [ 4]  928 	ld	e, l
-    00000211 CD 93 00         [17]  929 	call	0x0093
-                                    930 ;E:\MSXgl\engine/src/bios.c:768: }
-    00000214 C9               [10]  931 	ret
-                                    932 ;E:\MSXgl\engine/src/bios.c:803: u8 Bios_HasCharacter() __FASTCALL
-                                    933 ;	---------------------------------
-                                    934 ; Function Bios_HasCharacter
-                                    935 ; ---------------------------------
-    00000215                        936 _Bios_HasCharacter::
-                                    937 ;E:\MSXgl\engine/src/bios.c:811: __endasm;
-    00000215 2E 00            [ 7]  938 	ld	l, #0
-    00000217 CD 9C 00         [17]  939 	call	0x009C
-    0000021A C8               [11]  940 	ret	z
-    0000021B CD 9F 00         [17]  941 	call	0x009F
-    0000021E 6F               [ 4]  942 	ld	l, a
-                                    943 ;E:\MSXgl\engine/src/bios.c:812: }
-    0000021F C9               [10]  944 	ret
-                                    945 ;E:\MSXgl\engine/src/bios.c:913: void Bios_ClearScreen()
-                                    946 ;	---------------------------------
-                                    947 ; Function Bios_ClearScreen
-                                    948 ; ---------------------------------
-    00000220                        949 _Bios_ClearScreen::
-                                    950 ;E:\MSXgl\engine/src/bios.c:918: __endasm;
-    00000220 AF               [ 4]  951 	xor	a, a
-    00000221 CD C3 00         [17]  952 	call	0x00C3
-                                    953 ;E:\MSXgl\engine/src/bios.c:919: }
-    00000224 C9               [10]  954 	ret
-                                    955 ;E:\MSXgl\engine/src/bios.c:928: void Bios_SetCursorPosition(u8 X, u8 Y)
-                                    956 ;	---------------------------------
-                                    957 ; Function Bios_SetCursorPosition
-                                    958 ; ---------------------------------
-    00000225                        959 _Bios_SetCursorPosition::
-                                    960 ;E:\MSXgl\engine/src/bios.c:936: __endasm;	
-    00000225 67               [ 4]  961 	ld	h, a
-    00000226 CD C6 00         [17]  962 	call	0x00C6
-                                    963 ;E:\MSXgl\engine/src/bios.c:937: }
-    00000229 C9               [10]  964 	ret
-                                    965 	.area _CODE
-                                    966 	.area _INITIALIZER
-                                    967 	.area _CABS (ABS)
+    00000081                        644 _Bios_WriteVDP::
+                                    645 ;E:\MSXgl\engine/src/bios.c:350: __endasm;
+    00000081 4F               [ 4]  646 	ld	c, a
+    00000082 45               [ 4]  647 	ld	b, l
+    00000083 CD 47 00         [17]  648 	call	0x0047
+                                    649 ;E:\MSXgl\engine/src/bios.c:351: }
+    00000086 C9               [10]  650 	ret
+                                    651 ;E:\MSXgl\engine/src/bios.c:372: void Bios_WriteVRAM(u16 addr, u8 value)
+                                    652 ;	---------------------------------
+                                    653 ; Function Bios_WriteVRAM
+                                    654 ; ---------------------------------
+    00000087                        655 _Bios_WriteVRAM::
+                                    656 ;E:\MSXgl\engine/src/bios.c:383: __endasm;
+    00000087 FD 21 04 00      [14]  657 	ld	iy, #4
+    0000008B FD 39            [15]  658 	add	iy, sp
+    0000008D FD 7E 00         [19]  659 	ld	a, 0(iy)
+    00000090 CD 4D 00         [17]  660 	call	0x004D
+                                    661 ;E:\MSXgl\engine/src/bios.c:384: }
+    00000093 E1               [10]  662 	pop	hl
+    00000094 33               [ 6]  663 	inc	sp
+    00000095 E9               [ 4]  664 	jp	(hl)
+                                    665 ;E:\MSXgl\engine/src/bios.c:416: void Bios_FillVRAM(u16 addr, u16 length, u8 value)
+                                    666 ;	---------------------------------
+                                    667 ; Function Bios_FillVRAM
+                                    668 ; ---------------------------------
+    00000096                        669 _Bios_FillVRAM::
+                                    670 ;E:\MSXgl\engine/src/bios.c:430: __endasm;
+    00000096 FD 21 04 00      [14]  671 	ld	iy, #4
+    0000009A FD 39            [15]  672 	add	iy, sp
+    0000009C 4B               [ 4]  673 	ld	c, e
+    0000009D 42               [ 4]  674 	ld	b, d
+    0000009E FD 7E 00         [19]  675 	ld	a, 0(iy)
+    000000A1 CD 56 00         [17]  676 	call	0x0056
+                                    677 ;E:\MSXgl\engine/src/bios.c:431: }
+    000000A4 E1               [10]  678 	pop	hl
+    000000A5 33               [ 6]  679 	inc	sp
+    000000A6 E9               [ 4]  680 	jp	(hl)
+                                    681 ;E:\MSXgl\engine/src/bios.c:442: void Bios_TransfertVRAMtoRAM(u16 vram, u16 ram, u16 length)
+                                    682 ;	---------------------------------
+                                    683 ; Function Bios_TransfertVRAMtoRAM
+                                    684 ; ---------------------------------
+    000000A7                        685 _Bios_TransfertVRAMtoRAM::
+                                    686 ;E:\MSXgl\engine/src/bios.c:455: __endasm;
+    000000A7 FD 21 04 00      [14]  687 	ld	iy, #4
+    000000AB FD 39            [15]  688 	add	iy, sp
+    000000AD FD 4E 00         [19]  689 	ld	c, 0(iy)
+    000000B0 FD 46 01         [19]  690 	ld	b, 1(iy)
+    000000B3 CD 59 00         [17]  691 	call	0x0059
+                                    692 ;E:\MSXgl\engine/src/bios.c:456: }
+    000000B6 E1               [10]  693 	pop	hl
+    000000B7 F1               [10]  694 	pop	af
+    000000B8 E9               [ 4]  695 	jp	(hl)
+                                    696 ;E:\MSXgl\engine/src/bios.c:467: void Bios_TransfertRAMtoVRAM(u16 ram, u16 vram, u16 length)
+                                    697 ;	---------------------------------
+                                    698 ; Function Bios_TransfertRAMtoVRAM
+                                    699 ; ---------------------------------
+    000000B9                        700 _Bios_TransfertRAMtoVRAM::
+                                    701 ;E:\MSXgl\engine/src/bios.c:480: __endasm;
+    000000B9 FD 21 04 00      [14]  702 	ld	iy, #4
+    000000BD FD 39            [15]  703 	add	iy, sp
+    000000BF FD 4E 00         [19]  704 	ld	c, 0(iy)
+    000000C2 FD 46 01         [19]  705 	ld	b, 1(iy)
+    000000C5 CD 5C 00         [17]  706 	call	0x005C
+                                    707 ;E:\MSXgl\engine/src/bios.c:481: }
+    000000C8 E1               [10]  708 	pop	hl
+    000000C9 F1               [10]  709 	pop	af
+    000000CA E9               [ 4]  710 	jp	(hl)
+                                    711 ;E:\MSXgl\engine/src/bios.c:502: void Bios_ChangeColor(u8 text, u8 back, u8 border)
+                                    712 ;	---------------------------------
+                                    713 ; Function Bios_ChangeColor
+                                    714 ; ---------------------------------
+    000000CB                        715 _Bios_ChangeColor::
+                                    716 ;E:\MSXgl\engine/src/bios.c:517: __endasm;
+    000000CB FD 21 04 00      [14]  717 	ld	iy, #4
+    000000CF FD 39            [15]  718 	add	iy, sp
+    000000D1 32 E9 F3         [13]  719 	ld	(0xF3E9), a
+    000000D4 7D               [ 4]  720 	ld	a, l
+    000000D5 32 EA F3         [13]  721 	ld	(0xF3EA), a
+    000000D8 FD 7E 00         [19]  722 	ld	a, 0(iy)
+    000000DB 32 EB F3         [13]  723 	ld	(0xF3EB), a
+    000000DE CD 62 00         [17]  724 	call	0x0062
+                                    725 ;E:\MSXgl\engine/src/bios.c:518: }
+    000000E1 E1               [10]  726 	pop	hl
+    000000E2 33               [ 6]  727 	inc	sp
+    000000E3 E9               [ 4]  728 	jp	(hl)
+                                    729 ;E:\MSXgl\engine/src/bios.c:544: void Bios_InitScreen0Ex(u16 pnt, u16 pgt, u8 width, u8 text, u8 bg, u8 border)
+                                    730 ;	---------------------------------
+                                    731 ; Function Bios_InitScreen0Ex
+                                    732 ; ---------------------------------
+    000000E4                        733 _Bios_InitScreen0Ex::
+    000000E4 22 B3 F3         [16]  734 	ld	(_g_TXTNAM), hl
+    000000E7 ED 53 B7 F3      [20]  735 	ld	(_g_TXTCGP), de
+                                    736 ;E:\MSXgl\engine/src/bios.c:548: g_LINL40 = width;  // Character per line
+    000000EB FD 21 02 00      [14]  737 	ld	iy, #2
+    000000EF FD 39            [15]  738 	add	iy, sp
+    000000F1 FD 7E 00         [19]  739 	ld	a, 0 (iy)
+    000000F4 32 AE F3         [13]  740 	ld	(_g_LINL40+0), a
+                                    741 ;E:\MSXgl\engine/src/bios.c:549: g_FORCLR = text;   // Text color
+    000000F7 FD 7E 01         [19]  742 	ld	a, 1 (iy)
+    000000FA FD 23            [10]  743 	inc	iy
+    000000FC 32 E9 F3         [13]  744 	ld	(_g_FORCLR+0), a
+                                    745 ;E:\MSXgl\engine/src/bios.c:550: g_BAKCLR = bg;     // Background color
+    000000FF FD 7E 01         [19]  746 	ld	a, 1 (iy)
+    00000102 FD 23            [10]  747 	inc	iy
+    00000104 32 EA F3         [13]  748 	ld	(_g_BAKCLR+0), a
+                                    749 ;E:\MSXgl\engine/src/bios.c:551: g_BDRCLR = border; // Border colour
+    00000107 FD 7E 01         [19]  750 	ld	a, 1 (iy)
+    0000010A 32 EB F3         [13]  751 	ld	(_g_BDRCLR+0), a
+                                    752 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+    0000010D CD 6C 00         [17]  753 	call	0x006c
+                                    754 ;E:\MSXgl\engine/src/bios.c:552: Call(R_INITXT);
+                                    755 ;E:\MSXgl\engine/src/bios.c:553: }
+    00000110 E1               [10]  756 	pop	hl
+    00000111 F1               [10]  757 	pop	af
+    00000112 F1               [10]  758 	pop	af
+    00000113 E9               [ 4]  759 	jp	(hl)
+                                    760 ;E:\MSXgl\engine/src/bios.c:569: void Bios_InitScreen1Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+                                    761 ;	---------------------------------
+                                    762 ; Function Bios_InitScreen1Ex
+                                    763 ; ---------------------------------
+    00000114                        764 _Bios_InitScreen1Ex::
+    00000114 DD E5            [15]  765 	push	ix
+    00000116 DD 21 00 00      [14]  766 	ld	ix,#0
+    0000011A DD 39            [15]  767 	add	ix,sp
+    0000011C 22 BD F3         [16]  768 	ld	(_g_T32NAM), hl
+    0000011F ED 53 BF F3      [20]  769 	ld	(_g_T32COL), de
+                                    770 ;E:\MSXgl\engine/src/bios.c:573: g_T32CGP = pgt;    // Address of pattern generator table
+    00000123 DD 6E 04         [19]  771 	ld	l, 4 (ix)
+    00000126 DD 66 05         [19]  772 	ld	h, 5 (ix)
+    00000129 22 C1 F3         [16]  773 	ld	(_g_T32CGP), hl
+                                    774 ;E:\MSXgl\engine/src/bios.c:574: g_T32ATR = sat;    // Address of sprite attribute table
+    0000012C DD 6E 06         [19]  775 	ld	l, 6 (ix)
+    0000012F DD 66 07         [19]  776 	ld	h, 7 (ix)
+    00000132 22 C3 F3         [16]  777 	ld	(_g_T32ATR), hl
+                                    778 ;E:\MSXgl\engine/src/bios.c:575: g_T32PAT = sgt;    // Address of sprite generator table
+    00000135 DD 6E 08         [19]  779 	ld	l, 8 (ix)
+    00000138 DD 66 09         [19]  780 	ld	h, 9 (ix)
+    0000013B 22 C5 F3         [16]  781 	ld	(_g_T32PAT), hl
+                                    782 ;E:\MSXgl\engine/src/bios.c:576: g_FORCLR = text;   // Text color
+    0000013E DD 7E 0A         [19]  783 	ld	a, 10 (ix)
+    00000141 32 E9 F3         [13]  784 	ld	(_g_FORCLR+0), a
+                                    785 ;E:\MSXgl\engine/src/bios.c:577: g_BAKCLR = bg;     // Background color
+    00000144 DD 7E 0B         [19]  786 	ld	a, 11 (ix)
+    00000147 32 EA F3         [13]  787 	ld	(_g_BAKCLR+0), a
+                                    788 ;E:\MSXgl\engine/src/bios.c:578: g_BDRCLR = border; // Border color
+    0000014A DD 7E 0C         [19]  789 	ld	a, 12 (ix)
+    0000014D 32 EB F3         [13]  790 	ld	(_g_BDRCLR+0), a
+                                    791 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+    00000150 CD 6F 00         [17]  792 	call	0x006f
+                                    793 ;E:\MSXgl\engine/src/bios.c:579: Call(R_INIT32);
+                                    794 ;E:\MSXgl\engine/src/bios.c:580: }
+    00000153 DD E1            [14]  795 	pop	ix
+    00000155 E1               [10]  796 	pop	hl
+    00000156 FD 21 09 00      [14]  797 	ld	iy, #9
+    0000015A FD 39            [15]  798 	add	iy, sp
+    0000015C FD F9            [10]  799 	ld	sp, iy
+    0000015E E9               [ 4]  800 	jp	(hl)
+                                    801 ;E:\MSXgl\engine/src/bios.c:596: void Bios_InitScreen2Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+                                    802 ;	---------------------------------
+                                    803 ; Function Bios_InitScreen2Ex
+                                    804 ; ---------------------------------
+    0000015F                        805 _Bios_InitScreen2Ex::
+    0000015F DD E5            [15]  806 	push	ix
+    00000161 DD 21 00 00      [14]  807 	ld	ix,#0
+    00000165 DD 39            [15]  808 	add	ix,sp
+    00000167 22 C7 F3         [16]  809 	ld	(_g_GRPNAM), hl
+    0000016A ED 53 C9 F3      [20]  810 	ld	(_g_GRPCOL), de
+                                    811 ;E:\MSXgl\engine/src/bios.c:600: g_GRPCGP = pgt;    // Address of pattern generator table
+    0000016E DD 6E 04         [19]  812 	ld	l, 4 (ix)
+    00000171 DD 66 05         [19]  813 	ld	h, 5 (ix)
+    00000174 22 CB F3         [16]  814 	ld	(_g_GRPCGP), hl
+                                    815 ;E:\MSXgl\engine/src/bios.c:601: g_GRPATR = sat;    // Address of sprite attribute table
+    00000177 DD 6E 06         [19]  816 	ld	l, 6 (ix)
+    0000017A DD 66 07         [19]  817 	ld	h, 7 (ix)
+    0000017D 22 CD F3         [16]  818 	ld	(_g_GRPATR), hl
+                                    819 ;E:\MSXgl\engine/src/bios.c:602: g_GRPPAT = sgt;    // Address of sprite generator table
+    00000180 DD 6E 08         [19]  820 	ld	l, 8 (ix)
+    00000183 DD 66 09         [19]  821 	ld	h, 9 (ix)
+    00000186 22 CF F3         [16]  822 	ld	(_g_GRPPAT), hl
+                                    823 ;E:\MSXgl\engine/src/bios.c:603: g_FORCLR = text;   // Text color
+    00000189 DD 7E 0A         [19]  824 	ld	a, 10 (ix)
+    0000018C 32 E9 F3         [13]  825 	ld	(_g_FORCLR+0), a
+                                    826 ;E:\MSXgl\engine/src/bios.c:604: g_BAKCLR = bg;     // Background color
+    0000018F DD 7E 0B         [19]  827 	ld	a, 11 (ix)
+    00000192 32 EA F3         [13]  828 	ld	(_g_BAKCLR+0), a
+                                    829 ;E:\MSXgl\engine/src/bios.c:605: g_BDRCLR = border; // Border color
+    00000195 DD 7E 0C         [19]  830 	ld	a, 12 (ix)
+    00000198 32 EB F3         [13]  831 	ld	(_g_BDRCLR+0), a
+                                    832 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+    0000019B CD 72 00         [17]  833 	call	0x0072
+                                    834 ;E:\MSXgl\engine/src/bios.c:606: Call(R_INIGRP);
+                                    835 ;E:\MSXgl\engine/src/bios.c:607: }
+    0000019E DD E1            [14]  836 	pop	ix
+    000001A0 E1               [10]  837 	pop	hl
+    000001A1 FD 21 09 00      [14]  838 	ld	iy, #9
+    000001A5 FD 39            [15]  839 	add	iy, sp
+    000001A7 FD F9            [10]  840 	ld	sp, iy
+    000001A9 E9               [ 4]  841 	jp	(hl)
+                                    842 ;E:\MSXgl\engine/src/bios.c:623: void Bios_InitScreen3Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+                                    843 ;	---------------------------------
+                                    844 ; Function Bios_InitScreen3Ex
+                                    845 ; ---------------------------------
+    000001AA                        846 _Bios_InitScreen3Ex::
+    000001AA DD E5            [15]  847 	push	ix
+    000001AC DD 21 00 00      [14]  848 	ld	ix,#0
+    000001B0 DD 39            [15]  849 	add	ix,sp
+    000001B2 22 D1 F3         [16]  850 	ld	(_g_MLTNAM), hl
+    000001B5 ED 53 D3 F3      [20]  851 	ld	(_g_MLTCOL), de
+                                    852 ;E:\MSXgl\engine/src/bios.c:627: g_MLTCGP = pgt;    // Address of pattern generator table
+    000001B9 DD 6E 04         [19]  853 	ld	l, 4 (ix)
+    000001BC DD 66 05         [19]  854 	ld	h, 5 (ix)
+    000001BF 22 D5 F3         [16]  855 	ld	(_g_MLTCGP), hl
+                                    856 ;E:\MSXgl\engine/src/bios.c:628: g_MLTATR = sat;    // Address of sprite attribute table
+    000001C2 DD 6E 06         [19]  857 	ld	l, 6 (ix)
+    000001C5 DD 66 07         [19]  858 	ld	h, 7 (ix)
+    000001C8 22 D7 F3         [16]  859 	ld	(_g_MLTATR), hl
+                                    860 ;E:\MSXgl\engine/src/bios.c:629: g_MLTPAT = sgt;    // Address of sprite generator table
+    000001CB DD 6E 08         [19]  861 	ld	l, 8 (ix)
+    000001CE DD 66 09         [19]  862 	ld	h, 9 (ix)
+    000001D1 22 D9 F3         [16]  863 	ld	(_g_MLTPAT), hl
+                                    864 ;E:\MSXgl\engine/src/bios.c:630: g_FORCLR = text;   // Text color
+    000001D4 DD 7E 0A         [19]  865 	ld	a, 10 (ix)
+    000001D7 32 E9 F3         [13]  866 	ld	(_g_FORCLR+0), a
+                                    867 ;E:\MSXgl\engine/src/bios.c:631: g_BAKCLR = bg;     // Background color
+    000001DA DD 7E 0B         [19]  868 	ld	a, 11 (ix)
+    000001DD 32 EA F3         [13]  869 	ld	(_g_BAKCLR+0), a
+                                    870 ;E:\MSXgl\engine/src/bios.c:632: g_BDRCLR = border; // Border color
+    000001E0 DD 7E 0C         [19]  871 	ld	a, 12 (ix)
+    000001E3 32 EB F3         [13]  872 	ld	(_g_BDRCLR+0), a
+                                    873 ;E:\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+    000001E6 CD 75 00         [17]  874 	call	0x0075
+                                    875 ;E:\MSXgl\engine/src/bios.c:633: Call(R_INIMLT);
+                                    876 ;E:\MSXgl\engine/src/bios.c:634: }
+    000001E9 DD E1            [14]  877 	pop	ix
+    000001EB E1               [10]  878 	pop	hl
+    000001EC FD 21 09 00      [14]  879 	ld	iy, #9
+    000001F0 FD 39            [15]  880 	add	iy, sp
+    000001F2 FD F9            [10]  881 	ld	sp, iy
+    000001F4 E9               [ 4]  882 	jp	(hl)
+                                    883 ;E:\MSXgl\engine/src/bios.c:675: u16 Bios_GetPatternTableAddress(u8 id) __FASTCALL
+                                    884 ;	---------------------------------
+                                    885 ; Function Bios_GetPatternTableAddress
+                                    886 ; ---------------------------------
+    000001F5                        887 _Bios_GetPatternTableAddress::
+                                    888 ;E:\MSXgl\engine/src/bios.c:682: __endasm;
+    000001F5 7D               [ 4]  889 	ld	a, l
+    000001F6 CD 84 00         [17]  890 	call	0x0084
+                                    891 ;E:\MSXgl\engine/src/bios.c:683: }
+    000001F9 C9               [10]  892 	ret
+                                    893 ;E:\MSXgl\engine/src/bios.c:692: u16 Bios_GetAttributeTableAddress(u8 id) __FASTCALL
+                                    894 ;	---------------------------------
+                                    895 ; Function Bios_GetAttributeTableAddress
+                                    896 ; ---------------------------------
+    000001FA                        897 _Bios_GetAttributeTableAddress::
+                                    898 ;E:\MSXgl\engine/src/bios.c:699: __endasm;
+    000001FA 7D               [ 4]  899 	ld	a, l
+    000001FB CD 87 00         [17]  900 	call	0x0087
+                                    901 ;E:\MSXgl\engine/src/bios.c:700: }
+    000001FE C9               [10]  902 	ret
+                                    903 ;E:\MSXgl\engine/src/bios.c:724: void Bios_GraphPrintCharEx(u8 chr, u16 x, u8 y, u8 color, u8 op)
+                                    904 ;	---------------------------------
+                                    905 ; Function Bios_GraphPrintCharEx
+                                    906 ; ---------------------------------
+    000001FF                        907 _Bios_GraphPrintCharEx::
+    000001FF 4F               [ 4]  908 	ld	c, a
+                                    909 ;E:\MSXgl\engine/src/bios.c:726: g_GRPACX = x;
+    00000200 21 B7 FC         [10]  910 	ld	hl, #_g_GRPACX
+    00000203 73               [ 7]  911 	ld	(hl), e
+                                    912 ;E:\MSXgl\engine/src/bios.c:727: g_GRPACY = y;
+    00000204 FD 21 02 00      [14]  913 	ld	iy, #2
+    00000208 FD 39            [15]  914 	add	iy, sp
+    0000020A FD 7E 00         [19]  915 	ld	a, 0 (iy)
+    0000020D 32 B9 FC         [13]  916 	ld	(_g_GRPACY+0), a
+                                    917 ;E:\MSXgl\engine/src/bios.c:728: g_ATRBYT = color;
+    00000210 FD 7E 01         [19]  918 	ld	a, 1 (iy)
+    00000213 FD 23            [10]  919 	inc	iy
+    00000215 32 F2 F3         [13]  920 	ld	(_g_ATRBYT+0), a
+                                    921 ;E:\MSXgl\engine/src/bios.c:729: g_LOGOPR = op;
+    00000218 FD 7E 01         [19]  922 	ld	a, 1 (iy)
+    0000021B 32 02 FB         [13]  923 	ld	(_g_LOGOPR+0), a
+                                    924 ;E:\MSXgl\engine/src/bios.h:271: inline void Bios_GraphPrintChar(u8 chr) { ((void(*)(u8))R_GRPPRT)(chr); }
+    0000021E 79               [ 4]  925 	ld	a, c
+    0000021F CD 8D 00         [17]  926 	call	0x008d
+                                    927 ;E:\MSXgl\engine/src/bios.c:730: Bios_GraphPrintChar(chr);
+                                    928 ;E:\MSXgl\engine/src/bios.c:731: }
+    00000222 E1               [10]  929 	pop	hl
+    00000223 F1               [10]  930 	pop	af
+    00000224 33               [ 6]  931 	inc	sp
+    00000225 E9               [ 4]  932 	jp	(hl)
+                                    933 ;E:\MSXgl\engine/src/bios.c:759: void Bios_WritePSG(u8 reg, u8 value)
+                                    934 ;	---------------------------------
+                                    935 ; Function Bios_WritePSG
+                                    936 ; ---------------------------------
+    00000226                        937 _Bios_WritePSG::
+                                    938 ;E:\MSXgl\engine/src/bios.c:767: __endasm;	
+    00000226 5D               [ 4]  939 	ld	e, l
+    00000227 CD 93 00         [17]  940 	call	0x0093
+                                    941 ;E:\MSXgl\engine/src/bios.c:768: }
+    0000022A C9               [10]  942 	ret
+                                    943 ;E:\MSXgl\engine/src/bios.c:803: u8 Bios_HasCharacter() __FASTCALL
+                                    944 ;	---------------------------------
+                                    945 ; Function Bios_HasCharacter
+                                    946 ; ---------------------------------
+    0000022B                        947 _Bios_HasCharacter::
+                                    948 ;E:\MSXgl\engine/src/bios.c:811: __endasm;
+    0000022B 2E 00            [ 7]  949 	ld	l, #0
+    0000022D CD 9C 00         [17]  950 	call	0x009C
+    00000230 C8               [11]  951 	ret	z
+    00000231 CD 9F 00         [17]  952 	call	0x009F
+    00000234 6F               [ 4]  953 	ld	l, a
+                                    954 ;E:\MSXgl\engine/src/bios.c:812: }
+    00000235 C9               [10]  955 	ret
+                                    956 ;E:\MSXgl\engine/src/bios.c:913: void Bios_ClearScreen()
+                                    957 ;	---------------------------------
+                                    958 ; Function Bios_ClearScreen
+                                    959 ; ---------------------------------
+    00000236                        960 _Bios_ClearScreen::
+                                    961 ;E:\MSXgl\engine/src/bios.c:918: __endasm;
+    00000236 AF               [ 4]  962 	xor	a, a
+    00000237 CD C3 00         [17]  963 	call	0x00C3
+                                    964 ;E:\MSXgl\engine/src/bios.c:919: }
+    0000023A C9               [10]  965 	ret
+                                    966 ;E:\MSXgl\engine/src/bios.c:928: void Bios_SetCursorPosition(u8 X, u8 Y)
+                                    967 ;	---------------------------------
+                                    968 ; Function Bios_SetCursorPosition
+                                    969 ; ---------------------------------
+    0000023B                        970 _Bios_SetCursorPosition::
+                                    971 ;E:\MSXgl\engine/src/bios.c:936: __endasm;	
+    0000023B 67               [ 4]  972 	ld	h, a
+    0000023C CD C6 00         [17]  973 	call	0x00C6
+                                    974 ;E:\MSXgl\engine/src/bios.c:937: }
+    0000023F C9               [10]  975 	ret
+                                    976 	.area _CODE
+                                    977 	.area _INITIALIZER
+                                    978 	.area _CABS (ABS)

@@ -2,22 +2,15 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 4.2.0 #13081 (MINGW64)
 ;--------------------------------------------------------
-	.module msxne
+	.module dos
 	.optsdcc -mz80
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
-	.globl _sleep
-	.globl _Bios_PrintTextAt
-	.globl _Char_IsControl
-	.globl ___itoa
-	.globl _Bios_SetCursorPosition
-	.globl _Bios_ClearScreen
-	.globl _Bios_ChangeColor
-	.globl _Bios_Exit
-	.globl _E
+	.globl _g_DOS_Time
+	.globl _g_DOS_LastFIB
+	.globl _g_DOS_LastError
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -57,6 +50,7 @@
 	.globl _g_LINLEN
 	.globl _g_LINL32
 	.globl _g_LINL40
+	.globl _DOS_TPAUpperAddr
 	.globl _g_BDOS
 	.globl _g_MASTER
 	.globl _g_RAMAD3
@@ -221,12 +215,22 @@
 	.globl _g_CLPRIM
 	.globl _g_WRPRIM
 	.globl _g_RDPRIM
-	.globl _die
-	.globl _process_control
-	.globl _refresh_screen
-	.globl _draw_rows
-	.globl _startUp
-	.globl _drawFrame
+	.globl _DOS_Call
+	.globl _DOS_Exit0
+	.globl _DOS_CharInput
+	.globl _DOS_CharOutput
+	.globl _DOS_StringOutput
+	.globl _DOS_SetTransferAddr
+	.globl _DOS_OpenFCB
+	.globl _DOS_CreateFCB
+	.globl _DOS_CloseFCB
+	.globl _DOS_SequentialReadFCB
+	.globl _DOS_SequentialWriteFCB
+	.globl _DOS_RandomBlockWriteFCB
+	.globl _DOS_RandomBlockReadFCB
+	.globl _DOS_FindFirstFileFCB
+	.globl _DOS_FindNextFileFCB
+	.globl _DOS_GetVersion
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -256,6 +260,7 @@ _g_RTC_DataPort	=	0x00b5
 ; ram data
 ;--------------------------------------------------------
 	.area _DATA
+_DOS_TPAUpperAddr	=	0x0006
 _g_LINL40	=	0xf3ae
 _g_LINL32	=	0xf3af
 _g_LINLEN	=	0xf3b0
@@ -295,8 +300,12 @@ _g_LOGOPR	=	0xfb02
 _g_GRPACX	=	0xfcb7
 _g_GRPACY	=	0xfcb9
 _g_SLTSL	=	0xffff
-_E::
-	.ds 34
+_g_DOS_LastError::
+	.ds 1
+_g_DOS_LastFIB::
+	.ds 64
+_g_DOS_Time::
+	.ds 8
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -321,56 +330,23 @@ _E::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;./msxne.c:19: void main()
+;E:\MSXgl\engine/src/dos.c:36: void DOS_Call(u8 func)
 ;	---------------------------------
-; Function main
+; Function DOS_Call
 ; ---------------------------------
-_main::
-;./msxne.c:21: startUp();
-	call	_startUp
-;./msxne.c:23: while(1)
-00105$:
-;./msxne.c:25: c8 key = Bios_GetCharacter();
-	call	0x009f
+_DOS_Call::
+;E:\MSXgl\engine/src/dos.c:44: __endasm;
+	push	ix
 	ld	c, a
-;./msxne.c:26: if (!Char_IsControl(key))
-	push	bc
-	ld	a, c
-	call	_Char_IsControl
-	pop	bc
-	or	a, a
-	jr	NZ, 00102$
-;./msxne.c:28: Bios_SetCursorPosition(E.cursorx, E.cursory);
-	ld	hl, #_E + 33
-	ld	l, (hl)
-;	spillPairReg hl
-	ld	de, #_E + 32
-	ld	a, (de)
-	ld	b, a
-	push	bc
-	push	de
-	ld	a, b
-	call	_Bios_SetCursorPosition
-	pop	de
-	pop	bc
-;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
-	push	de
-	ld	a, c
-	call	0x00a2
-	pop	de
-;./msxne.c:30: E.cursorx += 1;
-	ld	a, (de)
-	inc	a
-	ld	(de), a
-;./msxne.c:31: drawFrame();
-	call	_drawFrame
-	jp	00105$
-00102$:
-;./msxne.c:34: process_control(key);
-	ld	a, c
-	call	_process_control
-;./msxne.c:36: }
-	jp	00105$
+	call	0x0005
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:45: }
+	ret
+___str_0:
+	.db 0x0a
+	.db 0x0d
+	.ascii "$"
+	.db 0x00
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
 _g_CLPRIM	=	0xf38c
@@ -535,298 +511,210 @@ _g_RAMAD2	=	0xf343
 _g_RAMAD3	=	0xf344
 _g_MASTER	=	0xf348
 _g_BDOS	=	0xf37d
-;./msxne.c:38: void die(const c8* s)
+;E:\MSXgl\engine/src/dos.c:49: void DOS_Exit0()
 ;	---------------------------------
-; Function die
+; Function DOS_Exit0
 ; ---------------------------------
-_die::
-;./msxne.c:41: Bios_PrintTextAt(msgx, msgy, s);
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_PrintTextAt
-;./msxne.c:42: sleep(2000);
-	ld	a, #0xd0
-	call	_sleep
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x00c0
-;./msxne.c:44: Bios_ClearScreen();
-	call	_Bios_ClearScreen
-;./msxne.c:45: Bios_Exit(0);
-	xor	a, a
-;./msxne.c:46: }
-	jp	_Bios_Exit
-;./msxne.c:48: bool process_control(c8 chr)
-;	---------------------------------
-; Function process_control
-; ---------------------------------
-_process_control::
-;./msxne.c:50: switch(chr)
-	ld	c, a
-	sub	a, #0x0d
-	jr	Z, 00102$
-	ld	a, c
-	sub	a, #0x11
-	jr	NZ, 00103$
-;./msxne.c:53: die("Encerrando");
-	ld	hl, #___str_0
-	call	_die
-;./msxne.c:54: break;
-	jp	00104$
-;./msxne.c:55: case 13:
-00102$:
-;./msxne.c:56: E.cursory += 1;
-	ld	bc, #_E + 33
-	ld	a, (bc)
-	inc	a
-	ld	(bc), a
-;./msxne.c:57: E.cursorx = 2;
-	ld	hl, #(_E + 32)
-	ld	(hl), #0x02
-;./msxne.c:58: break;
-	jp	00104$
-;./msxne.c:59: default:
-00103$:
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x00c0
-;./msxne.c:61: }
-00104$:
-;./msxne.c:62: Bios_SetCursorPosition(E.cursorx, E.cursory);
-	ld	hl, #_E + 33
-	ld	c, (hl)
-	ld	hl, #_E + 32
-	ld	b, (hl)
-	ld	l, c
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, b
-	call	_Bios_SetCursorPosition
-;./msxne.c:63: return true;
-	ld	a, #0x01
-;./msxne.c:64: }
+_DOS_Exit0::
+;E:\MSXgl\engine/src/dos.c:54: __endasm;
+	ld	c, #0x00
+	jp	0x0005
+;E:\MSXgl\engine/src/dos.c:55: }
 	ret
-___str_0:
-	.ascii "Encerrando"
-	.db 0x00
-;./msxne.c:66: void refresh_screen()
+;E:\MSXgl\engine/src/dos.c:59: c8 DOS_CharInput()
 ;	---------------------------------
-; Function refresh_screen
+; Function DOS_CharInput
 ; ---------------------------------
-_refresh_screen::
-;./msxne.c:68: Bios_ClearScreen();
-	call	_Bios_ClearScreen
-;./msxne.c:69: Bios_SetCursorPosition(1,1);
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
-	call	_Bios_SetCursorPosition
-;./msxne.c:70: draw_rows();
-	call	_draw_rows
-;./msxne.c:71: Bios_SetCursorPosition(1,1);
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
-;./msxne.c:72: }
-	jp	_Bios_SetCursorPosition
-;./msxne.c:74: void draw_rows()
-;	---------------------------------
-; Function draw_rows
-; ---------------------------------
-_draw_rows::
-;./msxne.c:76: for(u8 y=2; y<23; y++)
-	ld	l, #0x02
-;	spillPairReg hl
-;	spillPairReg hl
-00103$:
-	ld	a, l
-	sub	a, #0x17
-	ret	NC
-;./msxne.c:78: Bios_SetCursorPosition(1,y);
-	push	hl
-	ld	a, #0x01
-	call	_Bios_SetCursorPosition
-	pop	hl
-;./msxne.c:76: for(u8 y=2; y<23; y++)
-	inc	l
-;./msxne.c:80: }
-	jp	00103$
-;./msxne.c:82: void startUp()
-;	---------------------------------
-; Function startUp
-; ---------------------------------
-_startUp::
-;./msxne.c:84: __builtin_strcpy(E.name,"MSX Norton Editor");
-	ld	de, #_E
-	ld	hl, #___str_1
-	xor	a, a
-00107$:
-	cp	a, (hl)
-	ldi
-	jr	NZ, 00107$
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x006c
-	call	0x0078
-;./msxne.c:87: Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
-	ld	a, #0x02
-	push	af
-	inc	sp
-	ld	l, #0x02
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_ChangeColor
-;./msxne.c:88: refresh_screen();
-	call	_refresh_screen
-;./msxne.c:89: E.cursorx=1, E.cursory=1;
-	ld	hl, #(_E + 32)
-	ld	(hl), #0x01
-	ld	hl, #(_E + 33)
-	ld	(hl), #0x01
-;./msxne.c:90: }
-	ret
-___str_1:
-	.ascii "MSX Norton Editor"
-	.db 0x00
-;./msxne.c:92: void drawFrame()
-;	---------------------------------
-; Function drawFrame
-; ---------------------------------
-_drawFrame::
+_DOS_CharInput::
+;E:\MSXgl\engine/src/dos.c:67: __endasm;
 	push	ix
-	ld	ix,#0
-	add	ix,sp
-	ld	hl, #-6
-	add	hl, sp
-	ld	sp, hl
-;./msxne.c:96: __itoa(E.cursorx,x,10);
-	ld	hl, #0
-	add	hl, sp
-	ex	de, hl
-	ld	a, (#(_E + 32) + 0)
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	h, #0x00
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0a
-	push	af
-	inc	sp
-	call	___itoa
-;./msxne.c:97: __itoa(E.cursorx,y,10);
-	ld	hl, #3
-	add	hl, sp
-	ex	de, hl
-	ld	a, (#(_E + 32) + 0)
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	h, #0x00
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0a
-	push	af
-	inc	sp
-	call	___itoa
-;./msxne.c:98: Bios_SetCursorPosition(2,24);
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x02
-	call	_Bios_SetCursorPosition
-;./msxne.c:99: Bios_PrintTextAt(1,24,"Lin=");
-	ld	hl, #___str_2
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_PrintTextAt
-;./msxne.c:100: Bios_PrintTextAt(5,24,x);
-	ld	hl, #0
-	add	hl, sp
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x05
-	call	_Bios_PrintTextAt
-;./msxne.c:101: Bios_PrintTextAt(8,24,"Col=");
-	ld	hl, #___str_3
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x08
-	call	_Bios_PrintTextAt
-;./msxne.c:102: Bios_PrintTextAt(12,24,y);
-	ld	hl, #3
-	add	hl, sp
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0c
-	call	_Bios_PrintTextAt
-;./msxne.c:103: Bios_PrintTextAt(15,24,"a:\\arquivo.bas");
-	ld	hl, #___str_4
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0f
-	call	_Bios_PrintTextAt
-;./msxne.c:104: Bios_PrintTextAt(33,24,"Ins");
-	ld	hl, #___str_5
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x21
-	call	_Bios_PrintTextAt
-;./msxne.c:105: Bios_PrintTextAt(37,24,"WW");
-	ld	hl, #___str_6
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x25
-	call	_Bios_PrintTextAt
-;./msxne.c:106: Bios_SetCursorPosition(E.cursorx,E.cursory);
-	ld	hl, #_E + 33
-	ld	c, (hl)
-	ld	hl, #(_E + 32)
-	ld	b, (hl)
-	ld	l, c
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, b
-	call	_Bios_SetCursorPosition
-;./msxne.c:107: }
-	ld	sp, ix
+	ld	c, #0x01
+	call	0x0005
 	pop	ix
+;E:\MSXgl\engine/src/dos.c:68: }
 	ret
-___str_2:
-	.ascii "Lin="
-	.db 0x00
-___str_3:
-	.ascii "Col="
-	.db 0x00
-___str_4:
-	.ascii "a:"
-	.db 0x5c
-	.ascii "arquivo.bas"
-	.db 0x00
-___str_5:
-	.ascii "Ins"
-	.db 0x00
-___str_6:
-	.ascii "WW"
-	.db 0x00
+;E:\MSXgl\engine/src/dos.c:72: void DOS_CharOutput(c8 chr)
+;	---------------------------------
+; Function DOS_CharOutput
+; ---------------------------------
+_DOS_CharOutput::
+;E:\MSXgl\engine/src/dos.c:81: __endasm;
+	push	ix
+	ld	e, a
+	ld	c, #0x02
+	call	0x0005
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:82: }
+	ret
+;E:\MSXgl\engine/src/dos.c:86: void DOS_StringOutput(const c8* str)
+;	---------------------------------
+; Function DOS_StringOutput
+; ---------------------------------
+_DOS_StringOutput::
+;E:\MSXgl\engine/src/dos.c:95: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x09
+	call	0x0005
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:96: }
+	ret
+;E:\MSXgl\engine/src/dos.c:102: void DOS_SetTransferAddr(void* data)
+;	---------------------------------
+; Function DOS_SetTransferAddr
+; ---------------------------------
+_DOS_SetTransferAddr::
+;E:\MSXgl\engine/src/dos.c:113: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x1A
+	call	0x0005
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:114: }
+	ret
+;E:\MSXgl\engine/src/dos.c:121: u8 DOS_OpenFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_OpenFCB
+; ---------------------------------
+_DOS_OpenFCB::
+;E:\MSXgl\engine/src/dos.c:135: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x0F
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:136: }
+	ret
+;E:\MSXgl\engine/src/dos.c:140: u8 DOS_CreateFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_CreateFCB
+; ---------------------------------
+_DOS_CreateFCB::
+;E:\MSXgl\engine/src/dos.c:154: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x16
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:155: }
+	ret
+;E:\MSXgl\engine/src/dos.c:159: u8 DOS_CloseFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_CloseFCB
+; ---------------------------------
+_DOS_CloseFCB::
+;E:\MSXgl\engine/src/dos.c:173: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x10
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:174: }
+	ret
+;E:\MSXgl\engine/src/dos.c:178: u8 DOS_SequentialReadFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_SequentialReadFCB
+; ---------------------------------
+_DOS_SequentialReadFCB::
+;E:\MSXgl\engine/src/dos.c:192: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x14
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:193: }
+	ret
+;E:\MSXgl\engine/src/dos.c:197: u8 DOS_SequentialWriteFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_SequentialWriteFCB
+; ---------------------------------
+_DOS_SequentialWriteFCB::
+;E:\MSXgl\engine/src/dos.c:211: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x15
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:212: }
+	ret
+;E:\MSXgl\engine/src/dos.c:216: u8 DOS_RandomBlockWriteFCB(FCB* stream, u16 records)
+;	---------------------------------
+; Function DOS_RandomBlockWriteFCB
+; ---------------------------------
+_DOS_RandomBlockWriteFCB::
+;E:\MSXgl\engine/src/dos.c:231: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x26
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:232: }
+	ret
+;E:\MSXgl\engine/src/dos.c:236: u16 DOS_RandomBlockReadFCB(FCB* stream, u16 records)
+;	---------------------------------
+; Function DOS_RandomBlockReadFCB
+; ---------------------------------
+_DOS_RandomBlockReadFCB::
+;E:\MSXgl\engine/src/dos.c:252: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x27
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	ex	de, hl
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:253: }
+	ret
+;E:\MSXgl\engine/src/dos.c:257: u8 DOS_FindFirstFileFCB(FCB* stream)
+;	---------------------------------
+; Function DOS_FindFirstFileFCB
+; ---------------------------------
+_DOS_FindFirstFileFCB::
+;E:\MSXgl\engine/src/dos.c:270: __endasm;
+	push	ix
+	ex	de, hl
+	ld	c, #0x11
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:271: }
+	ret
+;E:\MSXgl\engine/src/dos.c:275: u8 DOS_FindNextFileFCB()
+;	---------------------------------
+; Function DOS_FindNextFileFCB
+; ---------------------------------
+_DOS_FindNextFileFCB::
+;E:\MSXgl\engine/src/dos.c:285: __endasm;
+	push	ix
+	ld	c, #0x12
+	call	0x0005
+	ld	(_g_DOS_LastError), a
+	pop	ix
+;E:\MSXgl\engine/src/dos.c:286: }
+	ret
+;E:\MSXgl\engine/src/dos.c:897: u8 DOS_GetVersion(DOS_Version* ver)
+;	---------------------------------
+; Function DOS_GetVersion
+; ---------------------------------
+_DOS_GetVersion::
+;E:\MSXgl\engine/src/dos.c:919: __endasm;
+	push	ix
+	push	hl
+	ld	c, #0x6F
+	call	0x0005
+	pop	hl
+	pop	ix
+	or	a
+	ret	nz
+	ld	a, b
+;E:\MSXgl\engine/src/dos.c:921: }
+	ret
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

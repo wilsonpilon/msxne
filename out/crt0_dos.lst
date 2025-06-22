@@ -164,8 +164,8 @@ Hexadecimal [32-Bits]
                          00000100     2 ADDR_BOOT=0x0100
                          00000001     3 DOS_PARSEARG=1
                          00000001     4 APP_SIGN=1
-                         00004C47     5 APP_SIGN_NAME="GL"
-                         00003154     6 APP_SIGN_ID="T1"
+                         00005057     5 APP_SIGN_NAME="WP"
+                         00003145     6 APP_SIGN_ID="E1"
                                       7 .macro ROM_SIGN_MACRO
                                       8 .endm
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 6
@@ -1349,8 +1349,8 @@ Hexadecimal [32-Bits]
                          00000001    39 .if APP_SIGN
     00000000 18 04            [12]   40 	jr		crt0_init
     00000002                         41 _g_AppSignature::
-    00000002 47 4C                   42 	.dw		APP_SIGN_NAME
-    00000004 54 31                   43 	.dw		APP_SIGN_ID
+    00000002 57 50                   42 	.dw		APP_SIGN_NAME
+    00000004 45 31                   43 	.dw		APP_SIGN_ID
                                      44 
                                      45 .endif
                                      46 ; .ifdef APP_SIGN_EXTRA

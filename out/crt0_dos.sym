@@ -5,7 +5,7 @@ Symbol Table
 
     .__.$$$.=   00002710 L   |     .__.ABS.=   00000000 G   |     .__.CPU.=   00000000 L
     .__.H$L.=   00000000 L   |     ADDR_BOO=   00000100     |     APP_SIGN=   00000001 
-    APP_SIGN=   00003154     |     APP_SIGN=   00004C47     |     BDOS    =   00000005 
+    APP_SIGN=   00003145     |     APP_SIGN=   00005057     |     BDOS    =   00000005 
     DOS_ISR =   00000000     |     DOS_PARS=   00000001     |     DOS_TERM=   00000062 
     DOS_TERM=   00000000     |     DOS_TPA =   00000006     |     ENASLT  =   00000024 
     EXPTBL  =   0000FCC1     |     HIMEM   =   0000FC4A     |     H_STKE  =   0000FEDA 
