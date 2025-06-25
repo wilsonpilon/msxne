@@ -305,26 +305,26 @@ _g_PrintInvalid::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;E:\MSXgl\engine/src/print.c:153: bool Print_Initialize()
+;C:\msx\projetos\MSXgl\engine/src/print.c:153: bool Print_Initialize()
 ;	---------------------------------
 ; Function Print_Initialize
 ; ---------------------------------
 _Print_Initialize::
-;E:\MSXgl\engine/src/print.c:155: Print_SetColor(0xF, 0x0);
+;C:\msx\projetos\MSXgl\engine/src/print.c:155: Print_SetColor(0xF, 0x0);
 	ld	l, #0x00
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	a, #0x0f
 	call	_Print_SetColor
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), #0x00
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), #0x00
-;E:\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
+;C:\msx\projetos\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
 	ld	a, (#_g_VDP_Data + 0)
-;E:\MSXgl\engine/src/print.c:164: switch(VDP_GetMode()) // Screen mode specific initialization
+;C:\msx\projetos\MSXgl\engine/src/print.c:164: switch(VDP_GetMode()) // Screen mode specific initialization
 	or	a, a
 	jr	Z, 00101$
 	cp	a, #0x01
@@ -334,46 +334,46 @@ _Print_Initialize::
 	sub	a, #0x03
 	jr	Z, 00104$
 	jp	00105$
-;E:\MSXgl\engine/src/print.c:167: case VDP_MODE_TEXT1:		// 40 characters per line of text, one colour for each character
+;C:\msx\projetos\MSXgl\engine/src/print.c:167: case VDP_MODE_TEXT1:		// 40 characters per line of text, one colour for each character
 00101$:
-;E:\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
+;C:\msx\projetos\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
 	ld	hl, #(_g_PrintData + 4)
 	ld	(hl), #0x03
-;E:\MSXgl\engine/src/print.c:169: g_PrintData.ScreenWidth = 40;
+;C:\msx\projetos\MSXgl\engine/src/print.c:169: g_PrintData.ScreenWidth = 40;
 	ld	hl, #0x0028
 	ld	((_g_PrintData + 26)), hl
-;E:\MSXgl\engine/src/print.c:170: break;
+;C:\msx\projetos\MSXgl\engine/src/print.c:170: break;
 	jp	00106$
-;E:\MSXgl\engine/src/print.c:177: case VDP_MODE_GRAPHIC1:		// 32 characters per one line of text, the COLOURed character available
+;C:\msx\projetos\MSXgl\engine/src/print.c:177: case VDP_MODE_GRAPHIC1:		// 32 characters per one line of text, the COLOURed character available
 00103$:
-;E:\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
+;C:\msx\projetos\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
 	ld	hl, #(_g_PrintData + 4)
 	ld	(hl), #0x03
-;E:\MSXgl\engine/src/print.c:179: g_PrintData.ScreenWidth = 32;
+;C:\msx\projetos\MSXgl\engine/src/print.c:179: g_PrintData.ScreenWidth = 32;
 	ld	hl, #0x0020
 	ld	((_g_PrintData + 26)), hl
-;E:\MSXgl\engine/src/print.c:180: break;
+;C:\msx\projetos\MSXgl\engine/src/print.c:180: break;
 	jp	00106$
-;E:\MSXgl\engine/src/print.c:183: case VDP_MODE_GRAPHIC2:		// 256 x 192, the colour is specififed for each 8 dots
+;C:\msx\projetos\MSXgl\engine/src/print.c:183: case VDP_MODE_GRAPHIC2:		// 256 x 192, the colour is specififed for each 8 dots
 00104$:
-;E:\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
+;C:\msx\projetos\MSXgl\engine/src/print.h:258: inline void Print_SetTabSize(u8 size) { g_PrintData.TabSize = size; }
 	ld	hl, #(_g_PrintData + 4)
 	ld	(hl), #0x03
-;E:\MSXgl\engine/src/print.c:185: g_PrintData.ScreenWidth = 32;
+;C:\msx\projetos\MSXgl\engine/src/print.c:185: g_PrintData.ScreenWidth = 32;
 	ld	hl, #0x0020
 	ld	((_g_PrintData + 26)), hl
-;E:\MSXgl\engine/src/print.c:186: break;
+;C:\msx\projetos\MSXgl\engine/src/print.c:186: break;
 	jp	00106$
-;E:\MSXgl\engine/src/print.c:231: default:
+;C:\msx\projetos\MSXgl\engine/src/print.c:231: default:
 00105$:
-;E:\MSXgl\engine/src/print.c:233: return FALSE;
+;C:\msx\projetos\MSXgl\engine/src/print.c:233: return FALSE;
 	xor	a, a
 	ret
-;E:\MSXgl\engine/src/print.c:234: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:234: }
 00106$:
-;E:\MSXgl\engine/src/print.c:238: return TRUE;
+;C:\msx\projetos\MSXgl\engine/src/print.c:238: return TRUE;
 	ld	a, #0x01
-;E:\MSXgl\engine/src/print.c:239: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:239: }
 	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -545,29 +545,29 @@ _g_HexChar:
 	.db #0x44	; 68	'D'
 	.db #0x45	; 69	'E'
 	.db #0x46	; 70	'F'
-;E:\MSXgl\engine/src/print.c:243: void Print_SetMode(u8 mode)
+;C:\msx\projetos\MSXgl\engine/src/print.c:243: void Print_SetMode(u8 mode)
 ;	---------------------------------
 ; Function Print_SetMode
 ; ---------------------------------
 _Print_SetMode::
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:245: g_PrintData.SourceMode = mode;
+;C:\msx\projetos\MSXgl\engine/src/print.c:245: g_PrintData.SourceMode = mode;
 	ld	hl, #_g_PrintData + 25
 	rrd
 	ld	a, c
 	rld
-;E:\MSXgl\engine/src/print.c:247: switch(g_PrintData.SourceMode)
+;C:\msx\projetos\MSXgl\engine/src/print.c:247: switch(g_PrintData.SourceMode)
 	ld	a, (hl)
 	and	a, #0x0f
 	sub	a, #0x04
 	ret	NZ
-;E:\MSXgl\engine/src/print.c:312: g_PrintData.DrawChar = DrawChar_Layout;
+;C:\msx\projetos\MSXgl\engine/src/print.c:312: g_PrintData.DrawChar = DrawChar_Layout;
 	ld	hl, #_DrawChar_Layout
 	ld	((_g_PrintData + 23)), hl
-;E:\MSXgl\engine/src/print.c:316: };
-;E:\MSXgl\engine/src/print.c:317: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:316: };
+;C:\msx\projetos\MSXgl\engine/src/print.c:317: }
 	ret
-;E:\MSXgl\engine/src/print.c:322: void Print_SetFont(const u8* font)
+;C:\msx\projetos\MSXgl\engine/src/print.c:322: void Print_SetFont(const u8* font)
 ;	---------------------------------
 ; Function Print_SetFont
 ; ---------------------------------
@@ -578,40 +578,40 @@ _Print_SetFont::
 	push	af
 	push	af
 	ex	de, hl
-;E:\MSXgl\engine/src/print.c:324: if(font == NULL) // Use Bios font (if any)
+;C:\msx\projetos\MSXgl\engine/src/print.c:324: if(font == NULL) // Use Bios font (if any)
 	ld	a, d
 	or	a, e
 	jr	NZ, 00102$
-;E:\MSXgl\engine/src/print.c:325: Print_SetFontEx(8, 8, 6, 8, 1, 255, (const u8*)g_CGTABL + 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:325: Print_SetFontEx(8, 8, 6, 8, 1, 255, (const u8*)g_CGTABL + 8);
 	ld	bc, (_g_CGTABL)
 	ld	hl, #0x0008
 	add	hl, bc
 	ex	de, hl
-;E:\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
 	ld	hl, #_g_PrintData
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
 	ld	bc, #_g_PrintData + 1
 	ld	a, #0x08
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
 	ld	hl, #(_g_PrintData + 2)
 	ld	(hl), #0x06
-;E:\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
 	ld	hl, #(_g_PrintData + 3)
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
 	ld	hl, #(_g_PrintData + 20)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
 	ld	hl, #(_g_PrintData + 21)
 	ld	(hl), #0xff
-;E:\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
 	ld	hl, #(_g_PrintData + 22)
 	ld	(hl), #0xff
-;E:\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
+;C:\msx\projetos\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
 	ld	((_g_PrintData + 28)), de
-;E:\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
+;C:\msx\projetos\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
 	ld	a, (bc)
 	ld	c, a
 	ld	b, #0x00
@@ -622,10 +622,10 @@ _Print_SetFont::
 	sbc	a, b
 	ld	b, a
 	ld	((_g_PrintData + 30)), bc
-;E:\MSXgl\engine/src/print.c:325: Print_SetFontEx(8, 8, 6, 8, 1, 255, (const u8*)g_CGTABL + 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:325: Print_SetFontEx(8, 8, 6, 8, 1, 255, (const u8*)g_CGTABL + 8);
 	jp	00106$
 00102$:
-;E:\MSXgl\engine/src/print.c:327: Print_SetFontEx(font[0] >> 4, font[0] & 0x0F, font[1] >> 4, font[1] & 0x0F, font[2], font[3], font+4);
+;C:\msx\projetos\MSXgl\engine/src/print.c:327: Print_SetFontEx(font[0] >> 4, font[0] & 0x0F, font[1] >> 4, font[1] & 0x0F, font[2], font[3], font+4);
 	ld	hl, #0x0004
 	add	hl, de
 	ld	c, l
@@ -680,36 +680,36 @@ _Print_SetFont::
 	rlca
 	and	a, #0x0f
 	ld	d, a
-;E:\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
 	ld	hl, #_g_PrintData
 	ld	(hl), d
-;E:\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
 	ld	hl, #(_g_PrintData + 1)
 	ld	(hl), e
-;E:\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
 	ld	hl, #(_g_PrintData + 2)
 	ld	a, -1 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
 	ld	hl, #(_g_PrintData + 3)
 	ld	a, -2 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
 	ld	hl, #(_g_PrintData + 20)
 	ld	a, -3 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
 	ld	hl, #(_g_PrintData + 21)
 	ld	a, -4 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
 	ld	a, -4 (ix)
 	sub	a, -3 (ix)
 	inc	a
 	ld	(#(_g_PrintData + 22)),a
-;E:\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
+;C:\msx\projetos\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
 	ld	((_g_PrintData + 28)), bc
-;E:\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
+;C:\msx\projetos\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
 	push	bc
 	ld	h, -3 (ix)
 ;	spillPairReg hl
@@ -731,27 +731,27 @@ _Print_SetFont::
 	sbc	a, h
 	ld	b, a
 	ld	((_g_PrintData + 30)), bc
-;E:\MSXgl\engine/src/print.c:327: Print_SetFontEx(font[0] >> 4, font[0] & 0x0F, font[1] >> 4, font[1] & 0x0F, font[2], font[3], font+4);
+;C:\msx\projetos\MSXgl\engine/src/print.c:327: Print_SetFontEx(font[0] >> 4, font[0] & 0x0F, font[1] >> 4, font[1] & 0x0F, font[2], font[3], font+4);
 00106$:
-;E:\MSXgl\engine/src/print.c:328: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:328: }
 	ld	sp, ix
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:391: void Print_SetColor(u8 text, u8 bg)
+;C:\msx\projetos\MSXgl\engine/src/print.c:391: void Print_SetColor(u8 text, u8 bg)
 ;	---------------------------------
 ; Function Print_SetColor
 ; ---------------------------------
 _Print_SetColor::
-;E:\MSXgl\engine/src/print.c:421: u8 col = text << 4 | bg;
+;C:\msx\projetos\MSXgl\engine/src/print.c:421: u8 col = text << 4 | bg;
 	add	a, a
 	add	a, a
 	add	a, a
 	add	a, a
 	or	a, l
 	ld	c, a
-;E:\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
+;C:\msx\projetos\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
 	ld	a, (#_g_VDP_Data + 0)
-;E:\MSXgl\engine/src/print.c:422: switch(VDP_GetMode())
+;C:\msx\projetos\MSXgl\engine/src/print.c:422: switch(VDP_GetMode())
 	or	a, a
 	jr	Z, 00101$
 	cp	a, #0x02
@@ -759,28 +759,28 @@ _Print_SetColor::
 	sub	a, #0x03
 	jr	Z, 00103$
 	ret
-;E:\MSXgl\engine/src/print.c:425: case VDP_MODE_TEXT1:		// 40 characters per line of text, one colour for each character
+;C:\msx\projetos\MSXgl\engine/src/print.c:425: case VDP_MODE_TEXT1:		// 40 characters per line of text, one colour for each character
 00101$:
-;E:\MSXgl\engine/src/vdp.h:717: inline void VDP_SetColor(u8 color) { VDP_RegWrite(7, color); }
+;C:\msx\projetos\MSXgl\engine/src/vdp.h:717: inline void VDP_SetColor(u8 color) { VDP_RegWrite(7, color); }
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
-;E:\MSXgl\engine/src/print.c:432: break;
+;C:\msx\projetos\MSXgl\engine/src/print.c:432: break;
 	ld	a, #0x07
 	jp	_VDP_RegWrite
-;E:\MSXgl\engine/src/print.c:435: case VDP_MODE_GRAPHIC1:		// 32 characters per one line of text, the COLOURed character available
+;C:\msx\projetos\MSXgl\engine/src/print.c:435: case VDP_MODE_GRAPHIC1:		// 32 characters per one line of text, the COLOURed character available
 00102$:
-;E:\MSXgl\engine/src/print.c:436: VDP_FillVRAM(col, g_ScreenColorLow, 0, 32);
+;C:\msx\projetos\MSXgl\engine/src/print.c:436: VDP_FillVRAM(col, g_ScreenColorLow, 0, 32);
 	ld	hl, #0x0020
 	push	hl
 	ld	de, (_g_ScreenColorLow)
 	ld	a, c
 	call	_VDP_FillVRAM_16K
-;E:\MSXgl\engine/src/print.c:437: break;
+;C:\msx\projetos\MSXgl\engine/src/print.c:437: break;
 	ret
-;E:\MSXgl\engine/src/print.c:440: case VDP_MODE_GRAPHIC2:		// 256 x 192, the colour is specififed for each 8 dots
+;C:\msx\projetos\MSXgl\engine/src/print.c:440: case VDP_MODE_GRAPHIC2:		// 256 x 192, the colour is specififed for each 8 dots
 00103$:
-;E:\MSXgl\engine/src/print.c:447: u16 dst = (u16)g_ScreenColorLow + g_PrintData.PatternOffset * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:447: u16 dst = (u16)g_ScreenColorLow + g_PrintData.PatternOffset * 8;
 	ld	a, (#_g_PrintData + 32)
 	ld	l, a
 ;	spillPairReg hl
@@ -793,7 +793,7 @@ _Print_SetColor::
 	add	hl, hl
 	ld	de, (_g_ScreenColorLow)
 	add	hl, de
-;E:\MSXgl\engine/src/print.c:448: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:448: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
 	ld	iy, #_g_PrintData + 22
 	ld	e, 0 (iy)
 	ld	d, #0x00
@@ -812,10 +812,10 @@ _Print_SetColor::
 	pop	iy
 	pop	bc
 	pop	hl
-;E:\MSXgl\engine/src/print.c:449: dst += 256 * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:449: dst += 256 * 8;
 	ld	de, #0x0800
 	add	hl, de
-;E:\MSXgl\engine/src/print.c:450: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:450: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
 	ld	e, 0 (iy)
 	ld	d, #0x00
 	ex	de, hl
@@ -833,12 +833,12 @@ _Print_SetColor::
 	pop	iy
 	pop	bc
 	pop	hl
-;E:\MSXgl\engine/src/print.c:451: dst += 256 * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:451: dst += 256 * 8;
 	ld	e, l
 	ld	a, h
 	add	a, #0x08
 	ld	d, a
-;E:\MSXgl\engine/src/print.c:452: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:452: VDP_FillVRAM(col, dst, 0, g_PrintData.CharCount * 8);
 	ld	l, 0 (iy)
 ;	spillPairReg hl
 	ld	h, #0x00
@@ -850,10 +850,10 @@ _Print_SetColor::
 	push	hl
 	ld	a, c
 	call	_VDP_FillVRAM_16K
-;E:\MSXgl\engine/src/print.c:456: };
-;E:\MSXgl\engine/src/print.c:459: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:456: };
+;C:\msx\projetos\MSXgl\engine/src/print.c:459: }
 	ret
-;E:\MSXgl\engine/src/print.c:464: void Print_SetColorShade(const u8* shade)
+;C:\msx\projetos\MSXgl\engine/src/print.c:464: void Print_SetColorShade(const u8* shade)
 ;	---------------------------------
 ; Function Print_SetColorShade
 ; ---------------------------------
@@ -864,12 +864,12 @@ _Print_SetColorShade::
 	push	af
 	dec	sp
 	ex	(sp), hl
-;E:\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
+;C:\msx\projetos\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
 	ld	a, (#_g_VDP_Data + 0)
-;E:\MSXgl\engine/src/print.c:482: switch(VDP_GetMode())
+;C:\msx\projetos\MSXgl\engine/src/print.c:482: switch(VDP_GetMode())
 	sub	a, #0x03
 	jr	NZ, 00113$
-;E:\MSXgl\engine/src/print.c:492: u16 dst = (u16)g_ScreenColorLow + g_PrintData.PatternOffset * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:492: u16 dst = (u16)g_ScreenColorLow + g_PrintData.PatternOffset * 8;
 	ld	a, (#_g_PrintData + 32)
 	ld	l, a
 ;	spillPairReg hl
@@ -884,14 +884,14 @@ _Print_SetColorShade::
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-;E:\MSXgl\engine/src/print.c:493: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:493: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
 	ld	-1 (ix), #0x00
 00111$:
 	ld	hl, #_g_PrintData + 22
 	ld	a,-1 (ix)
 	sub	a,(hl)
 	jr	NC, 00113$
-;E:\MSXgl\engine/src/print.c:495: VDP_WriteVRAM(shade, dst,           0, 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:495: VDP_WriteVRAM(shade, dst,           0, 8);
 	push	bc
 	ld	hl, #0x0008
 	push	hl
@@ -905,7 +905,7 @@ _Print_SetColorShade::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:496: VDP_WriteVRAM(shade, dst + 256 * 8, 0, 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:496: VDP_WriteVRAM(shade, dst + 256 * 8, 0, 8);
 	ld	hl, #0x0800
 	add	hl, bc
 	push	bc
@@ -920,7 +920,7 @@ _Print_SetColorShade::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:497: VDP_WriteVRAM(shade, dst + 512 * 8, 0, 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:497: VDP_WriteVRAM(shade, dst + 512 * 8, 0, 8);
 	ld	hl, #0x1000
 	add	hl, bc
 	push	bc
@@ -935,27 +935,27 @@ _Print_SetColorShade::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:498: dst += 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:498: dst += 8;
 	ld	hl, #0x0008
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-;E:\MSXgl\engine/src/print.c:493: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:493: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
 	inc	-1 (ix)
 	jp	00111$
-;E:\MSXgl\engine/src/print.c:503: };
+;C:\msx\projetos\MSXgl\engine/src/print.c:503: };
 00113$:
-;E:\MSXgl\engine/src/print.c:506: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:506: }
 	ld	sp, ix
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:520: u8 Print_ValidateChar(u8 chr)
+;C:\msx\projetos\MSXgl\engine/src/print.c:520: u8 Print_ValidateChar(u8 chr)
 ;	---------------------------------
 ; Function Print_ValidateChar
 ; ---------------------------------
 _Print_ValidateChar::
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:522: if((chr < g_PrintData.CharFirst) || (chr > g_PrintData.CharLast))
+;C:\msx\projetos\MSXgl\engine/src/print.c:522: if((chr < g_PrintData.CharFirst) || (chr > g_PrintData.CharLast))
 	ld	hl, #_g_PrintData + 20
 	ld	b, (hl)
 	ld	a, c
@@ -965,7 +965,7 @@ _Print_ValidateChar::
 	sub	a, c
 	jr	NC, 00114$
 00113$:
-;E:\MSXgl\engine/src/print.c:524: if((chr >= 'a') && (chr <= 'z') && (g_PrintData.CharFirst <= 'A') && (g_PrintData.CharLast >= 'Z')) // try to remap to upper case letter
+;C:\msx\projetos\MSXgl\engine/src/print.c:524: if((chr >= 'a') && (chr <= 'z') && (g_PrintData.CharFirst <= 'A') && (g_PrintData.CharLast >= 'Z')) // try to remap to upper case letter
 	ld	a, c
 	sub	a, #0x61
 	jr	C, 00108$
@@ -978,13 +978,13 @@ _Print_ValidateChar::
 	ld	a, (#_g_PrintData + 21)
 	sub	a, #0x5a
 	jr	C, 00108$
-;E:\MSXgl\engine/src/print.c:526: chr = chr - 'a' + 'A';
+;C:\msx\projetos\MSXgl\engine/src/print.c:526: chr = chr - 'a' + 'A';
 	ld	a, c
 	add	a, #0xe0
 	ld	c, a
 	jp	00114$
 00108$:
-;E:\MSXgl\engine/src/print.c:528: else if((chr >= 'A') && (chr <= 'Z') && (g_PrintData.CharFirst <= 'a') && (g_PrintData.CharLast >= 'z')) // try to remap to lower case letter
+;C:\msx\projetos\MSXgl\engine/src/print.c:528: else if((chr >= 'A') && (chr <= 'Z') && (g_PrintData.CharFirst <= 'a') && (g_PrintData.CharLast >= 'z')) // try to remap to lower case letter
 	ld	a, c
 	sub	a, #0x41
 	jr	C, 00102$
@@ -997,20 +997,20 @@ _Print_ValidateChar::
 	ld	a, (#_g_PrintData + 21)
 	sub	a, #0x7a
 	jr	C, 00102$
-;E:\MSXgl\engine/src/print.c:530: chr = chr - 'A' + 'a';
+;C:\msx\projetos\MSXgl\engine/src/print.c:530: chr = chr - 'A' + 'a';
 	ld	a, c
 	add	a, #0x20
 	ld	c, a
 	jp	00114$
 00102$:
-;E:\MSXgl\engine/src/print.c:533: chr = g_PrintData.CharFirst;
+;C:\msx\projetos\MSXgl\engine/src/print.c:533: chr = g_PrintData.CharFirst;
 	ld	c, b
 00114$:
-;E:\MSXgl\engine/src/print.c:535: return chr;
+;C:\msx\projetos\MSXgl\engine/src/print.c:535: return chr;
 	ld	a, c
-;E:\MSXgl\engine/src/print.c:536: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:536: }
 	ret
-;E:\MSXgl\engine/src/print.c:541: u8 Print_ValidatePattern(u8 chr, const c8** patterns)
+;C:\msx\projetos\MSXgl\engine/src/print.c:541: u8 Print_ValidatePattern(u8 chr, const c8** patterns)
 ;	---------------------------------
 ; Function Print_ValidatePattern
 ; ---------------------------------
@@ -1023,7 +1023,7 @@ _Print_ValidatePattern::
 	ld	c, a
 	ld	-2 (ix), e
 	ld	-1 (ix), d
-;E:\MSXgl\engine/src/print.c:543: if((chr < g_PrintData.CharFirst) || (chr > g_PrintData.CharLast))
+;C:\msx\projetos\MSXgl\engine/src/print.c:543: if((chr < g_PrintData.CharFirst) || (chr > g_PrintData.CharLast))
 	ld	hl, #_g_PrintData + 20
 	ld	e, (hl)
 	ld	a, c
@@ -1033,7 +1033,7 @@ _Print_ValidatePattern::
 	sub	a, c
 	jp	NC, 00114$
 00113$:
-;E:\MSXgl\engine/src/print.c:545: if((chr >= 'a') && (chr <= 'z') && (g_PrintData.CharFirst <= 'A') && (g_PrintData.CharLast >= 'Z')) // try to remap to upper case letter
+;C:\msx\projetos\MSXgl\engine/src/print.c:545: if((chr >= 'a') && (chr <= 'z') && (g_PrintData.CharFirst <= 'A') && (g_PrintData.CharLast >= 'Z')) // try to remap to upper case letter
 	ld	a, c
 	sub	a, #0x61
 	jr	C, 00108$
@@ -1046,11 +1046,11 @@ _Print_ValidatePattern::
 	ld	a, (#_g_PrintData + 21)
 	sub	a, #0x5a
 	jr	C, 00108$
-;E:\MSXgl\engine/src/print.c:547: chr = chr - 'a' + 'A';
+;C:\msx\projetos\MSXgl\engine/src/print.c:547: chr = chr - 'a' + 'A';
 	ld	a, c
 	add	a, #0xe0
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:548: *patterns = g_PrintData.FontPatterns + g_PrintData.PatternY * (chr - g_PrintData.CharFirst);
+;C:\msx\projetos\MSXgl\engine/src/print.c:548: *patterns = g_PrintData.FontPatterns + g_PrintData.PatternY * (chr - g_PrintData.CharFirst);
 	ld	hl, #_g_PrintData + 28
 	ld	a, (hl)
 	ld	-4 (ix), a
@@ -1091,7 +1091,7 @@ _Print_ValidatePattern::
 	ld	(hl), e
 	jp	00114$
 00108$:
-;E:\MSXgl\engine/src/print.c:550: else if((chr >= 'A') && (chr <= 'Z') && (g_PrintData.CharFirst <= 'a') && (g_PrintData.CharLast >= 'z')) // try to remap to lower case letter
+;C:\msx\projetos\MSXgl\engine/src/print.c:550: else if((chr >= 'A') && (chr <= 'Z') && (g_PrintData.CharFirst <= 'a') && (g_PrintData.CharLast >= 'z')) // try to remap to lower case letter
 	ld	a, c
 	sub	a, #0x41
 	jr	C, 00102$
@@ -1104,11 +1104,11 @@ _Print_ValidatePattern::
 	ld	a, (#_g_PrintData + 21)
 	sub	a, #0x7a
 	jr	C, 00102$
-;E:\MSXgl\engine/src/print.c:552: chr = chr - 'A' + 'a';
+;C:\msx\projetos\MSXgl\engine/src/print.c:552: chr = chr - 'A' + 'a';
 	ld	a, c
 	add	a, #0x20
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:553: *patterns = g_PrintData.FontPatterns + g_PrintData.PatternY * (chr - g_PrintData.CharFirst);
+;C:\msx\projetos\MSXgl\engine/src/print.c:553: *patterns = g_PrintData.FontPatterns + g_PrintData.PatternY * (chr - g_PrintData.CharFirst);
 	ld	hl, #_g_PrintData + 28
 	ld	a, (hl)
 	ld	-4 (ix), a
@@ -1149,7 +1149,7 @@ _Print_ValidatePattern::
 	ld	(hl), e
 	jp	00114$
 00102$:
-;E:\MSXgl\engine/src/print.c:556: *patterns = g_PrintInvalid;
+;C:\msx\projetos\MSXgl\engine/src/print.c:556: *patterns = g_PrintInvalid;
 	pop	de
 	pop	hl
 	push	hl
@@ -1158,13 +1158,13 @@ _Print_ValidatePattern::
 	inc	hl
 	ld	(hl), #>(_g_PrintInvalid)
 00114$:
-;E:\MSXgl\engine/src/print.c:558: return chr;
+;C:\msx\projetos\MSXgl\engine/src/print.c:558: return chr;
 	ld	a, c
-;E:\MSXgl\engine/src/print.c:559: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:559: }
 	ld	sp, ix
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:860: void CopyNo8HeightFontData(const u8* src, u16 dst, u8 height)
+;C:\msx\projetos\MSXgl\engine/src/print.c:860: void CopyNo8HeightFontData(const u8* src, u16 dst, u8 height)
 ;	---------------------------------
 ; Function CopyNo8HeightFontData
 ; ---------------------------------
@@ -1177,7 +1177,7 @@ _CopyNo8HeightFontData::
 	ex	(sp), hl
 	ld	c, e
 	ld	b, d
-;E:\MSXgl\engine/src/print.c:862: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:862: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
 	ld	-1 (ix), #0x00
 00103$:
 	ld	hl, #(_g_PrintData + 22)
@@ -1185,7 +1185,7 @@ _CopyNo8HeightFontData::
 	ld	a, -1 (ix)
 	sub	a, e
 	jr	NC, 00105$
-;E:\MSXgl\engine/src/print.c:864: VDP_FillVRAM(0, dst, 0, 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:864: VDP_FillVRAM(0, dst, 0, 8);
 	push	bc
 	ld	hl, #0x0008
 	push	hl
@@ -1194,7 +1194,7 @@ _CopyNo8HeightFontData::
 	xor	a, a
 	call	_VDP_FillVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:865: VDP_WriteVRAM(src, dst, 0, height);
+;C:\msx\projetos\MSXgl\engine/src/print.c:865: VDP_WriteVRAM(src, dst, 0, height);
 	ld	e, 4 (ix)
 	ld	d, #0x00
 	push	bc
@@ -1209,29 +1209,29 @@ _CopyNo8HeightFontData::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:866: src += height;
+;C:\msx\projetos\MSXgl\engine/src/print.c:866: src += height;
 	ld	a, -3 (ix)
 	add	a, 4 (ix)
 	ld	-3 (ix), a
 	jr	NC, 00118$
 	inc	-2 (ix)
 00118$:
-;E:\MSXgl\engine/src/print.c:867: dst += 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:867: dst += 8;
 	ld	hl, #0x0008
 	add	hl, bc
 	ld	c, l
 	ld	b, h
-;E:\MSXgl\engine/src/print.c:862: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:862: for(u8 i = 0; i < g_PrintData.CharCount; ++i)
 	inc	-1 (ix)
 	jp	00103$
 00105$:
-;E:\MSXgl\engine/src/print.c:869: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:869: }
 	ld	sp, ix
 	pop	ix
 	pop	hl
 	inc	sp
 	jp	(hl)
-;E:\MSXgl\engine/src/print.c:874: void Print_SetTextFont(const u8* fontData, u8 offset)
+;C:\msx\projetos\MSXgl\engine/src/print.c:874: void Print_SetTextFont(const u8* fontData, u8 offset)
 ;	---------------------------------
 ; Function Print_SetTextFont
 ; ---------------------------------
@@ -1244,15 +1244,15 @@ _Print_SetTextFont::
 	ld	sp, iy
 	ld	-2 (ix), l
 	ld	-1 (ix), h
-;E:\MSXgl\engine/src/print.c:876: g_PrintData.PatternOffset = offset;
+;C:\msx\projetos\MSXgl\engine/src/print.c:876: g_PrintData.PatternOffset = offset;
 	ld	hl, #(_g_PrintData + 32)
 	ld	a, 4 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.c:879: if(fontData == NULL) // Use Bios font (if any)
+;C:\msx\projetos\MSXgl\engine/src/print.c:879: if(fontData == NULL) // Use Bios font (if any)
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jp	NZ, 00102$
-;E:\MSXgl\engine/src/print.c:880: Print_SetFontEx(8, 8, 1, 1, 1, 255, (const u8*)g_CGTABL + 8); // @todo Should be [1, 255] to include all characters
+;C:\msx\projetos\MSXgl\engine/src/print.c:880: Print_SetFontEx(8, 8, 1, 1, 1, 255, (const u8*)g_CGTABL + 8); // @todo Should be [1, 255] to include all characters
 	ld	hl, (_g_CGTABL)
 	ld	-4 (ix), l
 	ld	-3 (ix), h
@@ -1262,31 +1262,31 @@ _Print_SetTextFont::
 	ld	a, -3 (ix)
 	adc	a, #0x00
 	ld	-7 (ix), a
-;E:\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
 	ld	hl, #_g_PrintData
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
 	ld	hl, #(_g_PrintData + 1)
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
 	ld	hl, #(_g_PrintData + 2)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
 	ld	hl, #(_g_PrintData + 3)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
 	ld	hl, #(_g_PrintData + 20)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
 	ld	hl, #(_g_PrintData + 21)
 	ld	(hl), #0xff
-;E:\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
 	ld	hl, #_g_PrintData + 22
 	ex	(sp), hl
 	pop	hl
 	push	hl
 	ld	(hl), #0xff
-;E:\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
+;C:\msx\projetos\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
 	ld	hl, #_g_PrintData + 28
 	ld	-10 (ix), l
 	ld	-9 (ix), h
@@ -1299,7 +1299,7 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, -7 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
+;C:\msx\projetos\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
 	ld	a, (#(_g_PrintData + 1) + 0)
 	ld	-3 (ix), a
 	ld	-6 (ix), a
@@ -1316,10 +1316,10 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, -3 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.c:880: Print_SetFontEx(8, 8, 1, 1, 1, 255, (const u8*)g_CGTABL + 8); // @todo Should be [1, 255] to include all characters
+;C:\msx\projetos\MSXgl\engine/src/print.c:880: Print_SetFontEx(8, 8, 1, 1, 1, 255, (const u8*)g_CGTABL + 8); // @todo Should be [1, 255] to include all characters
 	jp	00103$
 00102$:
-;E:\MSXgl\engine/src/print.c:882: Print_SetFontEx(8, 8, 1, 1, fontData[2], fontData[3], fontData+4);
+;C:\msx\projetos\MSXgl\engine/src/print.c:882: Print_SetFontEx(8, 8, 1, 1, fontData[2], fontData[3], fontData+4);
 	ld	a, -2 (ix)
 	add	a, #0x04
 	ld	-8 (ix), a
@@ -1347,27 +1347,27 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, (hl)
 	ld	-6 (ix), a
-;E:\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:197: g_PrintData.PatternX     = patternX;
 	ld	hl, #_g_PrintData
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:198: g_PrintData.PatternY     = patternY;
 	ld	hl, #(_g_PrintData + 1)
 	ld	(hl), #0x08
-;E:\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
+;C:\msx\projetos\MSXgl\engine/src/print.h:199: g_PrintData.UnitX        = sizeX;
 	ld	hl, #(_g_PrintData + 2)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
+;C:\msx\projetos\MSXgl\engine/src/print.h:200: g_PrintData.UnitY        = sizeY;
 	ld	hl, #(_g_PrintData + 3)
 	ld	(hl), #0x01
-;E:\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:201: g_PrintData.CharFirst    = firstChr;
 	ld	hl, #(_g_PrintData + 20)
 	ld	a, -6 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
+;C:\msx\projetos\MSXgl\engine/src/print.h:202: g_PrintData.CharLast     = lastChr;
 	ld	hl, #(_g_PrintData + 21)
 	ld	a, -3 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:203: g_PrintData.CharCount    = lastChr - firstChr + 1;
 	ld	hl, #_g_PrintData + 22
 	ex	(sp), hl
 	ld	a, -3 (ix)
@@ -1378,7 +1378,7 @@ _Print_SetTextFont::
 	push	hl
 	ld	a, -3 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
+;C:\msx\projetos\MSXgl\engine/src/print.h:204: g_PrintData.FontPatterns = patterns;
 	ld	hl, #_g_PrintData + 28
 	ld	-10 (ix), l
 	ld	-9 (ix), h
@@ -1391,7 +1391,7 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, -7 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
+;C:\msx\projetos\MSXgl\engine/src/print.h:205: g_PrintData.FontAddr     = g_PrintData.FontPatterns - (firstChr * g_PrintData.PatternY); // pre-compute address of the virtual index 0 character (used to quick drawing in PutChar_GX functions)
 	ld	a, (#(_g_PrintData + 1) + 0)
 	ld	-3 (ix), a
 	ld	e, a
@@ -1421,14 +1421,14 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, -5 (ix)
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.c:882: Print_SetFontEx(8, 8, 1, 1, fontData[2], fontData[3], fontData+4);
+;C:\msx\projetos\MSXgl\engine/src/print.c:882: Print_SetFontEx(8, 8, 1, 1, fontData[2], fontData[3], fontData+4);
 00103$:
-;E:\MSXgl\engine/src/print.c:883: Print_Initialize();
+;C:\msx\projetos\MSXgl\engine/src/print.c:883: Print_Initialize();
 	call	_Print_Initialize
-;E:\MSXgl\engine/src/print.c:884: Print_SetMode(PRINT_MODE_TEXT);
+;C:\msx\projetos\MSXgl\engine/src/print.c:884: Print_SetMode(PRINT_MODE_TEXT);
 	ld	a, #0x04
 	call	_Print_SetMode
-;E:\MSXgl\engine/src/print.c:887: const u8* src = g_PrintData.FontPatterns;
+;C:\msx\projetos\MSXgl\engine/src/print.c:887: const u8* src = g_PrintData.FontPatterns;
 	ld	l, -10 (ix)
 	ld	h, -9 (ix)
 	ld	a, (hl)
@@ -1436,7 +1436,7 @@ _Print_SetTextFont::
 	inc	hl
 	ld	a, (hl)
 	ld	-3 (ix), a
-;E:\MSXgl\engine/src/print.c:888: u16 dst = (u16)g_ScreenPatternLow + (offset * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:888: u16 dst = (u16)g_ScreenPatternLow + (offset * 8);
 	ld	a, 4 (ix)
 	ld	-6 (ix), a
 	ld	-5 (ix), #0x00
@@ -1458,11 +1458,11 @@ _Print_SetTextFont::
 	ld	a, -9 (ix)
 	adc	a, -7 (ix)
 	ld	-5 (ix), a
-;E:\MSXgl\engine/src/print.c:890: if(fontData != NULL)
+;C:\msx\projetos\MSXgl\engine/src/print.c:890: if(fontData != NULL)
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jr	Z, 00105$
-;E:\MSXgl\engine/src/print.c:891: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
+;C:\msx\projetos\MSXgl\engine/src/print.c:891: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
 	ld	l, -2 (ix)
 	ld	h, -1 (ix)
 	ld	a, (hl)
@@ -1480,7 +1480,7 @@ _Print_SetTextFont::
 	call	_CopyNo8HeightFontData
 	jp	00106$
 00105$:
-;E:\MSXgl\engine/src/print.c:894: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:894: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
 	pop	hl
 	push	hl
 	ld	a, (hl)
@@ -1509,12 +1509,12 @@ _Print_SetTextFont::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 00106$:
-;E:\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
+;C:\msx\projetos\MSXgl\engine/src/vdp.h:476: inline u8 VDP_GetMode() { return g_VDP_Data.Mode; }
 	ld	a, (#_g_VDP_Data + 0)
-;E:\MSXgl\engine/src/print.c:896: switch(VDP_GetMode())
+;C:\msx\projetos\MSXgl\engine/src/print.c:896: switch(VDP_GetMode())
 	sub	a, #0x03
 	jp	NZ,00118$
-;E:\MSXgl\engine/src/print.c:905: dst += 256 * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:905: dst += 256 * 8;
 	ld	a, -6 (ix)
 	ld	-8 (ix), a
 	ld	a, -5 (ix)
@@ -1528,11 +1528,11 @@ _Print_SetTextFont::
 	ld	-8 (ix), a
 	ld	a, -5 (ix)
 	ld	-7 (ix), a
-;E:\MSXgl\engine/src/print.c:907: if(fontData != NULL)
+;C:\msx\projetos\MSXgl\engine/src/print.c:907: if(fontData != NULL)
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jr	Z, 00109$
-;E:\MSXgl\engine/src/print.c:908: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
+;C:\msx\projetos\MSXgl\engine/src/print.c:908: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
 	ld	l, -2 (ix)
 	ld	h, -1 (ix)
 	ld	a, (hl)
@@ -1550,7 +1550,7 @@ _Print_SetTextFont::
 	call	_CopyNo8HeightFontData
 	jp	00110$
 00109$:
-;E:\MSXgl\engine/src/print.c:911: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:911: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
 	pop	hl
 	push	hl
 	ld	a, (hl)
@@ -1579,7 +1579,7 @@ _Print_SetTextFont::
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
 00110$:
-;E:\MSXgl\engine/src/print.c:912: dst += 256 * 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:912: dst += 256 * 8;
 	ld	a, -8 (ix)
 	ld	-6 (ix), a
 	ld	a, -7 (ix)
@@ -1593,11 +1593,11 @@ _Print_SetTextFont::
 	ld	-6 (ix), a
 	ld	a, -7 (ix)
 	ld	-5 (ix), a
-;E:\MSXgl\engine/src/print.c:914: if(fontData != NULL)
+;C:\msx\projetos\MSXgl\engine/src/print.c:914: if(fontData != NULL)
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jr	Z, 00112$
-;E:\MSXgl\engine/src/print.c:915: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
+;C:\msx\projetos\MSXgl\engine/src/print.c:915: CopyNo8HeightFontData(src, dst, fontData[0] & 0x0F);
 	ld	l, -2 (ix)
 	ld	h, -1 (ix)
 	ld	a, (hl)
@@ -1615,7 +1615,7 @@ _Print_SetTextFont::
 	call	_CopyNo8HeightFontData
 	jp	00118$
 00112$:
-;E:\MSXgl\engine/src/print.c:918: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:918: VDP_WriteVRAM(src, dst, 0, g_PrintData.CharCount * 8);
 	pop	hl
 	push	hl
 	ld	a, (hl)
@@ -1642,15 +1642,15 @@ _Print_SetTextFont::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_VDP_WriteVRAM_16K
-;E:\MSXgl\engine/src/print.c:921: };
+;C:\msx\projetos\MSXgl\engine/src/print.c:921: };
 00118$:
-;E:\MSXgl\engine/src/print.c:922: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:922: }
 	ld	sp, ix
 	pop	ix
 	pop	hl
 	inc	sp
 	jp	(hl)
-;E:\MSXgl\engine/src/print.c:927: void DrawChar_Layout(u8 chr)
+;C:\msx\projetos\MSXgl\engine/src/print.c:927: void DrawChar_Layout(u8 chr)
 ;	---------------------------------
 ; Function DrawChar_Layout
 ; ---------------------------------
@@ -1659,10 +1659,10 @@ _DrawChar_Layout::
 	ld	ix,#0
 	add	ix,sp
 	dec	sp
-;E:\MSXgl\engine/src/print.c:930: chr = Print_ValidateChar(chr);
+;C:\msx\projetos\MSXgl\engine/src/print.c:930: chr = Print_ValidateChar(chr);
 	call	_Print_ValidateChar
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:932: u8 shape = chr - g_PrintData.CharFirst + g_PrintData.PatternOffset;
+;C:\msx\projetos\MSXgl\engine/src/print.c:932: u8 shape = chr - g_PrintData.CharFirst + g_PrintData.PatternOffset;
 	ld	hl, #_g_PrintData + 20
 	ld	b, (hl)
 	ld	a, c
@@ -1671,7 +1671,7 @@ _DrawChar_Layout::
 	ld	c, (hl)
 	add	a, c
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:933: u16 dst = (u16)g_ScreenLayoutLow + (g_PrintData.CursorY * g_PrintData.ScreenWidth) + g_PrintData.CursorX;
+;C:\msx\projetos\MSXgl\engine/src/print.c:933: u16 dst = (u16)g_ScreenLayoutLow + (g_PrintData.CursorY * g_PrintData.ScreenWidth) + g_PrintData.CursorX;
 	ld	hl, #_g_PrintData + 6
 	ld	c, (hl)
 	ld	de, (#_g_PrintData + 26)
@@ -1695,19 +1695,19 @@ _DrawChar_Layout::
 	pop	bc
 	add	hl, bc
 	ex	de, hl
-;E:\MSXgl\engine/src/print.c:934: VDP_Poke(shape, dst, g_ScreenLayoutHigh);
+;C:\msx\projetos\MSXgl\engine/src/print.c:934: VDP_Poke(shape, dst, g_ScreenLayoutHigh);
 	ld	a, -1 (ix)
 	call	_VDP_Poke_16K
-;E:\MSXgl\engine/src/print.c:935: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:935: }
 	inc	sp
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:1100: void Print_Clear()
+;C:\msx\projetos\MSXgl\engine/src/print.c:1100: void Print_Clear()
 ;	---------------------------------
 ; Function Print_Clear
 ; ---------------------------------
 _Print_Clear::
-;E:\MSXgl\engine/src/print.c:1113: VDP_FillVRAM(0, g_ScreenLayoutLow, g_ScreenLayoutHigh, 24 * g_PrintData.ScreenWidth);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1113: VDP_FillVRAM(0, g_ScreenLayoutLow, g_ScreenLayoutHigh, 24 * g_PrintData.ScreenWidth);
 	ld	hl, (#(_g_PrintData + 26) + 0)
 	ld	c, l
 	ld	b, h
@@ -1720,9 +1720,9 @@ _Print_Clear::
 	ld	de, (_g_ScreenLayoutLow)
 	xor	a, a
 	call	_VDP_FillVRAM_16K
-;E:\MSXgl\engine/src/print.c:1116: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1116: }
 	ret
-;E:\MSXgl\engine/src/print.c:1121: void Print_Backspace(u8 num)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1121: void Print_Backspace(u8 num)
 ;	---------------------------------
 ; Function Print_Backspace
 ; ---------------------------------
@@ -1732,7 +1732,7 @@ _Print_Backspace::
 	add	ix,sp
 	dec	sp
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1141: u16 dst = g_ScreenLayoutLow + (g_PrintData.CursorY * g_PrintData.ScreenWidth) + g_PrintData.CursorX - num;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1141: u16 dst = g_ScreenLayoutLow + (g_PrintData.CursorY * g_PrintData.ScreenWidth) + g_PrintData.CursorX - num;
 	ld	hl, #_g_PrintData + 6
 	ld	c, (hl)
 	ld	de, (#_g_PrintData + 26)
@@ -1755,7 +1755,7 @@ _Print_Backspace::
 	cp	a, a
 	sbc	hl, de
 	ex	de, hl
-;E:\MSXgl\engine/src/print.c:1142: VDP_FillVRAM(0, dst, g_ScreenLayoutHigh, num);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1142: VDP_FillVRAM(0, dst, g_ScreenLayoutHigh, num);
 	ld	l, -1 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -1767,15 +1767,15 @@ _Print_Backspace::
 	xor	a, a
 	call	_VDP_FillVRAM_16K
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1143: g_PrintData.CursorX -= num;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1143: g_PrintData.CursorX -= num;
 	ld	a, (bc)
 	sub	a, -1 (ix)
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1146: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1146: }
 	inc	sp
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:1151: void Print_DrawChar(u8 chr)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1151: void Print_DrawChar(u8 chr)
 ;	---------------------------------
 ; Function Print_DrawChar
 ; ---------------------------------
@@ -1785,7 +1785,7 @@ _Print_DrawChar::
 	add	ix,sp
 	dec	sp
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1154: if(g_PrintData.CursorX + PRINT_W(g_PrintData.UnitX) > g_PrintData.ScreenWidth) // Handle automatic new-line when 
+;C:\msx\projetos\MSXgl\engine/src/print.c:1154: if(g_PrintData.CursorX + PRINT_W(g_PrintData.UnitX) > g_PrintData.ScreenWidth) // Handle automatic new-line when 
 	ld	bc, #_g_PrintData + 5
 	ld	a, (bc)
 	ld	e, a
@@ -1795,69 +1795,69 @@ _Print_DrawChar::
 	xor	a, a
 	sbc	hl, de
 	jr	NC, 00102$
-;E:\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
+;C:\msx\projetos\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
 	xor	a, a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
+;C:\msx\projetos\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
 	ld	de, #_g_PrintData + 6
 	ld	a, (de)
 	inc	a
 	ld	(de), a
-;E:\MSXgl\engine/src/print.c:1155: Print_Return();
+;C:\msx\projetos\MSXgl\engine/src/print.c:1155: Print_Return();
 00102$:
-;E:\MSXgl\engine/src/print.c:1160: g_PrintData.DrawChar(chr);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1160: g_PrintData.DrawChar(chr);
 	ld	hl, (#_g_PrintData + 23)
 	push	bc
 	ld	a, -1 (ix)
 	call	___sdcc_call_hl
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1163: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1163: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX);
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1164: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1164: }
 	inc	sp
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:1170: void Print_DrawCharX(c8 chr, u8 num)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1170: void Print_DrawCharX(c8 chr, u8 num)
 ;	---------------------------------
 ; Function Print_DrawCharX
 ; ---------------------------------
 _Print_DrawCharX::
 	ld	c, a
-;E:\MSXgl\engine/src/print.c:1172: for(u8 i = 0; i < num; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1172: for(u8 i = 0; i < num; ++i)
 	ld	b, #0x00
 00103$:
 	ld	a, b
 	sub	a, l
 	ret	NC
-;E:\MSXgl\engine/src/print.c:1173: Print_DrawChar(chr);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1173: Print_DrawChar(chr);
 	push	hl
 	push	bc
 	ld	a, c
 	call	_Print_DrawChar
 	pop	bc
 	pop	hl
-;E:\MSXgl\engine/src/print.c:1172: for(u8 i = 0; i < num; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1172: for(u8 i = 0; i < num; ++i)
 	inc	b
-;E:\MSXgl\engine/src/print.c:1174: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1174: }
 	jp	00103$
-;E:\MSXgl\engine/src/print.c:1179: void Print_DrawText(const c8* str)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1179: void Print_DrawText(const c8* str)
 ;	---------------------------------
 ; Function Print_DrawText
 ; ---------------------------------
 _Print_DrawText::
 	ex	de, hl
-;E:\MSXgl\engine/src/print.c:1181: while(*str != 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1181: while(*str != 0)
 00107$:
 	ld	a, (de)
-;E:\MSXgl\engine/src/print.c:1183: if(*str == '\t')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1183: if(*str == '\t')
 	ld	c,a
 	or	a,a
 	ret	Z
 	sub	a, #0x09
 	jr	NZ, 00105$
-;E:\MSXgl\engine/src/print.h:428: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX) + g_PrintData.TabSize - 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:428: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX) + g_PrintData.TabSize - 1;
 	ld	bc, #_g_PrintData + 5
 	ld	a, (bc)
 	ld	hl, #(_g_PrintData + 4)
@@ -1865,7 +1865,7 @@ _Print_DrawText::
 ;	spillPairReg hl
 	add	a, l
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.h:429: g_PrintData.CursorX &= ~(g_PrintData.TabSize - 1);
+;C:\msx\projetos\MSXgl\engine/src/print.h:429: g_PrintData.CursorX &= ~(g_PrintData.TabSize - 1);
 	ld	hl, #(_g_PrintData + 4)
 	ld	l, (hl)
 ;	spillPairReg hl
@@ -1879,35 +1879,35 @@ _Print_DrawText::
 	pop	af
 	and	a, l
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1184: Print_Tab();
+;C:\msx\projetos\MSXgl\engine/src/print.c:1184: Print_Tab();
 	jp	00106$
 00105$:
-;E:\MSXgl\engine/src/print.c:1185: else if(*str == '\n')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1185: else if(*str == '\n')
 	ld	a, c
 	sub	a, #0x0a
 	jr	NZ, 00102$
-;E:\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
+;C:\msx\projetos\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), #0x00
-;E:\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
+;C:\msx\projetos\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
 	ld	bc, #_g_PrintData + 6
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1186: Print_Return();
+;C:\msx\projetos\MSXgl\engine/src/print.c:1186: Print_Return();
 	jp	00106$
 00102$:
-;E:\MSXgl\engine/src/print.c:1192: Print_DrawChar(*str);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1192: Print_DrawChar(*str);
 	push	de
 	ld	a, c
 	call	_Print_DrawChar
 	pop	de
 00106$:
-;E:\MSXgl\engine/src/print.c:1193: str++;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1193: str++;
 	inc	de
-;E:\MSXgl\engine/src/print.c:1195: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1195: }
 	jp	00107$
-;E:\MSXgl\engine/src/print.c:1200: void Print_DrawBin8(u8 value)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1200: void Print_DrawBin8(u8 value)
 ;	---------------------------------
 ; Function Print_DrawBin8
 ; ---------------------------------
@@ -1915,14 +1915,14 @@ _Print_DrawBin8::
 	ld	l, a
 ;	spillPairReg hl
 ;	spillPairReg hl
-;E:\MSXgl\engine/src/print.c:1202: u8 flag = (u8)(1 << 7);
-;E:\MSXgl\engine/src/print.c:1203: for(u8 i = 0; i < 8; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1202: u8 flag = (u8)(1 << 7);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1203: for(u8 i = 0; i < 8; ++i)
 	ld	bc, #0x80
 00103$:
 	ld	a, b
 	sub	a, #0x08
 	ret	NC
-;E:\MSXgl\engine/src/print.c:1205: Print_DrawChar((value & flag) ? '1' : '0');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1205: Print_DrawChar((value & flag) ? '1' : '0');
 	ld	a, l
 	and	a,c
 	jr	Z, 00107$
@@ -1937,19 +1937,19 @@ _Print_DrawBin8::
 	call	_Print_DrawChar
 	pop	bc
 	pop	hl
-;E:\MSXgl\engine/src/print.c:1206: flag >>= 1;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1206: flag >>= 1;
 	srl	c
-;E:\MSXgl\engine/src/print.c:1203: for(u8 i = 0; i < 8; ++i)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1203: for(u8 i = 0; i < 8; ++i)
 	inc	b
-;E:\MSXgl\engine/src/print.c:1211: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1211: }
 	jp	00103$
-;E:\MSXgl\engine/src/print.c:1216: void Print_DrawHex8(u8 value)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1216: void Print_DrawHex8(u8 value)
 ;	---------------------------------
 ; Function Print_DrawHex8
 ; ---------------------------------
 _Print_DrawHex8::
 	ld	e, a
-;E:\MSXgl\engine/src/print.c:1218: Print_DrawChar(g_HexChar[(value >> 4) & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1218: Print_DrawChar(g_HexChar[(value >> 4) & 0x000F]);
 	ld	bc, #_g_HexChar+0
 	ld	a, e
 	rlca
@@ -1975,7 +1975,7 @@ _Print_DrawHex8::
 	call	_Print_DrawChar
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1219: Print_DrawChar(g_HexChar[value & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1219: Print_DrawChar(g_HexChar[value & 0x000F]);
 	ld	d, #0x00
 	ld	a, e
 	and	a, #0x0f
@@ -1988,29 +1988,29 @@ _Print_DrawHex8::
 	add	hl, bc
 	ld	c, (hl)
 	ld	a, c
-;E:\MSXgl\engine/src/print.c:1223: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1223: }
 	jp	_Print_DrawChar
-;E:\MSXgl\engine/src/print.c:1228: void Print_DrawHex16(u16 value)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1228: void Print_DrawHex16(u16 value)
 ;	---------------------------------
 ; Function Print_DrawHex16
 ; ---------------------------------
 _Print_DrawHex16::
-;E:\MSXgl\engine/src/print.c:1230: Print_DrawHex8(value >> 8);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1230: Print_DrawHex8(value >> 8);
 	ld	c, h
 	push	hl
 	ld	a, c
 	call	_Print_DrawHex8
 	pop	hl
-;E:\MSXgl\engine/src/print.c:1231: Print_DrawHex8((u8)value);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1231: Print_DrawHex8((u8)value);
 	ld	a, l
-;E:\MSXgl\engine/src/print.c:1232: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1232: }
 	jp	_Print_DrawHex8
-;E:\MSXgl\engine/src/print.c:1238: void Print_DrawHex32(u32 value)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1238: void Print_DrawHex32(u32 value)
 ;	---------------------------------
 ; Function Print_DrawHex32
 ; ---------------------------------
 _Print_DrawHex32::
-;E:\MSXgl\engine/src/print.c:1240: Print_DrawHex16(value >> 16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1240: Print_DrawHex16(value >> 16);
 ;	spillPairReg hl
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2020,11 +2020,11 @@ _Print_DrawHex32::
 	call	_Print_DrawHex16
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1241: Print_DrawHex16((u16)value);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1241: Print_DrawHex16((u16)value);
 	ex	de, hl
-;E:\MSXgl\engine/src/print.c:1242: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1242: }
 	jp	_Print_DrawHex16
-;E:\MSXgl\engine/src/print.c:1249: void Print_DrawInt(i32 value)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1249: void Print_DrawInt(i32 value)
 ;	---------------------------------
 ; Function Print_DrawInt
 ; ---------------------------------
@@ -2039,13 +2039,13 @@ _Print_DrawInt::
 	ld	-3 (ix), d
 	ld	-2 (ix), l
 	ld	-1 (ix), h
-;E:\MSXgl\engine/src/print.c:1256: if(value < 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1256: if(value < 0)
 	bit	7, -1 (ix)
 	jr	Z, 00102$
-;E:\MSXgl\engine/src/print.c:1258: Print_DrawChar('-');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1258: Print_DrawChar('-');
 	ld	a, #0x2d
 	call	_Print_DrawChar
-;E:\MSXgl\engine/src/print.c:1259: value = -value;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1259: value = -value;
 	xor	a, a
 	sub	a, -4 (ix)
 	ld	-4 (ix), a
@@ -2059,17 +2059,17 @@ _Print_DrawInt::
 	sub	a, -1 (ix)
 	ld	-1 (ix), a
 00102$:
-;E:\MSXgl\engine/src/print.c:1263: c8* ptr = str;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1263: c8* ptr = str;
 	ld	hl, #0
 	add	hl, sp
 	ld	c, l
 	ld	b, h
-;E:\MSXgl\engine/src/print.c:1264: *ptr = 0;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1264: *ptr = 0;
 	xor	a, a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1265: while(value >= 10)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1265: while(value >= 10)
 00103$:
-;E:\MSXgl\engine/src/print.c:1267: *++ptr = '0' + (value % 10);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1267: *++ptr = '0' + (value % 10);
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2077,7 +2077,7 @@ _Print_DrawInt::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	inc	hl
-;E:\MSXgl\engine/src/print.c:1265: while(value >= 10)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1265: while(value >= 10)
 	ld	a, -4 (ix)
 	sub	a, #0x0a
 	ld	a, -3 (ix)
@@ -2090,7 +2090,7 @@ _Print_DrawInt::
 	rra
 	sbc	a, #0x80
 	jr	C, 00105$
-;E:\MSXgl\engine/src/print.c:1267: *++ptr = '0' + (value % 10);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1267: *++ptr = '0' + (value % 10);
 	ld	c, l
 	ld	b, h
 	push	hl
@@ -2116,7 +2116,7 @@ _Print_DrawInt::
 	ld	a, e
 	add	a, #0x30
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.c:1268: value /= 10;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1268: value /= 10;
 	push	bc
 	ld	hl, #0x0000
 	push	hl
@@ -2140,16 +2140,16 @@ _Print_DrawInt::
 	ld	-1 (ix), h
 	jp	00103$
 00105$:
-;E:\MSXgl\engine/src/print.c:1270: *++ptr = '0' + value;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1270: *++ptr = '0' + value;
 	ld	a, -4 (ix)
 	add	a, #0x30
 	ld	(hl), a
-;E:\MSXgl\engine/src/print.c:1271: while(*ptr != 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1271: while(*ptr != 0)
 00106$:
 	ld	a, (hl)
 	or	a, a
 	jr	Z, 00109$
-;E:\MSXgl\engine/src/print.c:1272: Print_DrawChar(*ptr--);	
+;C:\msx\projetos\MSXgl\engine/src/print.c:1272: Print_DrawChar(*ptr--);	
 	dec	hl
 	ld	c, a
 	push	hl
@@ -2158,11 +2158,11 @@ _Print_DrawInt::
 	pop	hl
 	jp	00106$
 00109$:
-;E:\MSXgl\engine/src/print.c:1273: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1273: }
 	ld	sp, ix
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:1282: void Print_DrawFormat(const c8* format, ...)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1282: void Print_DrawFormat(const c8* format, ...)
 ;	---------------------------------
 ; Function Print_DrawFormat
 ; ---------------------------------
@@ -2173,17 +2173,17 @@ _Print_DrawFormat::
 	ld	hl, #-20
 	add	hl, sp
 	ld	sp, hl
-;E:\MSXgl\engine/src/print.c:1287: va_start(args, format);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1287: va_start(args, format);
 	ld	hl, #26
 	add	hl, sp
 	ld	-8 (ix), l
 	ld	-7 (ix), h
-;E:\MSXgl\engine/src/print.c:1289: const c8* ptr = format;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1289: const c8* ptr = format;
 	ld	a, 4 (ix)
 	ld	-4 (ix), a
 	ld	a, 5 (ix)
 	ld	-3 (ix), a
-;E:\MSXgl\engine/src/print.c:1290: while(*ptr != 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1290: while(*ptr != 0)
 00191$:
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
@@ -2191,17 +2191,17 @@ _Print_DrawFormat::
 	ld	-1 (ix), a
 	or	a, a
 	jp	Z, 00196$
-;E:\MSXgl\engine/src/print.c:1292: if(*ptr == '%')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1292: if(*ptr == '%')
 	ld	a, -1 (ix)
 	sub	a, #0x25
 	jp	NZ,00189$
-;E:\MSXgl\engine/src/print.c:1294: ptr++;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1294: ptr++;
 	ld	c, -4 (ix)
 	ld	b, -3 (ix)
 	inc	bc
-;E:\MSXgl\engine/src/print.c:1297: u8 len = 0;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1297: u8 len = 0;
 	ld	-1 (ix), #0x00
-;E:\MSXgl\engine/src/print.c:1298: if((*ptr >= '0') && (*ptr <= '9'))
+;C:\msx\projetos\MSXgl\engine/src/print.c:1298: if((*ptr >= '0') && (*ptr <= '9'))
 	ld	a, (bc)
 	ld	e, a
 	sub	a, #0x30
@@ -2209,13 +2209,13 @@ _Print_DrawFormat::
 	ld	a, #0x39
 	sub	a, e
 	jr	C, 00204$
-;E:\MSXgl\engine/src/print.c:1300: len = *ptr - '0';
+;C:\msx\projetos\MSXgl\engine/src/print.c:1300: len = *ptr - '0';
 	ld	a, e
 	add	a, #0xd0
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1301: ptr++;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1301: ptr++;
 	inc	bc
-;E:\MSXgl\engine/src/print.c:1303: while((*ptr >= '0') && (*ptr <= '9'))
+;C:\msx\projetos\MSXgl\engine/src/print.c:1303: while((*ptr >= '0') && (*ptr <= '9'))
 00204$:
 	ld	-10 (ix), c
 	ld	-9 (ix), b
@@ -2229,7 +2229,7 @@ _Print_DrawFormat::
 	ld	a, #0x39
 	sub	a, -2 (ix)
 	jr	C, 00239$
-;E:\MSXgl\engine/src/print.c:1305: len *= 10;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1305: len *= 10;
 	ld	l, -1 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2238,12 +2238,12 @@ _Print_DrawFormat::
 	add	hl, hl
 	add	hl, bc
 	add	hl, hl
-;E:\MSXgl\engine/src/print.c:1306: len += *ptr - '0';
+;C:\msx\projetos\MSXgl\engine/src/print.c:1306: len += *ptr - '0';
 	ld	a, -2 (ix)
 	add	a, #0xd0
 	add	a, l
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1307: ptr++;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1307: ptr++;
 	inc	-10 (ix)
 	jr	NZ, 00105$
 	inc	-9 (ix)
@@ -2253,7 +2253,7 @@ _Print_DrawFormat::
 	ld	-4 (ix), a
 	ld	a, -9 (ix)
 	ld	-3 (ix), a
-;E:\MSXgl\engine/src/print.c:1311: if((*ptr == 'i') || (*ptr == 'd'))
+;C:\msx\projetos\MSXgl\engine/src/print.c:1311: if((*ptr == 'i') || (*ptr == 'd'))
 	ld	a, -2 (ix)
 	sub	a, #0x69
 	jr	Z, 00178$
@@ -2261,7 +2261,7 @@ _Print_DrawFormat::
 	sub	a, #0x64
 	jr	NZ, 00179$
 00178$:
-;E:\MSXgl\engine/src/print.c:1313: i16 val = (i16)va_arg(args, i16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1313: i16 val = (i16)va_arg(args, i16);
 	ld	a, -8 (ix)
 	add	a, #0x02
 	ld	-6 (ix), a
@@ -2285,7 +2285,7 @@ _Print_DrawFormat::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1314: Print_DrawInt(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1314: Print_DrawInt(val);
 	ld	a, -2 (ix)
 	ld	-12 (ix), a
 	ld	a, -1 (ix)
@@ -2305,11 +2305,11 @@ _Print_DrawFormat::
 	call	_Print_DrawInt
 	jp	00190$
 00179$:
-;E:\MSXgl\engine/src/print.c:1316: else if(*ptr == 'u')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1316: else if(*ptr == 'u')
 	ld	a, -2 (ix)
 	sub	a, #0x75
 	jr	NZ, 00176$
-;E:\MSXgl\engine/src/print.c:1318: u16 val = (u16)va_arg(args, u16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1318: u16 val = (u16)va_arg(args, u16);
 	ld	a, -8 (ix)
 	add	a, #0x02
 	ld	-6 (ix), a
@@ -2333,7 +2333,7 @@ _Print_DrawFormat::
 	inc	hl
 	ld	a, (hl)
 	ld	-1 (ix), a
-;E:\MSXgl\engine/src/print.c:1319: Print_DrawInt(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1319: Print_DrawInt(val);
 	ld	a, -2 (ix)
 	ld	-12 (ix), a
 	ld	a, -1 (ix)
@@ -2352,18 +2352,18 @@ _Print_DrawFormat::
 	call	_Print_DrawInt
 	jp	00190$
 00176$:
-;E:\MSXgl\engine/src/print.c:1321: else if(*ptr == 'x')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1321: else if(*ptr == 'x')
 	ld	a, -2 (ix)
 	sub	a, #0x78
 	jp	NZ,00173$
-;E:\MSXgl\engine/src/print.c:1323: if(len == 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1323: if(len == 0)
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00109$
-;E:\MSXgl\engine/src/print.c:1324: len = 4;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1324: len = 4;
 	ld	-1 (ix), #0x04
 00109$:
-;E:\MSXgl\engine/src/print.c:1325: u16 val = (u16)va_arg(args, u16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1325: u16 val = (u16)va_arg(args, u16);
 	ld	a, -8 (ix)
 	add	a, #0x02
 	ld	-10 (ix), a
@@ -2387,11 +2387,11 @@ _Print_DrawFormat::
 	inc	hl
 	ld	a, (hl)
 	ld	-11 (ix), a
-;E:\MSXgl\engine/src/print.c:1326: if(len > 3)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1326: if(len > 3)
 	ld	a, #0x03
 	sub	a, -1 (ix)
 	jr	NC, 00111$
-;E:\MSXgl\engine/src/print.c:1327: Print_DrawChar(g_HexChar[(val >> 12) & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1327: Print_DrawChar(g_HexChar[(val >> 12) & 0x000F]);
 	ld	a, -11 (ix)
 	rlca
 	rlca
@@ -2415,11 +2415,11 @@ _Print_DrawFormat::
 	ld	a, (hl)
 	call	_Print_DrawChar
 00111$:
-;E:\MSXgl\engine/src/print.c:1328: if(len > 2)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1328: if(len > 2)
 	ld	a, #0x02
 	sub	a, -1 (ix)
 	jr	NC, 00113$
-;E:\MSXgl\engine/src/print.c:1329: Print_DrawChar(g_HexChar[(val >> 8) & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1329: Print_DrawChar(g_HexChar[(val >> 8) & 0x000F]);
 	ld	a, -11 (ix)
 	ld	-2 (ix), a
 	ld	-6 (ix), a
@@ -2439,11 +2439,11 @@ _Print_DrawFormat::
 	ld	a, (hl)
 	call	_Print_DrawChar
 00113$:
-;E:\MSXgl\engine/src/print.c:1330: if(len > 1)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1330: if(len > 1)
 	ld	a, #0x01
 	sub	a, -1 (ix)
 	jr	NC, 00115$
-;E:\MSXgl\engine/src/print.c:1331: Print_DrawChar(g_HexChar[(val >> 4) & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1331: Print_DrawChar(g_HexChar[(val >> 4) & 0x000F]);
 	ld	a, -12 (ix)
 	ld	-2 (ix), a
 	ld	a, -11 (ix)
@@ -2471,7 +2471,7 @@ _Print_DrawFormat::
 	ld	a, (hl)
 	call	_Print_DrawChar
 00115$:
-;E:\MSXgl\engine/src/print.c:1332: Print_DrawChar(g_HexChar[val & 0x000F]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1332: Print_DrawChar(g_HexChar[val & 0x000F]);
 	ld	a, -12 (ix)
 	ld	-2 (ix), a
 	ld	a, -11 (ix)
@@ -2492,18 +2492,18 @@ _Print_DrawFormat::
 	call	_Print_DrawChar
 	jp	00190$
 00173$:
-;E:\MSXgl\engine/src/print.c:1334: else if(*ptr == 'b')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1334: else if(*ptr == 'b')
 	ld	a, -2 (ix)
 	sub	a, #0x62
 	jp	NZ,00170$
-;E:\MSXgl\engine/src/print.c:1336: if(len == 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1336: if(len == 0)
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00117$
-;E:\MSXgl\engine/src/print.c:1337: len = 16;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1337: len = 16;
 	ld	-1 (ix), #0x10
 00117$:
-;E:\MSXgl\engine/src/print.c:1338: u16 val = (u16)va_arg(args, u16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1338: u16 val = (u16)va_arg(args, u16);
 	ld	a, -8 (ix)
 	add	a, #0x02
 	ld	-10 (ix), a
@@ -2527,7 +2527,7 @@ _Print_DrawFormat::
 	inc	hl
 	ld	a, (hl)
 	ld	-5 (ix), a
-;E:\MSXgl\engine/src/print.c:1339: u16 bit = 1 << (len - 1);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1339: u16 bit = 1 << (len - 1);
 	dec	-1 (ix)
 	ld	b, -1 (ix)
 	ld	-2 (ix), #0x01
@@ -2539,12 +2539,12 @@ _Print_DrawFormat::
 	rl	-1 (ix)
 00417$:
 	djnz	00416$
-;E:\MSXgl\engine/src/print.c:1340: while(bit)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1340: while(bit)
 00121$:
 	ld	a, -1 (ix)
 	or	a, -2 (ix)
 	jp	Z, 00190$
-;E:\MSXgl\engine/src/print.c:1342: if(val & bit)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1342: if(val & bit)
 	ld	a, -6 (ix)
 	and	a, -2 (ix)
 	ld	-10 (ix), a
@@ -2553,21 +2553,21 @@ _Print_DrawFormat::
 	ld	-9 (ix), a
 	or	a, -10 (ix)
 	jr	Z, 00119$
-;E:\MSXgl\engine/src/print.c:1343: Print_DrawChar('1');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1343: Print_DrawChar('1');
 	ld	a, #0x31
 	call	_Print_DrawChar
 	jp	00120$
 00119$:
-;E:\MSXgl\engine/src/print.c:1345: Print_DrawChar('0');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1345: Print_DrawChar('0');
 	ld	a, #0x30
 	call	_Print_DrawChar
 00120$:
-;E:\MSXgl\engine/src/print.c:1346: bit >>= 1;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1346: bit >>= 1;
 	srl	-1 (ix)
 	rr	-2 (ix)
 	jp	00121$
 00170$:
-;E:\MSXgl\engine/src/print.c:1350: else if((*ptr == 'I') || (*ptr == 'D'))
+;C:\msx\projetos\MSXgl\engine/src/print.c:1350: else if((*ptr == 'I') || (*ptr == 'D'))
 	ld	a, -2 (ix)
 	sub	a, #0x49
 	jr	Z, 00165$
@@ -2575,7 +2575,7 @@ _Print_DrawFormat::
 	sub	a, #0x44
 	jr	NZ, 00166$
 00165$:
-;E:\MSXgl\engine/src/print.c:1352: i32 val = (i32)va_arg(args, i32);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1352: i32 val = (i32)va_arg(args, i32);
 	ld	l, -8 (ix)
 	ld	h, -7 (ix)
 	ld	de, #0x0004
@@ -2600,18 +2600,18 @@ _Print_DrawFormat::
 	inc	hl
 	ld	h, (hl)
 ;	spillPairReg hl
-;E:\MSXgl\engine/src/print.c:1353: Print_DrawInt(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1353: Print_DrawInt(val);
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_Print_DrawInt
 	jp	00190$
 00166$:
-;E:\MSXgl\engine/src/print.c:1355: else if(*ptr == 'U')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1355: else if(*ptr == 'U')
 	ld	a, -2 (ix)
 	sub	a, #0x55
 	jr	NZ, 00163$
-;E:\MSXgl\engine/src/print.c:1357: u32 val = (u32)va_arg(args, u32);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1357: u32 val = (u32)va_arg(args, u32);
 	ld	l, -8 (ix)
 	ld	h, -7 (ix)
 	ld	de, #0x0004
@@ -2636,25 +2636,25 @@ _Print_DrawFormat::
 	inc	hl
 	ld	h, (hl)
 ;	spillPairReg hl
-;E:\MSXgl\engine/src/print.c:1358: Print_DrawInt(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1358: Print_DrawInt(val);
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_Print_DrawInt
 	jp	00190$
 00163$:
-;E:\MSXgl\engine/src/print.c:1360: else if(*ptr == 'X')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1360: else if(*ptr == 'X')
 	ld	a, -2 (ix)
 	sub	a, #0x58
 	jp	NZ,00160$
-;E:\MSXgl\engine/src/print.c:1362: if(len == 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1362: if(len == 0)
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00125$
-;E:\MSXgl\engine/src/print.c:1363: len = 8;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1363: len = 8;
 	ld	-1 (ix), #0x08
 00125$:
-;E:\MSXgl\engine/src/print.c:1364: u32 val = (u32)va_arg(args, u32);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1364: u32 val = (u32)va_arg(args, u32);
 	ld	l, -8 (ix)
 	ld	h, -7 (ix)
 	ld	de, #0x0004
@@ -2678,11 +2678,11 @@ _Print_DrawFormat::
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-;E:\MSXgl\engine/src/print.c:1366: if(len > 7)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1366: if(len > 7)
 	ld	a, #0x07
 	sub	a, -1 (ix)
 	jr	NC, 00127$
-;E:\MSXgl\engine/src/print.c:1367: Print_DrawChar(g_HexChar[(val >> 28) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1367: Print_DrawChar(g_HexChar[(val >> 28) & 0xF]);
 	ld	-12 (ix), d
 	xor	a, a
 	ld	-11 (ix), a
@@ -2716,11 +2716,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00127$:
-;E:\MSXgl\engine/src/print.c:1368: if(len > 6)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1368: if(len > 6)
 	ld	a, #0x06
 	sub	a, -1 (ix)
 	jr	NC, 00129$
-;E:\MSXgl\engine/src/print.c:1369: Print_DrawChar(g_HexChar[(val >> 24) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1369: Print_DrawChar(g_HexChar[(val >> 24) & 0xF]);
 	ld	a, d
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2744,11 +2744,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00129$:
-;E:\MSXgl\engine/src/print.c:1370: if(len > 5)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1370: if(len > 5)
 	ld	a, #0x05
 	sub	a, -1 (ix)
 	jr	NC, 00131$
-;E:\MSXgl\engine/src/print.c:1371: Print_DrawChar(g_HexChar[(val >> 20) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1371: Print_DrawChar(g_HexChar[(val >> 20) & 0xF]);
 	ld	-12 (ix), e
 	ld	-11 (ix), d
 	xor	a, a
@@ -2783,11 +2783,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00131$:
-;E:\MSXgl\engine/src/print.c:1372: if(len > 4)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1372: if(len > 4)
 	ld	a, #0x04
 	sub	a, -1 (ix)
 	jr	NC, 00133$
-;E:\MSXgl\engine/src/print.c:1373: Print_DrawChar(g_HexChar[(val >> 16) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1373: Print_DrawChar(g_HexChar[(val >> 16) & 0xF]);
 	ld	a, e
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2811,11 +2811,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00133$:
-;E:\MSXgl\engine/src/print.c:1374: if(len > 3)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1374: if(len > 3)
 	ld	a, #0x03
 	sub	a, -1 (ix)
 	jr	NC, 00135$
-;E:\MSXgl\engine/src/print.c:1375: Print_DrawChar(g_HexChar[(val >> 12) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1375: Print_DrawChar(g_HexChar[(val >> 12) & 0xF]);
 	ld	-12 (ix), b
 	ld	-11 (ix), e
 	ld	-10 (ix), d
@@ -2850,11 +2850,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00135$:
-;E:\MSXgl\engine/src/print.c:1376: if(len > 2)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1376: if(len > 2)
 	ld	a, #0x02
 	sub	a, -1 (ix)
 	jr	NC, 00137$
-;E:\MSXgl\engine/src/print.c:1377: Print_DrawChar(g_HexChar[(val >> 8) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1377: Print_DrawChar(g_HexChar[(val >> 8) & 0xF]);
 	ld	a, b
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -2878,11 +2878,11 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00137$:
-;E:\MSXgl\engine/src/print.c:1378: if(len > 1)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1378: if(len > 1)
 	ld	a, #0x01
 	sub	a, -1 (ix)
 	jr	NC, 00139$
-;E:\MSXgl\engine/src/print.c:1379: Print_DrawChar(g_HexChar[(val >> 4) & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1379: Print_DrawChar(g_HexChar[(val >> 4) & 0xF]);
 	ld	-12 (ix), c
 	ld	-11 (ix), b
 	ld	-10 (ix), e
@@ -2918,7 +2918,7 @@ _Print_DrawFormat::
 	pop	de
 	pop	bc
 00139$:
-;E:\MSXgl\engine/src/print.c:1380: Print_DrawChar(g_HexChar[val & 0xF]);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1380: Print_DrawChar(g_HexChar[val & 0xF]);
 	ld	a, c
 	and	a, #0x0f
 	ld	c, a
@@ -2929,18 +2929,18 @@ _Print_DrawFormat::
 	call	_Print_DrawChar
 	jp	00190$
 00160$:
-;E:\MSXgl\engine/src/print.c:1382: else if(*ptr == 'B')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1382: else if(*ptr == 'B')
 	ld	a, -2 (ix)
 	sub	a, #0x42
 	jp	NZ,00157$
-;E:\MSXgl\engine/src/print.c:1384: if(len == 0)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1384: if(len == 0)
 	ld	a, -1 (ix)
 	or	a, a
 	jr	NZ, 00141$
-;E:\MSXgl\engine/src/print.c:1385: len = 16;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1385: len = 16;
 	ld	-1 (ix), #0x10
 00141$:
-;E:\MSXgl\engine/src/print.c:1386: u32 val = (u32)va_arg(args, u32);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1386: u32 val = (u32)va_arg(args, u32);
 	ld	l, -8 (ix)
 	ld	h, -7 (ix)
 	ld	de, #0x0004
@@ -2955,7 +2955,7 @@ _Print_DrawFormat::
 	ex	de, hl
 	ld	bc, #0x0004
 	ldir
-;E:\MSXgl\engine/src/print.c:1387: u32 bit = 1 << (len - 1);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1387: u32 bit = 1 << (len - 1);
 	ld	b, -1 (ix)
 	dec	b
 	ld	hl, #0x0001
@@ -2972,14 +2972,14 @@ _Print_DrawFormat::
 	sbc	a, a
 	ld	-10 (ix), a
 	ld	-9 (ix), a
-;E:\MSXgl\engine/src/print.c:1388: while(bit)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1388: while(bit)
 00145$:
 	ld	a, -9 (ix)
 	or	a, -10 (ix)
 	or	a, -11 (ix)
 	or	a, -12 (ix)
 	jp	Z, 00190$
-;E:\MSXgl\engine/src/print.c:1390: if(val & bit)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1390: if(val & bit)
 	ld	a, -16 (ix)
 	and	a, -12 (ix)
 	ld	-20 (ix), a
@@ -2996,27 +2996,27 @@ _Print_DrawFormat::
 	or	a, -19 (ix)
 	or	a, -20 (ix)
 	jr	Z, 00143$
-;E:\MSXgl\engine/src/print.c:1391: Print_DrawChar('1');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1391: Print_DrawChar('1');
 	ld	a, #0x31
 	call	_Print_DrawChar
 	jp	00144$
 00143$:
-;E:\MSXgl\engine/src/print.c:1393: Print_DrawChar('0');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1393: Print_DrawChar('0');
 	ld	a, #0x30
 	call	_Print_DrawChar
 00144$:
-;E:\MSXgl\engine/src/print.c:1394: bit >>= 1;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1394: bit >>= 1;
 	srl	-9 (ix)
 	rr	-10 (ix)
 	rr	-11 (ix)
 	rr	-12 (ix)
 	jp	00145$
 00157$:
-;E:\MSXgl\engine/src/print.c:1398: else if(*ptr == 'c')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1398: else if(*ptr == 'c')
 	ld	a, -2 (ix)
 	sub	a, #0x63
 	jr	NZ, 00154$
-;E:\MSXgl\engine/src/print.c:1400: c8 val = (c8)va_arg(args, u16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1400: c8 val = (c8)va_arg(args, u16);
 	ld	l, -8 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -3029,16 +3029,16 @@ _Print_DrawFormat::
 	ld	-7 (ix), h
 	dec	hl
 	dec	hl
-;E:\MSXgl\engine/src/print.c:1401: Print_DrawChar(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1401: Print_DrawChar(val);
 	ld	a, (hl)
 	call	_Print_DrawChar
 	jp	00190$
 00154$:
-;E:\MSXgl\engine/src/print.c:1403: else if(*ptr == 's')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1403: else if(*ptr == 's')
 	ld	a, -2 (ix)
 	sub	a, #0x73
 	jr	NZ, 00151$
-;E:\MSXgl\engine/src/print.c:1405: const c8* val = (const c8*)va_arg(args, const c8*);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1405: const c8* val = (const c8*)va_arg(args, const c8*);
 	ld	l, -8 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -3055,27 +3055,27 @@ _Print_DrawFormat::
 	inc	hl
 	ld	h, (hl)
 ;	spillPairReg hl
-;E:\MSXgl\engine/src/print.c:1406: Print_DrawText(val);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1406: Print_DrawText(val);
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
 	call	_Print_DrawText
 	jp	00190$
 00151$:
-;E:\MSXgl\engine/src/print.c:1408: else if(*ptr == '%')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1408: else if(*ptr == '%')
 	ld	a, -2 (ix)
 	sub	a, #0x25
 	jr	NZ, 00190$
-;E:\MSXgl\engine/src/print.c:1410: Print_DrawChar('%');
+;C:\msx\projetos\MSXgl\engine/src/print.c:1410: Print_DrawChar('%');
 	ld	a, #0x25
 	call	_Print_DrawChar
 	jp	00190$
 00189$:
-;E:\MSXgl\engine/src/print.c:1414: else if(*ptr == '\t')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1414: else if(*ptr == '\t')
 	ld	a, -1 (ix)
 	sub	a, #0x09
 	jr	NZ, 00186$
-;E:\MSXgl\engine/src/print.h:428: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX) + g_PrintData.TabSize - 1;
+;C:\msx\projetos\MSXgl\engine/src/print.h:428: g_PrintData.CursorX += PRINT_W(g_PrintData.UnitX) + g_PrintData.TabSize - 1;
 	ld	bc, #_g_PrintData + 5
 	ld	a, (bc)
 	ld	hl, #(_g_PrintData + 4)
@@ -3083,46 +3083,46 @@ _Print_DrawFormat::
 	add	a, e
 	ld	e, a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.h:429: g_PrintData.CursorX &= ~(g_PrintData.TabSize - 1);
+;C:\msx\projetos\MSXgl\engine/src/print.h:429: g_PrintData.CursorX &= ~(g_PrintData.TabSize - 1);
 	ld	a, (#(_g_PrintData + 4) + 0)
 	dec	a
 	cpl
 	and	a, e
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1415: Print_Tab();
+;C:\msx\projetos\MSXgl\engine/src/print.c:1415: Print_Tab();
 	jp	00190$
 00186$:
-;E:\MSXgl\engine/src/print.c:1416: else if(*ptr == '\n')
+;C:\msx\projetos\MSXgl\engine/src/print.c:1416: else if(*ptr == '\n')
 	ld	a, -1 (ix)
 	sub	a, #0x0a
 	jr	NZ, 00183$
-;E:\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
+;C:\msx\projetos\MSXgl\engine/src/print.h:436: g_PrintData.CursorX = 0;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), #0x00
-;E:\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
+;C:\msx\projetos\MSXgl\engine/src/print.h:437: g_PrintData.CursorY += PRINT_H(g_PrintData.UnitY);
 	ld	bc, #_g_PrintData + 6
 	ld	a, (bc)
 	inc	a
 	ld	(bc), a
-;E:\MSXgl\engine/src/print.c:1417: Print_Return();
+;C:\msx\projetos\MSXgl\engine/src/print.c:1417: Print_Return();
 	jp	00190$
 00183$:
-;E:\MSXgl\engine/src/print.c:1423: Print_DrawChar(*ptr);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1423: Print_DrawChar(*ptr);
 	ld	a, -1 (ix)
 	call	_Print_DrawChar
 00190$:
-;E:\MSXgl\engine/src/print.c:1425: ptr++;
+;C:\msx\projetos\MSXgl\engine/src/print.c:1425: ptr++;
 	inc	-4 (ix)
 	jp	NZ,00191$
 	inc	-3 (ix)
 	jp	00191$
-;E:\MSXgl\engine/src/print.c:1428: va_end(args);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1428: va_end(args);
 00196$:
-;E:\MSXgl\engine/src/print.c:1429: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1429: }
 	ld	sp, ix
 	pop	ix
 	ret
-;E:\MSXgl\engine/src/print.c:1439: void Print_DrawLineH(u8 x, u8 y, u8 len)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1439: void Print_DrawLineH(u8 x, u8 y, u8 len)
 ;	---------------------------------
 ; Function Print_DrawLineH
 ; ---------------------------------
@@ -3132,24 +3132,24 @@ _Print_DrawLineH::
 	add	ix,sp
 	ld	b, a
 	ld	c, l
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), b
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), c
-;E:\MSXgl\engine/src/print.c:1442: Print_DrawCharX(0x17, len);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1442: Print_DrawCharX(0x17, len);
 	ld	l, 4 (ix)
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	a, #0x17
 	call	_Print_DrawCharX
-;E:\MSXgl\engine/src/print.c:1443: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1443: }
 	pop	ix
 	pop	hl
 	inc	sp
 	jp	(hl)
-;E:\MSXgl\engine/src/print.c:1447: void Print_DrawLineV(u8 x, u8 y, u8 len)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1447: void Print_DrawLineV(u8 x, u8 y, u8 len)
 ;	---------------------------------
 ; Function Print_DrawLineV
 ; ---------------------------------
@@ -3160,38 +3160,38 @@ _Print_DrawLineV::
 	dec	sp
 	ld	c, a
 	ld	-1 (ix), l
-;E:\MSXgl\engine/src/print.c:1449: for(u8 i = 0; i < len; i++)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1449: for(u8 i = 0; i < len; i++)
 	ld	b, #0x00
 00104$:
 	ld	a, b
 	sub	a, 4 (ix)
 	jr	NC, 00106$
-;E:\MSXgl\engine/src/print.c:1451: Print_SetPosition(x, y + i);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1451: Print_SetPosition(x, y + i);
 	ld	a, -1 (ix)
 	add	a, b
 	ld	e, a
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), c
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), e
-;E:\MSXgl\engine/src/print.c:1452: Print_DrawChar(0x16);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1452: Print_DrawChar(0x16);
 	push	bc
 	ld	a, #0x16
 	call	_Print_DrawChar
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1449: for(u8 i = 0; i < len; i++)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1449: for(u8 i = 0; i < len; i++)
 	inc	b
 	jp	00104$
 00106$:
-;E:\MSXgl\engine/src/print.c:1454: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1454: }
 	inc	sp
 	pop	ix
 	pop	hl
 	inc	sp
 	jp	(hl)
-;E:\MSXgl\engine/src/print.c:1458: void Print_DrawBox(u8 x, u8 y, u8 width, u8 height)
+;C:\msx\projetos\MSXgl\engine/src/print.c:1458: void Print_DrawBox(u8 x, u8 y, u8 width, u8 height)
 ;	---------------------------------
 ; Function Print_DrawBox
 ; ---------------------------------
@@ -3202,65 +3202,65 @@ _Print_DrawBox::
 	dec	sp
 	ld	d, a
 	ld	e, l
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), d
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), e
-;E:\MSXgl\engine/src/print.c:1462: Print_DrawChar(0x18);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1462: Print_DrawChar(0x18);
 	push	de
 	ld	a, #0x18
 	call	_Print_DrawChar
 	pop	de
-;E:\MSXgl\engine/src/print.c:1463: Print_SetPosition(x + width - 1, y);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1463: Print_SetPosition(x + width - 1, y);
 	ld	a, d
 	add	a, 4 (ix)
 	dec	a
 	ld	c, a
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	(#(_g_PrintData + 5)),a
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), e
-;E:\MSXgl\engine/src/print.c:1464: Print_DrawChar(0x19);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1464: Print_DrawChar(0x19);
 	push	bc
 	push	de
 	ld	a, #0x19
 	call	_Print_DrawChar
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1465: Print_SetPosition(x, y + height - 1);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1465: Print_SetPosition(x, y + height - 1);
 	ld	a, e
 	add	a, 5 (ix)
 	dec	a
 	ld	b, a
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), d
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	(#(_g_PrintData + 6)),a
-;E:\MSXgl\engine/src/print.c:1466: Print_DrawChar(0x1A);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1466: Print_DrawChar(0x1A);
 	push	bc
 	push	de
 	ld	a, #0x1a
 	call	_Print_DrawChar
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
+;C:\msx\projetos\MSXgl\engine/src/print.h:223: g_PrintData.CursorX = x;
 	ld	hl, #(_g_PrintData + 5)
 	ld	(hl), c
-;E:\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
+;C:\msx\projetos\MSXgl\engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 6)
 	ld	(hl), b
-;E:\MSXgl\engine/src/print.c:1468: Print_DrawChar(0x1B);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1468: Print_DrawChar(0x1B);
 	push	bc
 	push	de
 	ld	a, #0x1b
 	call	_Print_DrawChar
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1471: Print_DrawLineH(x + 1, y,              width - 2);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1471: Print_DrawLineH(x + 1, y,              width - 2);
 	ld	a, 4 (ix)
 	add	a, #0xfe
 	ld	-1 (ix), a
@@ -3282,7 +3282,7 @@ _Print_DrawBox::
 	pop	de
 	pop	bc
 	pop	hl
-;E:\MSXgl\engine/src/print.c:1472: Print_DrawLineH(x + 1, y + height - 1, width - 2);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1472: Print_DrawLineH(x + 1, y + height - 1, width - 2);
 	push	bc
 	push	de
 	ld	a, -1 (ix)
@@ -3295,7 +3295,7 @@ _Print_DrawBox::
 	call	_Print_DrawLineH
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1475: Print_DrawLineV(x,             y + 1, height - 2);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1475: Print_DrawLineV(x,             y + 1, height - 2);
 	ld	b, 5 (ix)
 	dec	b
 	dec	b
@@ -3311,7 +3311,7 @@ _Print_DrawBox::
 	call	_Print_DrawLineV
 	pop	de
 	pop	bc
-;E:\MSXgl\engine/src/print.c:1476: Print_DrawLineV(x + width - 1, y + 1, height - 2);
+;C:\msx\projetos\MSXgl\engine/src/print.c:1476: Print_DrawLineV(x + width - 1, y + 1, height - 2);
 	push	bc
 	inc	sp
 	ld	l, e
@@ -3319,7 +3319,7 @@ _Print_DrawBox::
 ;	spillPairReg hl
 	ld	a, c
 	call	_Print_DrawLineV
-;E:\MSXgl\engine/src/print.c:1477: }
+;C:\msx\projetos\MSXgl\engine/src/print.c:1477: }
 	inc	sp
 	pop	ix
 	pop	hl

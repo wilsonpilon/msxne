@@ -361,52 +361,52 @@
                                     361 ; code
                                     362 ;--------------------------------------------------------
                                     363 	.area _CODE
-                                    364 ;E:\MSXgl\engine/src/vdp.c:165: void VDP_SetModeFlag(u8 flag)
+                                    364 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:165: void VDP_SetModeFlag(u8 flag)
                                     365 ;	---------------------------------
                                     366 ; Function VDP_SetModeFlag
                                     367 ; ---------------------------------
     00000000                        368 _VDP_SetModeFlag::
     00000000 5F               [ 4]  369 	ld	e, a
-                                    370 ;E:\MSXgl\engine/src/vdp.c:168: u8 reg1 = g_VDP_REGSAV[1];
+                                    370 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:168: u8 reg1 = g_VDP_REGSAV[1];
     00000001 3Ar01r00         [13]  371 	ld	a, (#_g_VDP_REGSAV + 1)
-                                    372 ;E:\MSXgl\engine/src/vdp.c:169: reg1 &= 0b11100111;
+                                    372 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:169: reg1 &= 0b11100111;
     00000004 E6 E7            [ 7]  373 	and	a, #0xe7
     00000006 6F               [ 4]  374 	ld	l, a
                                     375 ;	spillPairReg hl
                                     376 ;	spillPairReg hl
-                                    377 ;E:\MSXgl\engine/src/vdp.c:170: if(flag & 0b00001)
+                                    377 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:170: if(flag & 0b00001)
     00000007 CB 43            [ 8]  378 	bit	0, e
     00000009 28 02            [12]  379 	jr	Z, 00102$
-                                    380 ;E:\MSXgl\engine/src/vdp.c:171: reg1 |= 0b00010000;
+                                    380 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:171: reg1 |= 0b00010000;
     0000000B CB E5            [ 8]  381 	set	4, l
     0000000D                        382 00102$:
-                                    383 ;E:\MSXgl\engine/src/vdp.c:172: if(flag & 0b00010)
+                                    383 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:172: if(flag & 0b00010)
     0000000D CB 4B            [ 8]  384 	bit	1, e
     0000000F 28 02            [12]  385 	jr	Z, 00104$
-                                    386 ;E:\MSXgl\engine/src/vdp.c:173: reg1 |= 0b00001000;
+                                    386 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:173: reg1 |= 0b00001000;
     00000011 CB DD            [ 8]  387 	set	3, l
     00000013                        388 00104$:
-                                    389 ;E:\MSXgl\engine/src/vdp.c:174: VDP_RegWriteBak(1, reg1);
+                                    389 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:174: VDP_RegWriteBak(1, reg1);
     00000013 3E 01            [ 7]  390 	ld	a, #0x01
     00000015 CDrF4r01         [17]  391 	call	_VDP_RegWriteBak
-                                    392 ;E:\MSXgl\engine/src/vdp.c:177: u8 reg0 = g_VDP_REGSAV[0];
+                                    392 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:177: u8 reg0 = g_VDP_REGSAV[0];
     00000018 3Ar00r00         [13]  393 	ld	a, (#_g_VDP_REGSAV + 0)
-                                    394 ;E:\MSXgl\engine/src/vdp.c:178: reg0 &= 0b11110001;
+                                    394 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:178: reg0 &= 0b11110001;
     0000001B E6 F1            [ 7]  395 	and	a, #0xf1
     0000001D 4F               [ 4]  396 	ld	c, a
-                                    397 ;E:\MSXgl\engine/src/vdp.c:179: flag >>= 1;
+                                    397 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:179: flag >>= 1;
     0000001E 7B               [ 4]  398 	ld	a, e
     0000001F CB 3F            [ 8]  399 	srl	a
-                                    400 ;E:\MSXgl\engine/src/vdp.c:180: flag &= 0b00001110;
+                                    400 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:180: flag &= 0b00001110;
     00000021 E6 0E            [ 7]  401 	and	a, #0x0e
-                                    402 ;E:\MSXgl\engine/src/vdp.c:181: reg0 |= flag;
+                                    402 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:181: reg0 |= flag;
     00000023 B1               [ 4]  403 	or	a, c
     00000024 6F               [ 4]  404 	ld	l, a
                                     405 ;	spillPairReg hl
                                     406 ;	spillPairReg hl
-                                    407 ;E:\MSXgl\engine/src/vdp.c:182: VDP_RegWriteBak(0, reg0);
+                                    407 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:182: VDP_RegWriteBak(0, reg0);
     00000025 AF               [ 4]  408 	xor	a, a
-                                    409 ;E:\MSXgl\engine/src/vdp.c:183: }
+                                    409 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:183: }
     00000026 C3rF4r01         [10]  410 	jp	_VDP_RegWriteBak
                          0000F380   411 _g_RDPRIM	=	0xf380
                          0000F385   412 _g_WRPRIM	=	0xf385
@@ -561,109 +561,109 @@
                          0000002D   561 _g_MSXVER	=	0x002d
                          0000002E   562 _g_MSXMID	=	0x002e
                          00000034   563 _g_CHAR_16	=	0x0034
-                                    564 ;E:\MSXgl\engine/src/vdp.c:188: void VDP_SetModeText1()
+                                    564 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:188: void VDP_SetModeText1()
                                     565 ;	---------------------------------
                                     566 ; Function VDP_SetModeText1
                                     567 ; ---------------------------------
     00000029                        568 _VDP_SetModeText1::
-                                    569 ;E:\MSXgl\engine/src/vdp.c:190: VDP_SetModeFlag(VDP_T1_MODE);
+                                    569 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:190: VDP_SetModeFlag(VDP_T1_MODE);
     00000029 3E 01            [ 7]  570 	ld	a, #0x01
     0000002B CDr00r00         [17]  571 	call	_VDP_SetModeFlag
-                                    572 ;E:\MSXgl\engine/src/vdp.c:191: VDP_SetLayoutTable(VDP_T1_ADDR_NT);
+                                    572 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:191: VDP_SetLayoutTable(VDP_T1_ADDR_NT);
     0000002E 21 00 00         [10]  573 	ld	hl, #0x0000
     00000031 CDr29r02         [17]  574 	call	_VDP_SetLayoutTable
-                                    575 ;E:\MSXgl\engine/src/vdp.c:192: VDP_SetPatternTable(VDP_T1_ADDR_PT);
+                                    575 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:192: VDP_SetPatternTable(VDP_T1_ADDR_PT);
     00000034 21 00 08         [10]  576 	ld	hl, #0x0800
-                                    577 ;E:\MSXgl\engine/src/vdp.c:193: }
+                                    577 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:193: }
     00000037 C3r66r02         [10]  578 	jp	_VDP_SetPatternTable
-                                    579 ;E:\MSXgl\engine/src/vdp.c:199: void VDP_SetModeMultiColor()
+                                    579 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:199: void VDP_SetModeMultiColor()
                                     580 ;	---------------------------------
                                     581 ; Function VDP_SetModeMultiColor
                                     582 ; ---------------------------------
     0000003A                        583 _VDP_SetModeMultiColor::
-                                    584 ;E:\MSXgl\engine/src/vdp.c:201: VDP_SetModeFlag(VDP_MC_MODE);
+                                    584 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:201: VDP_SetModeFlag(VDP_MC_MODE);
     0000003A 3E 02            [ 7]  585 	ld	a, #0x02
     0000003C CDr00r00         [17]  586 	call	_VDP_SetModeFlag
-                                    587 ;E:\MSXgl\engine/src/vdp.c:202: VDP_SetLayoutTable(VDP_MC_ADDR_NT);
+                                    587 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:202: VDP_SetLayoutTable(VDP_MC_ADDR_NT);
     0000003F 21 00 08         [10]  588 	ld	hl, #0x0800
     00000042 CDr29r02         [17]  589 	call	_VDP_SetLayoutTable
-                                    590 ;E:\MSXgl\engine/src/vdp.c:203: VDP_SetPatternTable(VDP_MC_ADDR_PT);
+                                    590 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:203: VDP_SetPatternTable(VDP_MC_ADDR_PT);
     00000045 21 00 00         [10]  591 	ld	hl, #0x0000
     00000048 CDr66r02         [17]  592 	call	_VDP_SetPatternTable
-                                    593 ;E:\MSXgl\engine/src/vdp.c:205: VDP_SetSpriteAttributeTable(VDP_MC_ADDR_SAT);
+                                    593 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:205: VDP_SetSpriteAttributeTable(VDP_MC_ADDR_SAT);
     0000004B 21 00 1B         [10]  594 	ld	hl, #0x1b00
     0000004E CDr83r02         [17]  595 	call	_VDP_SetSpriteAttributeTable
-                                    596 ;E:\MSXgl\engine/src/vdp.c:206: VDP_SetSpritePatternTable(VDP_MC_ADDR_SPT);
+                                    596 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:206: VDP_SetSpritePatternTable(VDP_MC_ADDR_SPT);
     00000051 21 00 38         [10]  597 	ld	hl, #0x3800
-                                    598 ;E:\MSXgl\engine/src/vdp.c:208: }
+                                    598 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:208: }
     00000054 C3rB4r02         [10]  599 	jp	_VDP_SetSpritePatternTable
-                                    600 ;E:\MSXgl\engine/src/vdp.c:214: void VDP_SetModeGraphic1()
+                                    600 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:214: void VDP_SetModeGraphic1()
                                     601 ;	---------------------------------
                                     602 ; Function VDP_SetModeGraphic1
                                     603 ; ---------------------------------
     00000057                        604 _VDP_SetModeGraphic1::
-                                    605 ;E:\MSXgl\engine/src/vdp.c:216: VDP_SetModeFlag(VDP_G1_MODE);
+                                    605 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:216: VDP_SetModeFlag(VDP_G1_MODE);
     00000057 AF               [ 4]  606 	xor	a, a
     00000058 CDr00r00         [17]  607 	call	_VDP_SetModeFlag
-                                    608 ;E:\MSXgl\engine/src/vdp.c:217: VDP_SetLayoutTable(VDP_G1_ADDR_NT);
+                                    608 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:217: VDP_SetLayoutTable(VDP_G1_ADDR_NT);
     0000005B 21 00 18         [10]  609 	ld	hl, #0x1800
     0000005E CDr29r02         [17]  610 	call	_VDP_SetLayoutTable
-                                    611 ;E:\MSXgl\engine/src/vdp.c:218: VDP_SetColorTable(VDP_G1_ADDR_CT);
+                                    611 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:218: VDP_SetColorTable(VDP_G1_ADDR_CT);
     00000061 21 00 20         [10]  612 	ld	hl, #0x2000
     00000064 CDr39r02         [17]  613 	call	_VDP_SetColorTable
-                                    614 ;E:\MSXgl\engine/src/vdp.c:219: VDP_SetPatternTable(VDP_G1_ADDR_PT);
+                                    614 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:219: VDP_SetPatternTable(VDP_G1_ADDR_PT);
     00000067 21 00 00         [10]  615 	ld	hl, #0x0000
     0000006A CDr66r02         [17]  616 	call	_VDP_SetPatternTable
-                                    617 ;E:\MSXgl\engine/src/vdp.c:221: VDP_SetSpriteAttributeTable(VDP_G1_ADDR_SAT);
+                                    617 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:221: VDP_SetSpriteAttributeTable(VDP_G1_ADDR_SAT);
     0000006D 21 00 1B         [10]  618 	ld	hl, #0x1b00
     00000070 CDr83r02         [17]  619 	call	_VDP_SetSpriteAttributeTable
-                                    620 ;E:\MSXgl\engine/src/vdp.c:222: VDP_SetSpritePatternTable(VDP_G1_ADDR_SPT);
+                                    620 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:222: VDP_SetSpritePatternTable(VDP_G1_ADDR_SPT);
     00000073 21 00 38         [10]  621 	ld	hl, #0x3800
-                                    622 ;E:\MSXgl\engine/src/vdp.c:224: }
+                                    622 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:224: }
     00000076 C3rB4r02         [10]  623 	jp	_VDP_SetSpritePatternTable
-                                    624 ;E:\MSXgl\engine/src/vdp.c:230: void VDP_SetModeGraphic2()
+                                    624 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:230: void VDP_SetModeGraphic2()
                                     625 ;	---------------------------------
                                     626 ; Function VDP_SetModeGraphic2
                                     627 ; ---------------------------------
     00000079                        628 _VDP_SetModeGraphic2::
-                                    629 ;E:\MSXgl\engine/src/vdp.c:232: VDP_SetModeFlag(VDP_G2_MODE);
+                                    629 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:232: VDP_SetModeFlag(VDP_G2_MODE);
     00000079 3E 04            [ 7]  630 	ld	a, #0x04
     0000007B CDr00r00         [17]  631 	call	_VDP_SetModeFlag
-                                    632 ;E:\MSXgl\engine/src/vdp.c:233: VDP_SetLayoutTable(VDP_G2_ADDR_NT);
+                                    632 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:233: VDP_SetLayoutTable(VDP_G2_ADDR_NT);
     0000007E 21 00 18         [10]  633 	ld	hl, #0x1800
     00000081 CDr29r02         [17]  634 	call	_VDP_SetLayoutTable
-                                    635 ;E:\MSXgl\engine/src/vdp.c:234: VDP_SetColorTable(VDP_G2_ADDR_CT);
+                                    635 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:234: VDP_SetColorTable(VDP_G2_ADDR_CT);
     00000084 21 00 20         [10]  636 	ld	hl, #0x2000
     00000087 CDr39r02         [17]  637 	call	_VDP_SetColorTable
-                                    638 ;E:\MSXgl\engine/src/vdp.c:235: VDP_SetPatternTable(VDP_G2_ADDR_PT);
+                                    638 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:235: VDP_SetPatternTable(VDP_G2_ADDR_PT);
     0000008A 21 00 00         [10]  639 	ld	hl, #0x0000
     0000008D CDr66r02         [17]  640 	call	_VDP_SetPatternTable
-                                    641 ;E:\MSXgl\engine/src/vdp.c:237: VDP_SetSpriteAttributeTable(VDP_G2_ADDR_SAT);
+                                    641 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:237: VDP_SetSpriteAttributeTable(VDP_G2_ADDR_SAT);
     00000090 21 00 1B         [10]  642 	ld	hl, #0x1b00
     00000093 CDr83r02         [17]  643 	call	_VDP_SetSpriteAttributeTable
-                                    644 ;E:\MSXgl\engine/src/vdp.c:238: VDP_SetSpritePatternTable(VDP_G2_ADDR_SPT);
+                                    644 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:238: VDP_SetSpritePatternTable(VDP_G2_ADDR_SPT);
     00000096 21 00 38         [10]  645 	ld	hl, #0x3800
-                                    646 ;E:\MSXgl\engine/src/vdp.c:240: }
+                                    646 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:240: }
     00000099 C3rB4r02         [10]  647 	jp	_VDP_SetSpritePatternTable
-                                    648 ;E:\MSXgl\engine/src/vdp.c:251: void VDP_ClearVRAM()
+                                    648 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:251: void VDP_ClearVRAM()
                                     649 ;	---------------------------------
                                     650 ; Function VDP_ClearVRAM
                                     651 ; ---------------------------------
     0000009C                        652 _VDP_ClearVRAM::
-                                    653 ;E:\MSXgl\engine/src/vdp.c:254: VDP_FillVRAM_16K(0, 0x0000, 0x4000);  // Clear 16 KB of VRAM
+                                    653 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:254: VDP_FillVRAM_16K(0, 0x0000, 0x4000);  // Clear 16 KB of VRAM
     0000009C 21 00 40         [10]  654 	ld	hl, #0x4000
     0000009F E5               [11]  655 	push	hl
     000000A0 11 00 00         [10]  656 	ld	de, #0x0000
     000000A3 AF               [ 4]  657 	xor	a, a
     000000A4 CDrD1r00         [17]  658 	call	_VDP_FillVRAM_16K
-                                    659 ;E:\MSXgl\engine/src/vdp.c:261: }
+                                    659 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:261: }
     000000A7 C9               [10]  660 	ret
-                                    661 ;E:\MSXgl\engine/src/vdp.c:272: void VDP_WriteVRAM_16K(const u8* src, u16 dest, u16 count)
+                                    661 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:272: void VDP_WriteVRAM_16K(const u8* src, u16 dest, u16 count)
                                     662 ;	---------------------------------
                                     663 ; Function VDP_WriteVRAM_16K
                                     664 ; ---------------------------------
     000000A8                        665 _VDP_WriteVRAM_16K::
-                                    666 ;E:\MSXgl\engine/src/vdp.c:341: __endasm;
+                                    666 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:341: __endasm;
     000000A8 FD 21 02 00      [14]  667 	ld	iy, #2
     000000AC FD 39            [15]  668 	add	iy, sp
     000000AE 7B               [ 4]  669 	ld	a, e
@@ -686,16 +686,16 @@
     000000CA 15               [ 4]  686 	dec	d
     000000CB C2rC5r00         [10]  687 	jp	nz, wrt16_loop_start
     000000CE                        688 	 wrt16_loop_end:
-                                    689 ;E:\MSXgl\engine/src/vdp.c:342: }
+                                    689 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:342: }
     000000CE E1               [10]  690 	pop	hl
     000000CF F1               [10]  691 	pop	af
     000000D0 E9               [ 4]  692 	jp	(hl)
-                                    693 ;E:\MSXgl\engine/src/vdp.c:351: void VDP_FillVRAM_16K(u8 value, u16 dest, u16 count) __NAKED // Stack: 4 bytes
+                                    693 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:351: void VDP_FillVRAM_16K(u8 value, u16 dest, u16 count) __NAKED // Stack: 4 bytes
                                     694 ;	---------------------------------
                                     695 ; Function VDP_FillVRAM_16K
                                     696 ; ---------------------------------
     000000D1                        697 _VDP_FillVRAM_16K::
-                                    698 ;E:\MSXgl\engine/src/vdp.c:402: __endasm;
+                                    698 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:402: __endasm;
     000000D1 4F               [ 4]  699 	ld	c, a
     000000D2 7B               [ 4]  700 	ld	a, e
     000000D3 F3               [ 4]  701 	di
@@ -719,13 +719,13 @@
     000000ED                        719 	 fll16_loop_end:
     000000ED FB               [ 4]  720 	ei
     000000EE FD E9            [ 8]  721 	jp	(iy)
-                                    722 ;E:\MSXgl\engine/src/vdp.c:403: }
-                                    723 ;E:\MSXgl\engine/src/vdp.c:516: void VDP_ReadVRAM_16K(u16 src, u8* dest, u16 count)
+                                    722 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:403: }
+                                    723 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:516: void VDP_ReadVRAM_16K(u16 src, u8* dest, u16 count)
                                     724 ;	---------------------------------
                                     725 ; Function VDP_ReadVRAM_16K
                                     726 ; ---------------------------------
     000000F0                        727 _VDP_ReadVRAM_16K::
-                                    728 ;E:\MSXgl\engine/src/vdp.c:586: __endasm;
+                                    728 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:586: __endasm;
     000000F0 FD 21 02 00      [14]  729 	ld	iy, #2
     000000F4 FD 39            [15]  730 	add	iy, sp
     000000F6 7D               [ 4]  731 	ld	a, l
@@ -748,16 +748,16 @@
     00000111 15               [ 4]  748 	dec	d
     00000112 C2r0Cr01         [10]  749 	jp	nz, rd16_loop_start
     00000115                        750 	 rd16_loop_end:
-                                    751 ;E:\MSXgl\engine/src/vdp.c:587: }
+                                    751 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:587: }
     00000115 E1               [10]  752 	pop	hl
     00000116 F1               [10]  753 	pop	af
     00000117 E9               [ 4]  754 	jp	(hl)
-                                    755 ;E:\MSXgl\engine/src/vdp.c:597: u8 VDP_Peek_16K(u16 dest) __PRESERVES(b, c, d, e, iyl, iyh)
+                                    755 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:597: u8 VDP_Peek_16K(u16 dest) __PRESERVES(b, c, d, e, iyl, iyh)
                                     756 ;	---------------------------------
                                     757 ; Function VDP_Peek_16K
                                     758 ; ---------------------------------
     00000118                        759 _VDP_Peek_16K::
-                                    760 ;E:\MSXgl\engine/src/vdp.c:632: __endasm;
+                                    760 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:632: __endasm;
     00000118 7D               [ 4]  761 	ld	a, l
     00000119 F3               [ 4]  762 	di
     0000011A D3 99            [11]  763 	out	(0x99), a
@@ -767,14 +767,14 @@
     00000121 29               [11]  767 	add	hl, hl
     00000122 FB               [ 4]  768 	ei
     00000123 DB 98            [11]  769 	in	a, (0x98)
-                                    770 ;E:\MSXgl\engine/src/vdp.c:633: }
+                                    770 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:633: }
     00000125 C9               [10]  771 	ret
-                                    772 ;E:\MSXgl\engine/src/vdp.c:641: void VDP_Poke_16K(u8 val, u16 dest) __PRESERVES(c, h, l, iyl, iyh)
+                                    772 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:641: void VDP_Poke_16K(u8 val, u16 dest) __PRESERVES(c, h, l, iyl, iyh)
                                     773 ;	---------------------------------
                                     774 ; Function VDP_Poke_16K
                                     775 ; ---------------------------------
     00000126                        776 _VDP_Poke_16K::
-                                    777 ;E:\MSXgl\engine/src/vdp.c:678: __endasm;
+                                    777 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:678: __endasm;
     00000126 47               [ 4]  778 	ld	b, a
     00000127 7B               [ 4]  779 	ld	a, e
     00000128 F3               [ 4]  780 	di
@@ -787,41 +787,41 @@
     00000133 78               [ 4]  787 	ld	a, b
     00000134 FB               [ 4]  788 	ei
     00000135 D3 98            [11]  789 	out	(0x98), a
-                                    790 ;E:\MSXgl\engine/src/vdp.c:679: }
+                                    790 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:679: }
     00000137 C9               [10]  791 	ret
-                                    792 ;E:\MSXgl\engine/src/vdp.c:1447: void VDP_Initialize()
+                                    792 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1447: void VDP_Initialize()
                                     793 ;	---------------------------------
                                     794 ; Function VDP_Initialize
                                     795 ; ---------------------------------
     00000138                        796 _VDP_Initialize::
-                                    797 ;E:\MSXgl\engine/src/vdp.c:1455: __endasm;
+                                    797 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1455: __endasm;
     00000138 21 DF F3         [10]  798 	ld	hl, #0xF3DF
     0000013B 11r00r00         [10]  799 	ld	de, #_g_VDP_REGSAV+0
     0000013E 01 08 00         [10]  800 	ld	bc, #8
     00000141 ED B0            [21]  801 	ldir
-                                    802 ;E:\MSXgl\engine/src/vdp.c:1478: g_VDPInitilized = TRUE;
+                                    802 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1478: g_VDPInitilized = TRUE;
     00000143 21r00r00         [10]  803 	ld	hl, #_g_VDPInitilized
     00000146 36 01            [10]  804 	ld	(hl), #0x01
-                                    805 ;E:\MSXgl\engine/src/vdp.c:1480: }
+                                    805 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1480: }
     00000148 C9               [10]  806 	ret
-                                    807 ;E:\MSXgl\engine/src/vdp.c:1488: void VDP_SetMode(const u8 mode)
+                                    807 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1488: void VDP_SetMode(const u8 mode)
                                     808 ;	---------------------------------
                                     809 ; Function VDP_SetMode
                                     810 ; ---------------------------------
     00000149                        811 _VDP_SetMode::
     00000149 4F               [ 4]  812 	ld	c, a
-                                    813 ;E:\MSXgl\engine/src/vdp.c:1491: if(!g_VDPInitilized)
+                                    813 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1491: if(!g_VDPInitilized)
     0000014A 3Ar00r00         [13]  814 	ld	a, (_g_VDPInitilized+0)
     0000014D B7               [ 4]  815 	or	a, a
     0000014E 20 05            [12]  816 	jr	NZ, 00102$
-                                    817 ;E:\MSXgl\engine/src/vdp.c:1492: VDP_Initialize();
+                                    817 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1492: VDP_Initialize();
     00000150 C5               [11]  818 	push	bc
     00000151 CDr38r01         [17]  819 	call	_VDP_Initialize
     00000154 C1               [10]  820 	pop	bc
     00000155                        821 00102$:
-                                    822 ;E:\MSXgl\engine/src/vdp.c:1499: g_VDP_Data.Mode = mode;
+                                    822 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1499: g_VDP_Data.Mode = mode;
     00000155 21r1Cr00         [10]  823 	ld	hl, #_g_VDP_Data
-                                    824 ;E:\MSXgl\engine/src/vdp.c:1500: switch(mode)
+                                    824 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1500: switch(mode)
     00000158 79               [ 4]  825 	ld	a,c
     00000159 77               [ 7]  826 	ld	(hl),a
     0000015A B7               [ 4]  827 	or	a, a
@@ -835,29 +835,29 @@
     00000166 D6 03            [ 7]  835 	sub	a, #0x03
     00000168 28 15            [12]  836 	jr	Z, 00106$
     0000016A C3r82r01         [10]  837 	jp	00113$
-                                    838 ;E:\MSXgl\engine/src/vdp.c:1507: case VDP_MODE_TEXT1:
+                                    838 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1507: case VDP_MODE_TEXT1:
     0000016D                        839 00103$:
-                                    840 ;E:\MSXgl\engine/src/vdp.c:1508: VDP_SetModeText1();
+                                    840 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1508: VDP_SetModeText1();
     0000016D CDr29r00         [17]  841 	call	_VDP_SetModeText1
-                                    842 ;E:\MSXgl\engine/src/vdp.c:1509: break;
+                                    842 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1509: break;
     00000170 C3r82r01         [10]  843 	jp	00113$
-                                    844 ;E:\MSXgl\engine/src/vdp.c:1514: case VDP_MODE_MULTICOLOR:
+                                    844 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1514: case VDP_MODE_MULTICOLOR:
     00000173                        845 00104$:
-                                    846 ;E:\MSXgl\engine/src/vdp.c:1515: VDP_SetModeMultiColor();
+                                    846 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1515: VDP_SetModeMultiColor();
     00000173 CDr3Ar00         [17]  847 	call	_VDP_SetModeMultiColor
-                                    848 ;E:\MSXgl\engine/src/vdp.c:1516: break;
+                                    848 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1516: break;
     00000176 C3r82r01         [10]  849 	jp	00113$
-                                    850 ;E:\MSXgl\engine/src/vdp.c:1521: case VDP_MODE_GRAPHIC1:
+                                    850 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1521: case VDP_MODE_GRAPHIC1:
     00000179                        851 00105$:
-                                    852 ;E:\MSXgl\engine/src/vdp.c:1522: VDP_SetModeGraphic1();
+                                    852 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1522: VDP_SetModeGraphic1();
     00000179 CDr57r00         [17]  853 	call	_VDP_SetModeGraphic1
-                                    854 ;E:\MSXgl\engine/src/vdp.c:1523: break;
+                                    854 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1523: break;
     0000017C C3r82r01         [10]  855 	jp	00113$
-                                    856 ;E:\MSXgl\engine/src/vdp.c:1528: case VDP_MODE_GRAPHIC2:
+                                    856 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1528: case VDP_MODE_GRAPHIC2:
     0000017F                        857 00106$:
-                                    858 ;E:\MSXgl\engine/src/vdp.c:1529: VDP_SetModeGraphic2();
+                                    858 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1529: VDP_SetModeGraphic2();
     0000017F CDr79r00         [17]  859 	call	_VDP_SetModeGraphic2
-                                    860 ;E:\MSXgl\engine/src/vdp.h:703: inline void VDP_EnableDisplay(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_BL, enable ? R01_BL : 0); }
+                                    860 ;C:\msx\projetos\MSXgl\engine/src/vdp.h:703: inline void VDP_EnableDisplay(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_BL, enable ? R01_BL : 0); }
     00000182                        861 00113$:
     00000182 3E 40            [ 7]  862 	ld	a, #0x40
     00000184 F5               [11]  863 	push	af
@@ -867,7 +867,7 @@
                                     867 ;	spillPairReg hl
     00000188 3E 01            [ 7]  868 	ld	a, #0x01
     0000018A CDr07r02         [17]  869 	call	_VDP_RegWriteBakMask
-                                    870 ;E:\MSXgl\engine/src/vdp.h:710: inline void VDP_EnableVBlank(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_IE0, enable ? R01_IE0 : 0); }
+                                    870 ;C:\msx\projetos\MSXgl\engine/src/vdp.h:710: inline void VDP_EnableVBlank(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_IE0, enable ? R01_IE0 : 0); }
     0000018D 3E 20            [ 7]  871 	ld	a, #0x20
     0000018F F5               [11]  872 	push	af
     00000190 33               [ 6]  873 	inc	sp
@@ -876,15 +876,15 @@
                                     876 ;	spillPairReg hl
     00000193 3E 01            [ 7]  877 	ld	a, #0x01
     00000195 CDr07r02         [17]  878 	call	_VDP_RegWriteBakMask
-                                    879 ;E:\MSXgl\engine/src/vdp.c:1612: VDP_EnableVBlank(TRUE);
-                                    880 ;E:\MSXgl\engine/src/vdp.c:1635: }
+                                    879 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1612: VDP_EnableVBlank(TRUE);
+                                    880 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1635: }
     00000198 C9               [10]  881 	ret
-                                    882 ;E:\MSXgl\engine/src/vdp.c:1641: u8 VDP_GetVersion() __NAKED
+                                    882 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1641: u8 VDP_GetVersion() __NAKED
                                     883 ;	---------------------------------
                                     884 ; Function VDP_GetVersion
                                     885 ; ---------------------------------
     00000199                        886 _VDP_GetVersion::
-                                    887 ;E:\MSXgl\engine/src/vdp.c:1710: __endasm;
+                                    887 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1710: __endasm;
     00000199                        888 	 VDP_GetVersionAsm:
     00000199 CDrB8r01         [17]  889 	call	VDP_IsTMS9918A
     0000019C C8               [11]  890 	ret	z
@@ -935,13 +935,13 @@
     000001E4 08               [ 4]  935 	ex	af, af'					; '
     000001E5 E6 40            [ 7]  936 	and	#0b01000000
     000001E7 C9               [10]  937 	ret
-                                    938 ;E:\MSXgl\engine/src/vdp.c:1711: }
-                                    939 ;E:\MSXgl\engine/src/vdp.c:1719: void VDP_RegWrite(u8 reg, u8 value) __PRESERVES(b, c, d, e, iyl, iyh)
+                                    938 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1711: }
+                                    939 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1719: void VDP_RegWrite(u8 reg, u8 value) __PRESERVES(b, c, d, e, iyl, iyh)
                                     940 ;	---------------------------------
                                     941 ; Function VDP_RegWrite
                                     942 ; ---------------------------------
     000001E8                        943 _VDP_RegWrite::
-                                    944 ;E:\MSXgl\engine/src/vdp.c:1733: __endasm;
+                                    944 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1733: __endasm;
     000001E8 67               [ 4]  945 	ld	h, a
     000001E9 7D               [ 4]  946 	ld	a, l
     000001EA F3               [ 4]  947 	di
@@ -950,14 +950,14 @@
     000001EE C6 80            [ 7]  950 	add	#0x80
     000001F0 FB               [ 4]  951 	ei
     000001F1 D3 99            [11]  952 	out	(0x99), a
-                                    953 ;E:\MSXgl\engine/src/vdp.c:1734: }
+                                    953 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1734: }
     000001F3 C9               [10]  954 	ret
-                                    955 ;E:\MSXgl\engine/src/vdp.c:1742: void VDP_RegWriteBak(u8 reg, u8 value) __PRESERVES(d, e, iyl, iyh)
+                                    955 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1742: void VDP_RegWriteBak(u8 reg, u8 value) __PRESERVES(d, e, iyl, iyh)
                                     956 ;	---------------------------------
                                     957 ; Function VDP_RegWriteBak
                                     958 ; ---------------------------------
     000001F4                        959 _VDP_RegWriteBak::
-                                    960 ;E:\MSXgl\engine/src/vdp.c:1762: __endasm;
+                                    960 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1762: __endasm;
     000001F4 4F               [ 4]  961 	ld	c, a
     000001F5 7D               [ 4]  962 	ld	a, l
     000001F6 06 00            [ 7]  963 	ld	b, #0
@@ -970,9 +970,9 @@
     00000201 C6 80            [ 7]  970 	add	#0x80
     00000203 FB               [ 4]  971 	ei
     00000204 D3 99            [11]  972 	out	(0x99), a
-                                    973 ;E:\MSXgl\engine/src/vdp.c:1763: }
+                                    973 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1763: }
     00000206 C9               [10]  974 	ret
-                                    975 ;E:\MSXgl\engine/src/vdp.c:1772: void VDP_RegWriteBakMask(u8 reg, u8 mask, u8 flag)
+                                    975 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1772: void VDP_RegWriteBakMask(u8 reg, u8 mask, u8 flag)
                                     976 ;	---------------------------------
                                     977 ; Function VDP_RegWriteBakMask
                                     978 ; ---------------------------------
@@ -982,43 +982,43 @@
     0000020D DD 39            [15]  982 	add	ix,sp
     0000020F 4F               [ 4]  983 	ld	c, a
     00000210 5D               [ 4]  984 	ld	e, l
-                                    985 ;E:\MSXgl\engine/src/vdp.c:1774: u8 value = g_VDP_REGSAV[reg];
+                                    985 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1774: u8 value = g_VDP_REGSAV[reg];
     00000211 21r00r00         [10]  986 	ld	hl, #_g_VDP_REGSAV+0
     00000214 06 00            [ 7]  987 	ld	b, #0x00
     00000216 09               [11]  988 	add	hl, bc
     00000217 7E               [ 7]  989 	ld	a, (hl)
-                                    990 ;E:\MSXgl\engine/src/vdp.c:1775: value &= mask;
+                                    990 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1775: value &= mask;
     00000218 A3               [ 4]  991 	and	a, e
-                                    992 ;E:\MSXgl\engine/src/vdp.c:1776: value |= flag;
+                                    992 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1776: value |= flag;
     00000219 DD B6 04         [19]  993 	or	a, 4 (ix)
     0000021C 6F               [ 4]  994 	ld	l, a
                                     995 ;	spillPairReg hl
                                     996 ;	spillPairReg hl
-                                    997 ;E:\MSXgl\engine/src/vdp.c:1777: VDP_RegWriteBak(reg, value);
+                                    997 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1777: VDP_RegWriteBak(reg, value);
     0000021D 79               [ 4]  998 	ld	a, c
     0000021E CDrF4r01         [17]  999 	call	_VDP_RegWriteBak
-                                   1000 ;E:\MSXgl\engine/src/vdp.c:1778: }
+                                   1000 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1778: }
     00000221 DD E1            [14] 1001 	pop	ix
     00000223 E1               [10] 1002 	pop	hl
     00000224 33               [ 6] 1003 	inc	sp
     00000225 E9               [ 4] 1004 	jp	(hl)
-                                   1005 ;E:\MSXgl\engine/src/vdp.c:1782: u8 VDP_ReadDefaultStatus() __PRESERVES(b, c, d, e, h, l, iyl, iyh)
+                                   1005 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1782: u8 VDP_ReadDefaultStatus() __PRESERVES(b, c, d, e, h, l, iyl, iyh)
                                    1006 ;	---------------------------------
                                    1007 ; Function VDP_ReadDefaultStatus
                                    1008 ; ---------------------------------
     00000226                       1009 _VDP_ReadDefaultStatus::
-                                   1010 ;E:\MSXgl\engine/src/vdp.c:1786: __endasm;
+                                   1010 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1786: __endasm;
     00000226 DB 99            [11] 1011 	in	a, (0x99)
-                                   1012 ;E:\MSXgl\engine/src/vdp.c:1787: }
+                                   1012 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1787: }
     00000228 C9               [10] 1013 	ret
-                                   1014 ;E:\MSXgl\engine/src/vdp.c:1804: void VDP_SetLayoutTable(VADDR addr)
+                                   1014 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1804: void VDP_SetLayoutTable(VADDR addr)
                                    1015 ;	---------------------------------
                                    1016 ; Function VDP_SetLayoutTable
                                    1017 ; ---------------------------------
     00000229                       1018 _VDP_SetLayoutTable::
-                                   1019 ;E:\MSXgl\engine/src/vdp.c:1806: g_ScreenLayoutLow = (u16)addr;
+                                   1019 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1806: g_ScreenLayoutLow = (u16)addr;
     00000229 22r31r00         [16] 1020 	ld	(_g_ScreenLayoutLow), hl
-                                   1021 ;E:\MSXgl\engine/src/vdp.c:1809: reg = (u8)(addr >> 10);
+                                   1021 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1809: reg = (u8)(addr >> 10);
     0000022C 7C               [ 4] 1022 	ld	a, h
     0000022D 0F               [ 4] 1023 	rrca
     0000022E 0F               [ 4] 1024 	rrca
@@ -1029,18 +1029,18 @@
     00000232 26 00            [ 7] 1029 	ld	h, #0x00
                                    1030 ;	spillPairReg hl
                                    1031 ;	spillPairReg hl
-                                   1032 ;E:\MSXgl\engine/src/vdp.c:1830: VDP_RegWrite(2, reg);
+                                   1032 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1830: VDP_RegWrite(2, reg);
     00000234 3E 02            [ 7] 1033 	ld	a, #0x02
-                                   1034 ;E:\MSXgl\engine/src/vdp.c:1835: }
+                                   1034 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1835: }
     00000236 C3rE8r01         [10] 1035 	jp	_VDP_RegWrite
-                                   1036 ;E:\MSXgl\engine/src/vdp.c:1839: void VDP_SetColorTable(VADDR addr)
+                                   1036 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1839: void VDP_SetColorTable(VADDR addr)
                                    1037 ;	---------------------------------
                                    1038 ; Function VDP_SetColorTable
                                    1039 ; ---------------------------------
     00000239                       1040 _VDP_SetColorTable::
-                                   1041 ;E:\MSXgl\engine/src/vdp.c:1841: g_ScreenColorLow = (u16)addr;
+                                   1041 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1841: g_ScreenColorLow = (u16)addr;
     00000239 22r33r00         [16] 1042 	ld	(_g_ScreenColorLow), hl
-                                   1043 ;E:\MSXgl\engine/src/vdp.c:1844: reg = (u8)(addr >> 6);
+                                   1043 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1844: reg = (u8)(addr >> 6);
     0000023C CB 3C            [ 8] 1044 	srl	h
     0000023E CB 1D            [ 8] 1045 	rr	l
     00000240 CB 3C            [ 8] 1046 	srl	h
@@ -1054,31 +1054,31 @@
     00000250 CB 3C            [ 8] 1054 	srl	h
     00000252 CB 1D            [ 8] 1055 	rr	l
     00000254 4D               [ 4] 1056 	ld	c, l
-                                   1057 ;E:\MSXgl\engine/src/vdp.c:1845: switch(g_VDP_Data.Mode)
+                                   1057 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1845: switch(g_VDP_Data.Mode)
     00000255 3Ar1Cr00         [13] 1058 	ld	a, (#_g_VDP_Data + 0)
     00000258 D6 03            [ 7] 1059 	sub	a, #0x03
     0000025A 20 04            [12] 1060 	jr	NZ, 00102$
-                                   1061 ;E:\MSXgl\engine/src/vdp.c:1865: reg |= 0b1111111;
+                                   1061 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1865: reg |= 0b1111111;
     0000025C 79               [ 4] 1062 	ld	a, c
     0000025D F6 7F            [ 7] 1063 	or	a, #0x7f
     0000025F 4F               [ 4] 1064 	ld	c, a
-                                   1065 ;E:\MSXgl\engine/src/vdp.c:1867: };	
+                                   1065 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1867: };	
     00000260                       1066 00102$:
-                                   1067 ;E:\MSXgl\engine/src/vdp.c:1868: VDP_RegWrite(3, reg);
+                                   1067 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1868: VDP_RegWrite(3, reg);
     00000260 69               [ 4] 1068 	ld	l, c
                                    1069 ;	spillPairReg hl
                                    1070 ;	spillPairReg hl
     00000261 3E 03            [ 7] 1071 	ld	a, #0x03
-                                   1072 ;E:\MSXgl\engine/src/vdp.c:1876: }
+                                   1072 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1876: }
     00000263 C3rE8r01         [10] 1073 	jp	_VDP_RegWrite
-                                   1074 ;E:\MSXgl\engine/src/vdp.c:1880: void VDP_SetPatternTable(VADDR addr)
+                                   1074 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1880: void VDP_SetPatternTable(VADDR addr)
                                    1075 ;	---------------------------------
                                    1076 ; Function VDP_SetPatternTable
                                    1077 ; ---------------------------------
     00000266                       1078 _VDP_SetPatternTable::
-                                   1079 ;E:\MSXgl\engine/src/vdp.c:1882: g_ScreenPatternLow = (u16)addr;
+                                   1079 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1882: g_ScreenPatternLow = (u16)addr;
     00000266 22r35r00         [16] 1080 	ld	(_g_ScreenPatternLow), hl
-                                   1081 ;E:\MSXgl\engine/src/vdp.c:1885: reg = (u8)(addr >> 11);
+                                   1081 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1885: reg = (u8)(addr >> 11);
     00000269 7C               [ 4] 1082 	ld	a, h
     0000026A 0F               [ 4] 1083 	rrca
     0000026B 0F               [ 4] 1084 	rrca
@@ -1086,32 +1086,32 @@
     0000026D E6 1F            [ 7] 1086 	and	a, #0x1f
     0000026F 4F               [ 4] 1087 	ld	c, a
     00000270 06 00            [ 7] 1088 	ld	b, #0x00
-                                   1089 ;E:\MSXgl\engine/src/vdp.c:1886: switch(g_VDP_Data.Mode)
+                                   1089 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1886: switch(g_VDP_Data.Mode)
     00000272 3Ar1Cr00         [13] 1090 	ld	a, (#_g_VDP_Data + 0)
     00000275 D6 03            [ 7] 1091 	sub	a, #0x03
     00000277 20 04            [12] 1092 	jr	NZ, 00102$
-                                   1093 ;E:\MSXgl\engine/src/vdp.c:1900: reg |= 0b11;
+                                   1093 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1900: reg |= 0b11;
     00000279 79               [ 4] 1094 	ld	a, c
     0000027A F6 03            [ 7] 1095 	or	a, #0x03
     0000027C 4F               [ 4] 1096 	ld	c, a
-                                   1097 ;E:\MSXgl\engine/src/vdp.c:1901: };
+                                   1097 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1901: };
     0000027D                       1098 00102$:
-                                   1099 ;E:\MSXgl\engine/src/vdp.c:1902: VDP_RegWrite(4, reg);
+                                   1099 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1902: VDP_RegWrite(4, reg);
     0000027D 69               [ 4] 1100 	ld	l, c
                                    1101 ;	spillPairReg hl
                                    1102 ;	spillPairReg hl
     0000027E 3E 04            [ 7] 1103 	ld	a, #0x04
-                                   1104 ;E:\MSXgl\engine/src/vdp.c:1907: }
+                                   1104 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1907: }
     00000280 C3rE8r01         [10] 1105 	jp	_VDP_RegWrite
-                                   1106 ;E:\MSXgl\engine/src/vdp.c:1921: void VDP_SetSpriteAttributeTable(VADDR addr)
+                                   1106 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1921: void VDP_SetSpriteAttributeTable(VADDR addr)
                                    1107 ;	---------------------------------
                                    1108 ; Function VDP_SetSpriteAttributeTable
                                    1109 ; ---------------------------------
     00000283                       1110 _VDP_SetSpriteAttributeTable::
     00000283 EB               [ 4] 1111 	ex	de, hl
-                                   1112 ;E:\MSXgl\engine/src/vdp.c:1923: g_SpriteAttributeLow = (u16)addr;
+                                   1112 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1923: g_SpriteAttributeLow = (u16)addr;
     00000284 ED 53r37r00      [20] 1113 	ld	(_g_SpriteAttributeLow), de
-                                   1114 ;E:\MSXgl\engine/src/vdp.c:1926: reg = (u8)(addr >> 7);
+                                   1114 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1926: reg = (u8)(addr >> 7);
     00000288 6B               [ 4] 1115 	ld	l, e
                                    1116 ;	spillPairReg hl
                                    1117 ;	spillPairReg hl
@@ -1130,10 +1130,10 @@
     000002A0 CB 1D            [ 8] 1130 	rr	l
     000002A2 CB 39            [ 8] 1131 	srl	c
     000002A4 CB 1D            [ 8] 1132 	rr	l
-                                   1133 ;E:\MSXgl\engine/src/vdp.c:1949: VDP_RegWrite(5, reg);
+                                   1133 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1949: VDP_RegWrite(5, reg);
     000002A6 3E 05            [ 7] 1134 	ld	a, #0x05
     000002A8 CDrE8r01         [17] 1135 	call	_VDP_RegWrite
-                                   1136 ;E:\MSXgl\engine/src/vdp.c:1958: addr -= 0x200;
+                                   1136 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1958: addr -= 0x200;
                                    1137 ;	spillPairReg hl
                                    1138 ;	spillPairReg hl
     000002AB 6B               [ 4] 1139 	ld	l, e
@@ -1143,17 +1143,17 @@
                                    1143 ;	spillPairReg hl
                                    1144 ;	spillPairReg hl
     000002B0 22r3Br00         [16] 1145 	ld	(_g_SpriteColorLow), hl
-                                   1146 ;E:\MSXgl\engine/src/vdp.c:1959: g_SpriteColorLow = (u16)addr;
-                                   1147 ;E:\MSXgl\engine/src/vdp.c:1963: }
+                                   1146 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1959: g_SpriteColorLow = (u16)addr;
+                                   1147 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1963: }
     000002B3 C9               [10] 1148 	ret
-                                   1149 ;E:\MSXgl\engine/src/vdp.c:1969: void VDP_SetSpritePatternTable(VADDR addr)
+                                   1149 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1969: void VDP_SetSpritePatternTable(VADDR addr)
                                    1150 ;	---------------------------------
                                    1151 ; Function VDP_SetSpritePatternTable
                                    1152 ; ---------------------------------
     000002B4                       1153 _VDP_SetSpritePatternTable::
-                                   1154 ;E:\MSXgl\engine/src/vdp.c:1971: g_SpritePatternLow  = (u16)addr;
+                                   1154 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1971: g_SpritePatternLow  = (u16)addr;
     000002B4 22r39r00         [16] 1155 	ld	(_g_SpritePatternLow), hl
-                                   1156 ;E:\MSXgl\engine/src/vdp.c:1976: u8 reg = (u8)(addr >> 11);
+                                   1156 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1976: u8 reg = (u8)(addr >> 11);
     000002B7 7C               [ 4] 1157 	ld	a, h
     000002B8 0F               [ 4] 1158 	rrca
     000002B9 0F               [ 4] 1159 	rrca
@@ -1165,11 +1165,11 @@
     000002BE 26 00            [ 7] 1165 	ld	h, #0x00
                                    1166 ;	spillPairReg hl
                                    1167 ;	spillPairReg hl
-                                   1168 ;E:\MSXgl\engine/src/vdp.c:1977: VDP_RegWrite(6, reg);
+                                   1168 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1977: VDP_RegWrite(6, reg);
     000002C0 3E 06            [ 7] 1169 	ld	a, #0x06
-                                   1170 ;E:\MSXgl\engine/src/vdp.c:1979: }
+                                   1170 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1979: }
     000002C2 C3rE8r01         [10] 1171 	jp	_VDP_RegWrite
-                                   1172 ;E:\MSXgl\engine/src/vdp.c:1983: void VDP_LoadSpritePattern(const u8* addr, u8 index, u8 count)
+                                   1172 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1983: void VDP_LoadSpritePattern(const u8* addr, u8 index, u8 count)
                                    1173 ;	---------------------------------
                                    1174 ; Function VDP_LoadSpritePattern
                                    1175 ; ---------------------------------
@@ -1179,9 +1179,9 @@
     000002CB DD 39            [15] 1179 	add	ix,sp
     000002CD 4D               [ 4] 1180 	ld	c, l
     000002CE 44               [ 4] 1181 	ld	b, h
-                                   1182 ;E:\MSXgl\engine/src/vdp.c:1985: u16 low = g_SpritePatternLow;
+                                   1182 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1985: u16 low = g_SpritePatternLow;
     000002CF ED 5Br39r00      [20] 1183 	ld	de, (_g_SpritePatternLow)
-                                   1184 ;E:\MSXgl\engine/src/vdp.c:1986: low += (index * 8);
+                                   1184 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1986: low += (index * 8);
     000002D3 DD 6E 04         [19] 1185 	ld	l, 4 (ix)
                                    1186 ;	spillPairReg hl
                                    1187 ;	spillPairReg hl
@@ -1193,7 +1193,7 @@
     000002DA 29               [11] 1193 	add	hl, hl
     000002DB 19               [11] 1194 	add	hl, de
     000002DC EB               [ 4] 1195 	ex	de, hl
-                                   1196 ;E:\MSXgl\engine/src/vdp.c:1987: VDP_WriteVRAM(addr, low, g_SpritePatternHigh, count * 8);
+                                   1196 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1987: VDP_WriteVRAM(addr, low, g_SpritePatternHigh, count * 8);
     000002DD DD 6E 05         [19] 1197 	ld	l, 5 (ix)
                                    1198 ;	spillPairReg hl
                                    1199 ;	spillPairReg hl
@@ -1211,12 +1211,12 @@
                                    1211 ;	spillPairReg hl
                                    1212 ;	spillPairReg hl
     000002E8 CDrA8r00         [17] 1213 	call	_VDP_WriteVRAM_16K
-                                   1214 ;E:\MSXgl\engine/src/vdp.c:1988: }
+                                   1214 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1988: }
     000002EB DD E1            [14] 1215 	pop	ix
     000002ED E1               [10] 1216 	pop	hl
     000002EE F1               [10] 1217 	pop	af
     000002EF E9               [ 4] 1218 	jp	(hl)
-                                   1219 ;E:\MSXgl\engine/src/vdp.c:1992: void VDP_SetSpriteSM1(u8 index, u8 x, u8 y, u8 shape, u8 color)
+                                   1219 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1992: void VDP_SetSpriteSM1(u8 index, u8 x, u8 y, u8 shape, u8 color)
                                    1220 ;	---------------------------------
                                    1221 ; Function VDP_SetSpriteSM1
                                    1222 ; ---------------------------------
@@ -1226,24 +1226,24 @@
     000002F6 DD 39            [15] 1226 	add	ix,sp
     000002F8 5F               [ 4] 1227 	ld	e, a
     000002F9 4D               [ 4] 1228 	ld	c, l
-                                   1229 ;E:\MSXgl\engine/src/vdp.c:1994: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
+                                   1229 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1994: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
     000002FA 21r2Dr00         [10] 1230 	ld	hl, #_g_VDP_Sprite
     000002FD DD 7E 04         [19] 1231 	ld	a, 4 (ix)
     00000300 77               [ 7] 1232 	ld	(hl), a
-                                   1233 ;E:\MSXgl\engine/src/vdp.c:1995: g_VDP_Sprite.X = x;				// X coordinate of the sprite
+                                   1233 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1995: g_VDP_Sprite.X = x;				// X coordinate of the sprite
     00000301 21r2Er00         [10] 1234 	ld	hl, #(_g_VDP_Sprite + 1)
     00000304 71               [ 7] 1235 	ld	(hl), c
-                                   1236 ;E:\MSXgl\engine/src/vdp.c:1996: g_VDP_Sprite.Pattern = shape;	// Pattern index
+                                   1236 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1996: g_VDP_Sprite.Pattern = shape;	// Pattern index
     00000305 21r2Fr00         [10] 1237 	ld	hl, #(_g_VDP_Sprite + 2)
     00000308 DD 7E 05         [19] 1238 	ld	a, 5 (ix)
     0000030B 77               [ 7] 1239 	ld	(hl), a
-                                   1240 ;E:\MSXgl\engine/src/vdp.c:1997: g_VDP_Sprite.Color = color;		// Color index (Sprite Mode 1 only) + Early clock
+                                   1240 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1997: g_VDP_Sprite.Color = color;		// Color index (Sprite Mode 1 only) + Early clock
     0000030C 21r30r00         [10] 1241 	ld	hl, #(_g_VDP_Sprite + 3)
     0000030F DD 7E 06         [19] 1242 	ld	a, 6 (ix)
     00000312 77               [ 7] 1243 	ld	(hl), a
-                                   1244 ;E:\MSXgl\engine/src/vdp.c:1999: u16 low = g_SpriteAttributeLow;
+                                   1244 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:1999: u16 low = g_SpriteAttributeLow;
     00000313 ED 4Br37r00      [20] 1245 	ld	bc, (_g_SpriteAttributeLow)
-                                   1246 ;E:\MSXgl\engine/src/vdp.c:2000: low += (index * 4);
+                                   1246 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2000: low += (index * 4);
     00000317 6B               [ 4] 1247 	ld	l, e
                                    1248 ;	spillPairReg hl
                                    1249 ;	spillPairReg hl
@@ -1254,18 +1254,18 @@
     0000031B 29               [11] 1254 	add	hl, hl
     0000031C 09               [11] 1255 	add	hl, bc
     0000031D EB               [ 4] 1256 	ex	de, hl
-                                   1257 ;E:\MSXgl\engine/src/vdp.c:2001: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 4);
+                                   1257 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2001: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 4);
     0000031E 21 04 00         [10] 1258 	ld	hl, #0x0004
     00000321 E5               [11] 1259 	push	hl
     00000322 21r2Dr00         [10] 1260 	ld	hl, #_g_VDP_Sprite
     00000325 CDrA8r00         [17] 1261 	call	_VDP_WriteVRAM_16K
-                                   1262 ;E:\MSXgl\engine/src/vdp.c:2002: }
+                                   1262 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2002: }
     00000328 DD E1            [14] 1263 	pop	ix
     0000032A E1               [10] 1264 	pop	hl
     0000032B F1               [10] 1265 	pop	af
     0000032C 33               [ 6] 1266 	inc	sp
     0000032D E9               [ 4] 1267 	jp	(hl)
-                                   1268 ;E:\MSXgl\engine/src/vdp.c:2006: void VDP_SetSprite(u8 index, u8 x, u8 y, u8 shape)
+                                   1268 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2006: void VDP_SetSprite(u8 index, u8 x, u8 y, u8 shape)
                                    1269 ;	---------------------------------
                                    1270 ; Function VDP_SetSprite
                                    1271 ; ---------------------------------
@@ -1275,20 +1275,20 @@
     00000334 DD 39            [15] 1275 	add	ix,sp
     00000336 5F               [ 4] 1276 	ld	e, a
     00000337 4D               [ 4] 1277 	ld	c, l
-                                   1278 ;E:\MSXgl\engine/src/vdp.c:2008: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
+                                   1278 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2008: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
     00000338 21r2Dr00         [10] 1279 	ld	hl, #_g_VDP_Sprite
     0000033B DD 7E 04         [19] 1280 	ld	a, 4 (ix)
     0000033E 77               [ 7] 1281 	ld	(hl), a
-                                   1282 ;E:\MSXgl\engine/src/vdp.c:2009: g_VDP_Sprite.X = x;				// X coordinate of the sprite
+                                   1282 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2009: g_VDP_Sprite.X = x;				// X coordinate of the sprite
     0000033F 21r2Er00         [10] 1283 	ld	hl, #(_g_VDP_Sprite + 1)
     00000342 71               [ 7] 1284 	ld	(hl), c
-                                   1285 ;E:\MSXgl\engine/src/vdp.c:2010: g_VDP_Sprite.Pattern = shape;	// Pattern index
+                                   1285 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2010: g_VDP_Sprite.Pattern = shape;	// Pattern index
     00000343 21r2Fr00         [10] 1286 	ld	hl, #(_g_VDP_Sprite + 2)
     00000346 DD 7E 05         [19] 1287 	ld	a, 5 (ix)
     00000349 77               [ 7] 1288 	ld	(hl), a
-                                   1289 ;E:\MSXgl\engine/src/vdp.c:2012: u16 low = g_SpriteAttributeLow;
+                                   1289 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2012: u16 low = g_SpriteAttributeLow;
     0000034A ED 4Br37r00      [20] 1290 	ld	bc, (_g_SpriteAttributeLow)
-                                   1291 ;E:\MSXgl\engine/src/vdp.c:2013: low += (index * 4);
+                                   1291 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2013: low += (index * 4);
     0000034E 6B               [ 4] 1292 	ld	l, e
                                    1293 ;	spillPairReg hl
                                    1294 ;	spillPairReg hl
@@ -1299,17 +1299,17 @@
     00000352 29               [11] 1299 	add	hl, hl
     00000353 09               [11] 1300 	add	hl, bc
     00000354 EB               [ 4] 1301 	ex	de, hl
-                                   1302 ;E:\MSXgl\engine/src/vdp.c:2014: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 3);
+                                   1302 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2014: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 3);
     00000355 21 03 00         [10] 1303 	ld	hl, #0x0003
     00000358 E5               [11] 1304 	push	hl
     00000359 21r2Dr00         [10] 1305 	ld	hl, #_g_VDP_Sprite
     0000035C CDrA8r00         [17] 1306 	call	_VDP_WriteVRAM_16K
-                                   1307 ;E:\MSXgl\engine/src/vdp.c:2015: }
+                                   1307 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2015: }
     0000035F DD E1            [14] 1308 	pop	ix
     00000361 E1               [10] 1309 	pop	hl
     00000362 F1               [10] 1310 	pop	af
     00000363 E9               [ 4] 1311 	jp	(hl)
-                                   1312 ;E:\MSXgl\engine/src/vdp.c:2053: void VDP_SetSpritePosition(u8 index, u8 x, u8 y)
+                                   1312 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2053: void VDP_SetSpritePosition(u8 index, u8 x, u8 y)
                                    1313 ;	---------------------------------
                                    1314 ; Function VDP_SetSpritePosition
                                    1315 ; ---------------------------------
@@ -1319,16 +1319,16 @@
     0000036A DD 39            [15] 1319 	add	ix,sp
     0000036C 5F               [ 4] 1320 	ld	e, a
     0000036D 4D               [ 4] 1321 	ld	c, l
-                                   1322 ;E:\MSXgl\engine/src/vdp.c:2055: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
+                                   1322 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2055: g_VDP_Sprite.Y = y;				// Y coordinate on screen (all lower priority sprite will be disable if equal to 216 or 0xD0)
     0000036E 21r2Dr00         [10] 1323 	ld	hl, #_g_VDP_Sprite
     00000371 DD 7E 04         [19] 1324 	ld	a, 4 (ix)
     00000374 77               [ 7] 1325 	ld	(hl), a
-                                   1326 ;E:\MSXgl\engine/src/vdp.c:2056: g_VDP_Sprite.X = x;				// X coordinate of the sprite
+                                   1326 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2056: g_VDP_Sprite.X = x;				// X coordinate of the sprite
     00000375 21r2Er00         [10] 1327 	ld	hl, #(_g_VDP_Sprite + 1)
     00000378 71               [ 7] 1328 	ld	(hl), c
-                                   1329 ;E:\MSXgl\engine/src/vdp.c:2058: u16 low = g_SpriteAttributeLow;
+                                   1329 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2058: u16 low = g_SpriteAttributeLow;
     00000379 ED 4Br37r00      [20] 1330 	ld	bc, (_g_SpriteAttributeLow)
-                                   1331 ;E:\MSXgl\engine/src/vdp.c:2059: low += (index * 4);
+                                   1331 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2059: low += (index * 4);
     0000037D 6B               [ 4] 1332 	ld	l, e
                                    1333 ;	spillPairReg hl
                                    1334 ;	spillPairReg hl
@@ -1339,26 +1339,26 @@
     00000381 29               [11] 1339 	add	hl, hl
     00000382 09               [11] 1340 	add	hl, bc
     00000383 EB               [ 4] 1341 	ex	de, hl
-                                   1342 ;E:\MSXgl\engine/src/vdp.c:2060: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 2);
+                                   1342 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2060: VDP_WriteVRAM((u8*)&g_VDP_Sprite, low, g_SpriteAttributeHigh, 2);
     00000384 21 02 00         [10] 1343 	ld	hl, #0x0002
     00000387 E5               [11] 1344 	push	hl
     00000388 21r2Dr00         [10] 1345 	ld	hl, #_g_VDP_Sprite
     0000038B CDrA8r00         [17] 1346 	call	_VDP_WriteVRAM_16K
-                                   1347 ;E:\MSXgl\engine/src/vdp.c:2061: }
+                                   1347 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2061: }
     0000038E DD E1            [14] 1348 	pop	ix
     00000390 E1               [10] 1349 	pop	hl
     00000391 33               [ 6] 1350 	inc	sp
     00000392 E9               [ 4] 1351 	jp	(hl)
-                                   1352 ;E:\MSXgl\engine/src/vdp.c:2065: void VDP_SetSpritePositionX(u8 index, u8 x)
+                                   1352 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2065: void VDP_SetSpritePositionX(u8 index, u8 x)
                                    1353 ;	---------------------------------
                                    1354 ; Function VDP_SetSpritePositionX
                                    1355 ; ---------------------------------
     00000393                       1356 _VDP_SetSpritePositionX::
     00000393 47               [ 4] 1357 	ld	b, a
     00000394 4D               [ 4] 1358 	ld	c, l
-                                   1359 ;E:\MSXgl\engine/src/vdp.c:2067: u16 low = g_SpriteAttributeLow;
+                                   1359 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2067: u16 low = g_SpriteAttributeLow;
     00000395 ED 5Br37r00      [20] 1360 	ld	de, (_g_SpriteAttributeLow)
-                                   1361 ;E:\MSXgl\engine/src/vdp.c:2068: low += (index * 4);
+                                   1361 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2068: low += (index * 4);
     00000399 68               [ 4] 1362 	ld	l, b
                                    1363 ;	spillPairReg hl
                                    1364 ;	spillPairReg hl
@@ -1369,21 +1369,21 @@
     0000039D 29               [11] 1369 	add	hl, hl
     0000039E 19               [11] 1370 	add	hl, de
     0000039F EB               [ 4] 1371 	ex	de, hl
-                                   1372 ;E:\MSXgl\engine/src/vdp.c:2069: VDP_Poke(x, ++low, g_SpriteAttributeHigh);
+                                   1372 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2069: VDP_Poke(x, ++low, g_SpriteAttributeHigh);
     000003A0 13               [ 6] 1373 	inc	de
     000003A1 79               [ 4] 1374 	ld	a, c
-                                   1375 ;E:\MSXgl\engine/src/vdp.c:2070: }
+                                   1375 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2070: }
     000003A2 C3r26r01         [10] 1376 	jp	_VDP_Poke_16K
-                                   1377 ;E:\MSXgl\engine/src/vdp.c:2074: void VDP_SetSpritePositionY(u8 index, u8 y)
+                                   1377 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2074: void VDP_SetSpritePositionY(u8 index, u8 y)
                                    1378 ;	---------------------------------
                                    1379 ; Function VDP_SetSpritePositionY
                                    1380 ; ---------------------------------
     000003A5                       1381 _VDP_SetSpritePositionY::
     000003A5 47               [ 4] 1382 	ld	b, a
     000003A6 4D               [ 4] 1383 	ld	c, l
-                                   1384 ;E:\MSXgl\engine/src/vdp.c:2076: u16 low = g_SpriteAttributeLow;
+                                   1384 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2076: u16 low = g_SpriteAttributeLow;
     000003A7 ED 5Br37r00      [20] 1385 	ld	de, (_g_SpriteAttributeLow)
-                                   1386 ;E:\MSXgl\engine/src/vdp.c:2077: low += (index * 4);
+                                   1386 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2077: low += (index * 4);
     000003AB 68               [ 4] 1387 	ld	l, b
                                    1388 ;	spillPairReg hl
                                    1389 ;	spillPairReg hl
@@ -1394,22 +1394,22 @@
     000003AF 29               [11] 1394 	add	hl, hl
     000003B0 19               [11] 1395 	add	hl, de
     000003B1 EB               [ 4] 1396 	ex	de, hl
-                                   1397 ;E:\MSXgl\engine/src/vdp.c:2078: VDP_Poke(y, low, g_SpriteAttributeHigh);
+                                   1397 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2078: VDP_Poke(y, low, g_SpriteAttributeHigh);
     000003B2 79               [ 4] 1398 	ld	a, c
-                                   1399 ;E:\MSXgl\engine/src/vdp.c:2079: }
+                                   1399 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2079: }
     000003B3 C3r26r01         [10] 1400 	jp	_VDP_Poke_16K
-                                   1401 ;E:\MSXgl\engine/src/vdp.c:2083: void VDP_SetSpritePattern(u8 index, u8 shape)
+                                   1401 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2083: void VDP_SetSpritePattern(u8 index, u8 shape)
                                    1402 ;	---------------------------------
                                    1403 ; Function VDP_SetSpritePattern
                                    1404 ; ---------------------------------
     000003B6                       1405 _VDP_SetSpritePattern::
     000003B6 47               [ 4] 1406 	ld	b, a
     000003B7 4D               [ 4] 1407 	ld	c, l
-                                   1408 ;E:\MSXgl\engine/src/vdp.c:2085: u16 low = g_SpriteAttributeLow + 2;
+                                   1408 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2085: u16 low = g_SpriteAttributeLow + 2;
     000003B8 ED 5Br37r00      [20] 1409 	ld	de, (_g_SpriteAttributeLow)
     000003BC 13               [ 6] 1410 	inc	de
     000003BD 13               [ 6] 1411 	inc	de
-                                   1412 ;E:\MSXgl\engine/src/vdp.c:2086: low += (index * 4);
+                                   1412 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2086: low += (index * 4);
     000003BE 68               [ 4] 1413 	ld	l, b
                                    1414 ;	spillPairReg hl
                                    1415 ;	spillPairReg hl
@@ -1420,23 +1420,23 @@
     000003C2 29               [11] 1420 	add	hl, hl
     000003C3 19               [11] 1421 	add	hl, de
     000003C4 EB               [ 4] 1422 	ex	de, hl
-                                   1423 ;E:\MSXgl\engine/src/vdp.c:2087: VDP_Poke(shape, low, g_SpriteAttributeHigh);
+                                   1423 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2087: VDP_Poke(shape, low, g_SpriteAttributeHigh);
     000003C5 79               [ 4] 1424 	ld	a, c
-                                   1425 ;E:\MSXgl\engine/src/vdp.c:2088: }
+                                   1425 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2088: }
     000003C6 C3r26r01         [10] 1426 	jp	_VDP_Poke_16K
-                                   1427 ;E:\MSXgl\engine/src/vdp.c:2092: void VDP_SetSpriteColorSM1(u8 index, u8 color)
+                                   1427 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2092: void VDP_SetSpriteColorSM1(u8 index, u8 color)
                                    1428 ;	---------------------------------
                                    1429 ; Function VDP_SetSpriteColorSM1
                                    1430 ; ---------------------------------
     000003C9                       1431 _VDP_SetSpriteColorSM1::
     000003C9 47               [ 4] 1432 	ld	b, a
     000003CA 4D               [ 4] 1433 	ld	c, l
-                                   1434 ;E:\MSXgl\engine/src/vdp.c:2094: u16 low = g_SpriteAttributeLow + 3;
+                                   1434 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2094: u16 low = g_SpriteAttributeLow + 3;
     000003CB ED 5Br37r00      [20] 1435 	ld	de, (_g_SpriteAttributeLow)
     000003CF 13               [ 6] 1436 	inc	de
     000003D0 13               [ 6] 1437 	inc	de
     000003D1 13               [ 6] 1438 	inc	de
-                                   1439 ;E:\MSXgl\engine/src/vdp.c:2095: low += (index * 4);
+                                   1439 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2095: low += (index * 4);
     000003D2 68               [ 4] 1440 	ld	l, b
                                    1441 ;	spillPairReg hl
                                    1442 ;	spillPairReg hl
@@ -1447,24 +1447,24 @@
     000003D6 29               [11] 1447 	add	hl, hl
     000003D7 19               [11] 1448 	add	hl, de
     000003D8 EB               [ 4] 1449 	ex	de, hl
-                                   1450 ;E:\MSXgl\engine/src/vdp.c:2096: VDP_Poke(color, low, g_SpriteAttributeHigh);
+                                   1450 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2096: VDP_Poke(color, low, g_SpriteAttributeHigh);
     000003D9 79               [ 4] 1451 	ld	a, c
-                                   1452 ;E:\MSXgl\engine/src/vdp.c:2097: }
+                                   1452 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2097: }
     000003DA C3r26r01         [10] 1453 	jp	_VDP_Poke_16K
-                                   1454 ;E:\MSXgl\engine/src/vdp.c:2130: void VDP_DisableSpritesFrom(u8 index)
+                                   1454 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2130: void VDP_DisableSpritesFrom(u8 index)
                                    1455 ;	---------------------------------
                                    1456 ; Function VDP_DisableSpritesFrom
                                    1457 ; ---------------------------------
     000003DD                       1458 _VDP_DisableSpritesFrom::
     000003DD 4F               [ 4] 1459 	ld	c, a
-                                   1460 ;E:\MSXgl\engine/src/vdp.c:2137: VDP_SetSpritePositionY(index, y);
+                                   1460 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2137: VDP_SetSpritePositionY(index, y);
     000003DE 2E D0            [ 7] 1461 	ld	l, #0xd0
                                    1462 ;	spillPairReg hl
                                    1463 ;	spillPairReg hl
     000003E0 79               [ 4] 1464 	ld	a, c
-                                   1465 ;E:\MSXgl\engine/src/vdp.c:2138: }
+                                   1465 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2138: }
     000003E1 C3rA5r03         [10] 1466 	jp	_VDP_SetSpritePositionY
-                                   1467 ;E:\MSXgl\engine/src/vdp.c:2212: void VDP_LoadPattern_GM2(const u8* src, u8 count, u8 offset)
+                                   1467 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2212: void VDP_LoadPattern_GM2(const u8* src, u8 count, u8 offset)
                                    1468 ;	---------------------------------
                                    1469 ; Function VDP_LoadPattern_GM2
                                    1470 ; ---------------------------------
@@ -1472,7 +1472,7 @@
     000003E4 DD E5            [15] 1472 	push	ix
     000003E6 DD 21 00 00      [14] 1473 	ld	ix,#0
     000003EA DD 39            [15] 1474 	add	ix,sp
-                                   1475 ;E:\MSXgl\engine/src/vdp.c:2214: u16 dst = g_ScreenPatternLow + (offset * 8);
+                                   1475 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2214: u16 dst = g_ScreenPatternLow + (offset * 8);
     000003EC DD 5E 05         [19] 1476 	ld	e, 5 (ix)
     000003EF 16 00            [ 7] 1477 	ld	d, #0x00
     000003F1 EB               [ 4] 1478 	ex	de, hl
@@ -1482,7 +1482,7 @@
     000003F5 EB               [ 4] 1482 	ex	de, hl
     000003F6 FD 2Ar35r00      [20] 1483 	ld	iy, (_g_ScreenPatternLow)
     000003FA FD 19            [15] 1484 	add	iy, de
-                                   1485 ;E:\MSXgl\engine/src/vdp.c:2215: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
+                                   1485 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2215: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
     000003FC DD 5E 04         [19] 1486 	ld	e, 4 (ix)
     000003FF 16 00            [ 7] 1487 	ld	d, #0x00
     00000401 EB               [ 4] 1488 	ex	de, hl
@@ -1502,10 +1502,10 @@
     00000413 FD E1            [14] 1502 	pop	iy
     00000415 C1               [10] 1503 	pop	bc
     00000416 E1               [10] 1504 	pop	hl
-                                   1505 ;E:\MSXgl\engine/src/vdp.c:2216: dst += 0x800;
+                                   1505 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2216: dst += 0x800;
     00000417 11 00 08         [10] 1506 	ld	de, #0x0800
     0000041A FD 19            [15] 1507 	add	iy, de
-                                   1508 ;E:\MSXgl\engine/src/vdp.c:2217: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
+                                   1508 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2217: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
     0000041C E5               [11] 1509 	push	hl
     0000041D C5               [11] 1510 	push	bc
     0000041E FD E5            [15] 1511 	push	iy
@@ -1516,21 +1516,21 @@
     00000427 FD E1            [14] 1516 	pop	iy
     00000429 C1               [10] 1517 	pop	bc
     0000042A E1               [10] 1518 	pop	hl
-                                   1519 ;E:\MSXgl\engine/src/vdp.c:2218: dst += 0x800;
+                                   1519 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2218: dst += 0x800;
     0000042B FD E5            [15] 1520 	push	iy
     0000042D D1               [10] 1521 	pop	de
     0000042E 7A               [ 4] 1522 	ld	a, d
     0000042F C6 08            [ 7] 1523 	add	a, #0x08
     00000431 57               [ 4] 1524 	ld	d, a
-                                   1525 ;E:\MSXgl\engine/src/vdp.c:2219: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
+                                   1525 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2219: VDP_WriteVRAM(src, dst, g_ScreenPatternHigh, count * 8);
     00000432 C5               [11] 1526 	push	bc
     00000433 CDrA8r00         [17] 1527 	call	_VDP_WriteVRAM_16K
-                                   1528 ;E:\MSXgl\engine/src/vdp.c:2220: }
+                                   1528 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2220: }
     00000436 DD E1            [14] 1529 	pop	ix
     00000438 E1               [10] 1530 	pop	hl
     00000439 F1               [10] 1531 	pop	af
     0000043A E9               [ 4] 1532 	jp	(hl)
-                                   1533 ;E:\MSXgl\engine/src/vdp.c:2224: void VDP_LoadColor_GM2(const u8* src, u8 count, u8 offset)
+                                   1533 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2224: void VDP_LoadColor_GM2(const u8* src, u8 count, u8 offset)
                                    1534 ;	---------------------------------
                                    1535 ; Function VDP_LoadColor_GM2
                                    1536 ; ---------------------------------
@@ -1538,7 +1538,7 @@
     0000043B DD E5            [15] 1538 	push	ix
     0000043D DD 21 00 00      [14] 1539 	ld	ix,#0
     00000441 DD 39            [15] 1540 	add	ix,sp
-                                   1541 ;E:\MSXgl\engine/src/vdp.c:2226: u16 dst = g_ScreenColorLow + (offset * 8);
+                                   1541 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2226: u16 dst = g_ScreenColorLow + (offset * 8);
     00000443 DD 5E 05         [19] 1542 	ld	e, 5 (ix)
     00000446 16 00            [ 7] 1543 	ld	d, #0x00
     00000448 EB               [ 4] 1544 	ex	de, hl
@@ -1548,7 +1548,7 @@
     0000044C EB               [ 4] 1548 	ex	de, hl
     0000044D FD 2Ar33r00      [20] 1549 	ld	iy, (_g_ScreenColorLow)
     00000451 FD 19            [15] 1550 	add	iy, de
-                                   1551 ;E:\MSXgl\engine/src/vdp.c:2227: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
+                                   1551 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2227: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
     00000453 DD 5E 04         [19] 1552 	ld	e, 4 (ix)
     00000456 16 00            [ 7] 1553 	ld	d, #0x00
     00000458 EB               [ 4] 1554 	ex	de, hl
@@ -1568,10 +1568,10 @@
     0000046A FD E1            [14] 1568 	pop	iy
     0000046C C1               [10] 1569 	pop	bc
     0000046D E1               [10] 1570 	pop	hl
-                                   1571 ;E:\MSXgl\engine/src/vdp.c:2228: dst += 0x800;
+                                   1571 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2228: dst += 0x800;
     0000046E 11 00 08         [10] 1572 	ld	de, #0x0800
     00000471 FD 19            [15] 1573 	add	iy, de
-                                   1574 ;E:\MSXgl\engine/src/vdp.c:2229: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
+                                   1574 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2229: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
     00000473 E5               [11] 1575 	push	hl
     00000474 C5               [11] 1576 	push	bc
     00000475 FD E5            [15] 1577 	push	iy
@@ -1582,21 +1582,21 @@
     0000047E FD E1            [14] 1582 	pop	iy
     00000480 C1               [10] 1583 	pop	bc
     00000481 E1               [10] 1584 	pop	hl
-                                   1585 ;E:\MSXgl\engine/src/vdp.c:2230: dst += 0x800;
+                                   1585 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2230: dst += 0x800;
     00000482 FD E5            [15] 1586 	push	iy
     00000484 D1               [10] 1587 	pop	de
     00000485 7A               [ 4] 1588 	ld	a, d
     00000486 C6 08            [ 7] 1589 	add	a, #0x08
     00000488 57               [ 4] 1590 	ld	d, a
-                                   1591 ;E:\MSXgl\engine/src/vdp.c:2231: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
+                                   1591 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2231: VDP_WriteVRAM(src, dst, g_ScreenColorHigh, count * 8);
     00000489 C5               [11] 1592 	push	bc
     0000048A CDrA8r00         [17] 1593 	call	_VDP_WriteVRAM_16K
-                                   1594 ;E:\MSXgl\engine/src/vdp.c:2232: }
+                                   1594 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2232: }
     0000048D DD E1            [14] 1595 	pop	ix
     0000048F E1               [10] 1596 	pop	hl
     00000490 F1               [10] 1597 	pop	af
     00000491 E9               [ 4] 1598 	jp	(hl)
-                                   1599 ;E:\MSXgl\engine/src/vdp.c:2236: void VDP_WriteLayout_GM2(const u8* src, u8 dx, u8 dy, u8 nx, u8 ny)
+                                   1599 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2236: void VDP_WriteLayout_GM2(const u8* src, u8 dx, u8 dy, u8 nx, u8 ny)
                                    1600 ;	---------------------------------
                                    1601 ; Function VDP_WriteLayout_GM2
                                    1602 ; ---------------------------------
@@ -1607,7 +1607,7 @@
     0000049A 3B               [ 6] 1607 	dec	sp
     0000049B 4D               [ 4] 1608 	ld	c, l
     0000049C 44               [ 4] 1609 	ld	b, h
-                                   1610 ;E:\MSXgl\engine/src/vdp.c:2238: u16 dst = g_ScreenLayoutLow + (dy * 32) + dx;
+                                   1610 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2238: u16 dst = g_ScreenLayoutLow + (dy * 32) + dx;
     0000049D DD 6E 05         [19] 1611 	ld	l, 5 (ix)
                                    1612 ;	spillPairReg hl
                                    1613 ;	spillPairReg hl
@@ -1624,13 +1624,13 @@
     000004AC DD 5E 04         [19] 1624 	ld	e, 4 (ix)
     000004AF 16 00            [ 7] 1625 	ld	d, #0x00
     000004B1 19               [11] 1626 	add	hl, de
-                                   1627 ;E:\MSXgl\engine/src/vdp.c:2239: for(u8 y = 0; y < ny; ++y)
+                                   1627 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2239: for(u8 y = 0; y < ny; ++y)
     000004B2 DD 36 FF 00      [19] 1628 	ld	-1 (ix), #0x00
     000004B6                       1629 00103$:
     000004B6 DD 7E FF         [19] 1630 	ld	a, -1 (ix)
     000004B9 DD 96 07         [19] 1631 	sub	a, 7 (ix)
     000004BC 30 22            [12] 1632 	jr	NC, 00105$
-                                   1633 ;E:\MSXgl\engine/src/vdp.c:2241: VDP_WriteVRAM(src, dst, g_ScreenLayoutHigh, nx);
+                                   1633 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2241: VDP_WriteVRAM(src, dst, g_ScreenLayoutHigh, nx);
     000004BE DD 5E 06         [19] 1634 	ld	e, 6 (ix)
     000004C1 16 00            [ 7] 1635 	ld	d, #0x00
     000004C3 E5               [11] 1636 	push	hl
@@ -1646,28 +1646,28 @@
     000004C9 CDrA8r00         [17] 1646 	call	_VDP_WriteVRAM_16K
     000004CC C1               [10] 1647 	pop	bc
     000004CD E1               [10] 1648 	pop	hl
-                                   1649 ;E:\MSXgl\engine/src/vdp.c:2242: src += nx;
+                                   1649 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2242: src += nx;
     000004CE 79               [ 4] 1650 	ld	a, c
     000004CF DD 86 06         [19] 1651 	add	a, 6 (ix)
     000004D2 4F               [ 4] 1652 	ld	c, a
     000004D3 30 01            [12] 1653 	jr	NC, 00118$
     000004D5 04               [ 4] 1654 	inc	b
     000004D6                       1655 00118$:
-                                   1656 ;E:\MSXgl\engine/src/vdp.c:2243: dst += 32;
+                                   1656 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2243: dst += 32;
     000004D6 11 20 00         [10] 1657 	ld	de, #0x0020
     000004D9 19               [11] 1658 	add	hl, de
-                                   1659 ;E:\MSXgl\engine/src/vdp.c:2239: for(u8 y = 0; y < ny; ++y)
+                                   1659 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2239: for(u8 y = 0; y < ny; ++y)
     000004DA DD 34 FF         [23] 1660 	inc	-1 (ix)
     000004DD C3rB6r04         [10] 1661 	jp	00103$
     000004E0                       1662 00105$:
-                                   1663 ;E:\MSXgl\engine/src/vdp.c:2245: }
+                                   1663 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2245: }
     000004E0 33               [ 6] 1664 	inc	sp
     000004E1 DD E1            [14] 1665 	pop	ix
     000004E3 E1               [10] 1666 	pop	hl
     000004E4 F1               [10] 1667 	pop	af
     000004E5 F1               [10] 1668 	pop	af
     000004E6 E9               [ 4] 1669 	jp	(hl)
-                                   1670 ;E:\MSXgl\engine/src/vdp.c:2249: void VDP_FillLayout_GM2(u8 value, u8 dx, u8 dy, u8 nx, u8 ny)
+                                   1670 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2249: void VDP_FillLayout_GM2(u8 value, u8 dx, u8 dy, u8 nx, u8 ny)
                                    1671 ;	---------------------------------
                                    1672 ; Function VDP_FillLayout_GM2
                                    1673 ; ---------------------------------
@@ -1677,7 +1677,7 @@
     000004ED DD 39            [15] 1677 	add	ix,sp
     000004EF 4F               [ 4] 1678 	ld	c, a
     000004F0 45               [ 4] 1679 	ld	b, l
-                                   1680 ;E:\MSXgl\engine/src/vdp.c:2251: u16 dst = g_ScreenLayoutLow + (dy * 32) + dx;
+                                   1680 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2251: u16 dst = g_ScreenLayoutLow + (dy * 32) + dx;
     000004F1 DD 6E 04         [19] 1681 	ld	l, 4 (ix)
                                    1682 ;	spillPairReg hl
                                    1683 ;	spillPairReg hl
@@ -1694,13 +1694,13 @@
     00000500 58               [ 4] 1694 	ld	e, b
     00000501 16 00            [ 7] 1695 	ld	d, #0x00
     00000503 19               [11] 1696 	add	hl, de
-                                   1697 ;E:\MSXgl\engine/src/vdp.c:2252: for(u8 y = 0; y < ny; ++y)
+                                   1697 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2252: for(u8 y = 0; y < ny; ++y)
     00000504 06 00            [ 7] 1698 	ld	b, #0x00
     00000506                       1699 00103$:
     00000506 78               [ 4] 1700 	ld	a, b
     00000507 DD 96 06         [19] 1701 	sub	a, 6 (ix)
     0000050A 30 17            [12] 1702 	jr	NC, 00105$
-                                   1703 ;E:\MSXgl\engine/src/vdp.c:2254: VDP_FillVRAM(value, dst, g_ScreenLayoutHigh, nx);
+                                   1703 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2254: VDP_FillVRAM(value, dst, g_ScreenLayoutHigh, nx);
     0000050C DD 5E 05         [19] 1704 	ld	e, 5 (ix)
     0000050F 16 00            [ 7] 1705 	ld	d, #0x00
     00000511 E5               [11] 1706 	push	hl
@@ -1711,14 +1711,14 @@
     00000516 CDrD1r00         [17] 1711 	call	_VDP_FillVRAM_16K
     00000519 C1               [10] 1712 	pop	bc
     0000051A E1               [10] 1713 	pop	hl
-                                   1714 ;E:\MSXgl\engine/src/vdp.c:2255: dst += 32;
+                                   1714 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2255: dst += 32;
     0000051B 11 20 00         [10] 1715 	ld	de, #0x0020
     0000051E 19               [11] 1716 	add	hl, de
-                                   1717 ;E:\MSXgl\engine/src/vdp.c:2252: for(u8 y = 0; y < ny; ++y)
+                                   1717 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2252: for(u8 y = 0; y < ny; ++y)
     0000051F 04               [ 4] 1718 	inc	b
     00000520 C3r06r05         [10] 1719 	jp	00103$
     00000523                       1720 00105$:
-                                   1721 ;E:\MSXgl\engine/src/vdp.c:2257: }
+                                   1721 ;C:\msx\projetos\MSXgl\engine/src/vdp.c:2257: }
     00000523 DD E1            [14] 1722 	pop	ix
     00000525 E1               [10] 1723 	pop	hl
     00000526 F1               [10] 1724 	pop	af

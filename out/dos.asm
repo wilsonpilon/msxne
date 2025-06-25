@@ -330,17 +330,17 @@ _g_DOS_Time::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;E:\MSXgl\engine/src/dos.c:36: void DOS_Call(u8 func)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:36: void DOS_Call(u8 func)
 ;	---------------------------------
 ; Function DOS_Call
 ; ---------------------------------
 _DOS_Call::
-;E:\MSXgl\engine/src/dos.c:44: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:44: __endasm;
 	push	ix
 	ld	c, a
 	call	0x0005
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:45: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:45: }
 	ret
 ___str_0:
 	.db 0x0a
@@ -511,157 +511,157 @@ _g_RAMAD2	=	0xf343
 _g_RAMAD3	=	0xf344
 _g_MASTER	=	0xf348
 _g_BDOS	=	0xf37d
-;E:\MSXgl\engine/src/dos.c:49: void DOS_Exit0()
+;C:\msx\projetos\MSXgl\engine/src/dos.c:49: void DOS_Exit0()
 ;	---------------------------------
 ; Function DOS_Exit0
 ; ---------------------------------
 _DOS_Exit0::
-;E:\MSXgl\engine/src/dos.c:54: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:54: __endasm;
 	ld	c, #0x00
 	jp	0x0005
-;E:\MSXgl\engine/src/dos.c:55: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:55: }
 	ret
-;E:\MSXgl\engine/src/dos.c:59: c8 DOS_CharInput()
+;C:\msx\projetos\MSXgl\engine/src/dos.c:59: c8 DOS_CharInput()
 ;	---------------------------------
 ; Function DOS_CharInput
 ; ---------------------------------
 _DOS_CharInput::
-;E:\MSXgl\engine/src/dos.c:67: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:67: __endasm;
 	push	ix
 	ld	c, #0x01
 	call	0x0005
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:68: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:68: }
 	ret
-;E:\MSXgl\engine/src/dos.c:72: void DOS_CharOutput(c8 chr)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:72: void DOS_CharOutput(c8 chr)
 ;	---------------------------------
 ; Function DOS_CharOutput
 ; ---------------------------------
 _DOS_CharOutput::
-;E:\MSXgl\engine/src/dos.c:81: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:81: __endasm;
 	push	ix
 	ld	e, a
 	ld	c, #0x02
 	call	0x0005
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:82: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:82: }
 	ret
-;E:\MSXgl\engine/src/dos.c:86: void DOS_StringOutput(const c8* str)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:86: void DOS_StringOutput(const c8* str)
 ;	---------------------------------
 ; Function DOS_StringOutput
 ; ---------------------------------
 _DOS_StringOutput::
-;E:\MSXgl\engine/src/dos.c:95: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:95: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x09
 	call	0x0005
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:96: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:96: }
 	ret
-;E:\MSXgl\engine/src/dos.c:102: void DOS_SetTransferAddr(void* data)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:102: void DOS_SetTransferAddr(void* data)
 ;	---------------------------------
 ; Function DOS_SetTransferAddr
 ; ---------------------------------
 _DOS_SetTransferAddr::
-;E:\MSXgl\engine/src/dos.c:113: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:113: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x1A
 	call	0x0005
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:114: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:114: }
 	ret
-;E:\MSXgl\engine/src/dos.c:121: u8 DOS_OpenFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:121: u8 DOS_OpenFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_OpenFCB
 ; ---------------------------------
 _DOS_OpenFCB::
-;E:\MSXgl\engine/src/dos.c:135: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:135: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x0F
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:136: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:136: }
 	ret
-;E:\MSXgl\engine/src/dos.c:140: u8 DOS_CreateFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:140: u8 DOS_CreateFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_CreateFCB
 ; ---------------------------------
 _DOS_CreateFCB::
-;E:\MSXgl\engine/src/dos.c:154: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:154: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x16
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:155: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:155: }
 	ret
-;E:\MSXgl\engine/src/dos.c:159: u8 DOS_CloseFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:159: u8 DOS_CloseFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_CloseFCB
 ; ---------------------------------
 _DOS_CloseFCB::
-;E:\MSXgl\engine/src/dos.c:173: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:173: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x10
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:174: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:174: }
 	ret
-;E:\MSXgl\engine/src/dos.c:178: u8 DOS_SequentialReadFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:178: u8 DOS_SequentialReadFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_SequentialReadFCB
 ; ---------------------------------
 _DOS_SequentialReadFCB::
-;E:\MSXgl\engine/src/dos.c:192: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:192: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x14
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:193: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:193: }
 	ret
-;E:\MSXgl\engine/src/dos.c:197: u8 DOS_SequentialWriteFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:197: u8 DOS_SequentialWriteFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_SequentialWriteFCB
 ; ---------------------------------
 _DOS_SequentialWriteFCB::
-;E:\MSXgl\engine/src/dos.c:211: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:211: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x15
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:212: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:212: }
 	ret
-;E:\MSXgl\engine/src/dos.c:216: u8 DOS_RandomBlockWriteFCB(FCB* stream, u16 records)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:216: u8 DOS_RandomBlockWriteFCB(FCB* stream, u16 records)
 ;	---------------------------------
 ; Function DOS_RandomBlockWriteFCB
 ; ---------------------------------
 _DOS_RandomBlockWriteFCB::
-;E:\MSXgl\engine/src/dos.c:231: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:231: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x26
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:232: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:232: }
 	ret
-;E:\MSXgl\engine/src/dos.c:236: u16 DOS_RandomBlockReadFCB(FCB* stream, u16 records)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:236: u16 DOS_RandomBlockReadFCB(FCB* stream, u16 records)
 ;	---------------------------------
 ; Function DOS_RandomBlockReadFCB
 ; ---------------------------------
 _DOS_RandomBlockReadFCB::
-;E:\MSXgl\engine/src/dos.c:252: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:252: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x27
@@ -669,41 +669,41 @@ _DOS_RandomBlockReadFCB::
 	ld	(_g_DOS_LastError), a
 	ex	de, hl
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:253: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:253: }
 	ret
-;E:\MSXgl\engine/src/dos.c:257: u8 DOS_FindFirstFileFCB(FCB* stream)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:257: u8 DOS_FindFirstFileFCB(FCB* stream)
 ;	---------------------------------
 ; Function DOS_FindFirstFileFCB
 ; ---------------------------------
 _DOS_FindFirstFileFCB::
-;E:\MSXgl\engine/src/dos.c:270: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:270: __endasm;
 	push	ix
 	ex	de, hl
 	ld	c, #0x11
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:271: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:271: }
 	ret
-;E:\MSXgl\engine/src/dos.c:275: u8 DOS_FindNextFileFCB()
+;C:\msx\projetos\MSXgl\engine/src/dos.c:275: u8 DOS_FindNextFileFCB()
 ;	---------------------------------
 ; Function DOS_FindNextFileFCB
 ; ---------------------------------
 _DOS_FindNextFileFCB::
-;E:\MSXgl\engine/src/dos.c:285: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:285: __endasm;
 	push	ix
 	ld	c, #0x12
 	call	0x0005
 	ld	(_g_DOS_LastError), a
 	pop	ix
-;E:\MSXgl\engine/src/dos.c:286: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:286: }
 	ret
-;E:\MSXgl\engine/src/dos.c:897: u8 DOS_GetVersion(DOS_Version* ver)
+;C:\msx\projetos\MSXgl\engine/src/dos.c:897: u8 DOS_GetVersion(DOS_Version* ver)
 ;	---------------------------------
 ; Function DOS_GetVersion
 ; ---------------------------------
 _DOS_GetVersion::
-;E:\MSXgl\engine/src/dos.c:919: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/dos.c:919: __endasm;
 	push	ix
 	push	hl
 	ld	c, #0x6F
@@ -713,7 +713,7 @@ _DOS_GetVersion::
 	or	a
 	ret	nz
 	ld	a, b
-;E:\MSXgl\engine/src/dos.c:921: }
+;C:\msx\projetos\MSXgl\engine/src/dos.c:921: }
 	ret
 	.area _CODE
 	.area _INITIALIZER

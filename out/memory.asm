@@ -46,26 +46,26 @@ _g_StackAddress::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;E:\MSXgl\engine/src/memory.c:24: u16 Mem_GetStackAddress()
+;C:\msx\projetos\MSXgl\engine/src/memory.c:24: u16 Mem_GetStackAddress()
 ;	---------------------------------
 ; Function Mem_GetStackAddress
 ; ---------------------------------
 _Mem_GetStackAddress::
-;E:\MSXgl\engine/src/memory.c:29: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/memory.c:29: __endasm;
 	ld	(_g_StackAddress), sp
 	ld	de, (_g_StackAddress)
-;E:\MSXgl\engine/src/memory.c:30: }
+;C:\msx\projetos\MSXgl\engine/src/memory.c:30: }
 	ret
-;E:\MSXgl\engine/src/memory.c:34: void* Mem_HeapAlloc(u16 size)
+;C:\msx\projetos\MSXgl\engine/src/memory.c:34: void* Mem_HeapAlloc(u16 size)
 ;	---------------------------------
 ; Function Mem_HeapAlloc
 ; ---------------------------------
 _Mem_HeapAlloc::
 	ld	c, l
 	ld	b, h
-;E:\MSXgl\engine/src/memory.c:36: u16 addr = g_HeapStartAddress;
+;C:\msx\projetos\MSXgl\engine/src/memory.c:36: u16 addr = g_HeapStartAddress;
 	ld	de, (_g_HeapStartAddress)
-;E:\MSXgl\engine/src/memory.c:37: g_HeapStartAddress += size;
+;C:\msx\projetos\MSXgl\engine/src/memory.c:37: g_HeapStartAddress += size;
 	ld	hl, #_g_HeapStartAddress
 	ld	a, (hl)
 	add	a, c
@@ -74,16 +74,16 @@ _Mem_HeapAlloc::
 	ld	a, (hl)
 	adc	a, b
 	ld	(hl), a
-;E:\MSXgl\engine/src/memory.c:38: return (void*)addr;
-;E:\MSXgl\engine/src/memory.c:39: }
+;C:\msx\projetos\MSXgl\engine/src/memory.c:38: return (void*)addr;
+;C:\msx\projetos\MSXgl\engine/src/memory.c:39: }
 	ret
-;E:\MSXgl\engine/src/memory.c:43: void Mem_HeapFree(u16 size)
+;C:\msx\projetos\MSXgl\engine/src/memory.c:43: void Mem_HeapFree(u16 size)
 ;	---------------------------------
 ; Function Mem_HeapFree
 ; ---------------------------------
 _Mem_HeapFree::
 	ex	de, hl
-;E:\MSXgl\engine/src/memory.c:45: g_HeapStartAddress -= size;	
+;C:\msx\projetos\MSXgl\engine/src/memory.c:45: g_HeapStartAddress -= size;	
 	ld	hl, #_g_HeapStartAddress
 	ld	a, (hl)
 	sub	a, e
@@ -92,14 +92,14 @@ _Mem_HeapFree::
 	ld	a, (hl)
 	sbc	a, d
 	ld	(hl), a
-;E:\MSXgl\engine/src/memory.c:46: }
+;C:\msx\projetos\MSXgl\engine/src/memory.c:46: }
 	ret
-;E:\MSXgl\engine/src/memory.c:157: void Mem_Set_16b(u16 val, void* dest, u16 size)
+;C:\msx\projetos\MSXgl\engine/src/memory.c:157: void Mem_Set_16b(u16 val, void* dest, u16 size)
 ;	---------------------------------
 ; Function Mem_Set_16b
 ; ---------------------------------
 _Mem_Set_16b::
-;E:\MSXgl\engine/src/memory.c:191: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/memory.c:191: __endasm;
 	push	de
 	ex	de, hl
 	ld	(hl), d
@@ -115,7 +115,7 @@ _Mem_Set_16b::
 	ldir
 	 mem_fill16_end:
 	jp	(iy)
-;E:\MSXgl\engine/src/memory.c:192: }
+;C:\msx\projetos\MSXgl\engine/src/memory.c:192: }
 	pop	hl
 	pop	af
 	jp	(hl)

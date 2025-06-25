@@ -1,13 +1,13 @@
 -mjwx
--i E:\MSXgl\projects\msxne/out/ne.ihx
+-i C:\msx\projetos\MSXgl\projects\msxne/out/ne.ihx
 -b _CODE = 0x0100
 -b _DATA = 0x0000
--k E:\MSXgl\tools/sdcc/lib/z80
--k E:\MSXgl\tools/sdcc/bin\..\lib\z80
--l E:\MSXgl\projects\msxne/out/msxgl.lib
+-k C:\msx\projetos\MSXgl\tools/sdcc/lib/z80
+-k C:\msx\projetos\MSXgl\tools/sdcc/bin\..\lib\z80
+-l C:\msx\projetos\MSXgl\projects\msxne/out/msxgl.lib
 -l z80
-E:\MSXgl\projects\msxne/out/crt0_dos.rel
-E:\MSXgl\projects\msxne/out/ne.rel
-E:\MSXgl\projects\msxne/out/extra.rel
+C:\msx\projetos\MSXgl\projects\msxne/out/crt0_dos.rel
+C:\msx\projetos\MSXgl\projects\msxne/out/ne.rel
+C:\msx\projetos\MSXgl\projects\msxne/out/extra.rel
 
 -e

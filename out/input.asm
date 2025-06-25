@@ -9,6 +9,8 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _Input_Detect
+	.globl _g_InputBufferOld
+	.globl _g_InputBufferNew
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -195,7 +197,9 @@
 	.globl _g_RDPRIM
 	.globl _Joystick_Read
 	.globl _Keyboard_Read
+	.globl _Keyboard_Update
 	.globl _Keyboard_IsKeyPressed
+	.globl _Keyboard_IsKeyPushed
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -268,6 +272,10 @@ _g_SLTSL	=	0xffff
 ; ram data
 ;--------------------------------------------------------
 	.area _INITIALIZED
+_g_InputBufferNew::
+	.ds 2
+_g_InputBufferOld::
+	.ds 2
 ;--------------------------------------------------------
 ; absolute external ram data
 ;--------------------------------------------------------
@@ -288,12 +296,12 @@ _g_SLTSL	=	0xffff
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;E:\MSXgl\engine/src/input.c:27: u8 Input_Detect(enum INPUT_PORT port)
+;C:\msx\projetos\MSXgl\engine/src/input.c:27: u8 Input_Detect(enum INPUT_PORT port)
 ;	---------------------------------
 ; Function Input_Detect
 ; ---------------------------------
 _Input_Detect::
-;E:\MSXgl\engine/src/input.c:49: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/input.c:49: __endasm;
 	ld	h, a
 	and	#0b11001111
 	ld	l, a
@@ -309,7 +317,7 @@ _Input_Detect::
 	out	(0xA0), a
 	in	a, (0xA2)
 	and	#0x3F
-;E:\MSXgl\engine/src/input.c:50: }
+;C:\msx\projetos\MSXgl\engine/src/input.c:50: }
 	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -456,12 +464,12 @@ _g_RG25SAV	=	0xfffa
 _g_RG26SAV	=	0xfffb
 _g_RG27SAV	=	0xfffc
 _g_SVFFFD	=	0xfffd
-;E:\MSXgl\engine/src/input.c:69: u8 Joystick_Read(u8 port) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
+;C:\msx\projetos\MSXgl\engine/src/input.c:69: u8 Joystick_Read(u8 port) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
 ;	---------------------------------
 ; Function Joystick_Read
 ; ---------------------------------
 _Joystick_Read::
-;E:\MSXgl\engine/src/input.c:91: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/input.c:91: __endasm;
 	ld	a, #15
 	di
 	out	(0xA0), a
@@ -472,35 +480,84 @@ _Joystick_Read::
 	ei
 	in	a, (0xA2)
 	ld	l, a
-;E:\MSXgl\engine/src/input.c:92: }
+;C:\msx\projetos\MSXgl\engine/src/input.c:92: }
 	ret
-;E:\MSXgl\engine/src/input.c:268: u8 Keyboard_Read(u8 row) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
+;C:\msx\projetos\MSXgl\engine/src/input.c:268: u8 Keyboard_Read(u8 row) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
 ;	---------------------------------
 ; Function Keyboard_Read
 ; ---------------------------------
 _Keyboard_Read::
-;E:\MSXgl\engine/src/input.c:278: __endasm;
+;C:\msx\projetos\MSXgl\engine/src/input.c:278: __endasm;
 	in	a, (0xAA)
 	and	#0xF0
 	or	l
 	out	(0xAA), a
 	in	a, (0xA9)
 	ld	l, a
-;E:\MSXgl\engine/src/input.c:279: }
+;C:\msx\projetos\MSXgl\engine/src/input.c:279: }
 	ret
-;E:\MSXgl\engine/src/input.c:320: u8 Keyboard_IsKeyPressed(u8 key)
+;C:\msx\projetos\MSXgl\engine/src/input.c:290: void Keyboard_Update()
+;	---------------------------------
+; Function Keyboard_Update
+; ---------------------------------
+_Keyboard_Update::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	push	af
+;C:\msx\projetos\MSXgl\engine/src/input.c:292: for(u8 i = INPUT_KB_UPDATE_MIN; i <= INPUT_KB_UPDATE_MAX; ++i)	
+	ld	c, #0x00
+00103$:
+	ld	a, #0x08
+	sub	a, c
+	jr	C, 00105$
+;C:\msx\projetos\MSXgl\engine/src/input.c:294: g_InputBufferOld[i] = g_InputBufferNew[i];
+	ld	a, (_g_InputBufferOld+0)
+	add	a, c
+	ld	-2 (ix), a
+	ld	a, (_g_InputBufferOld+1)
+	adc	a, #0x00
+	ld	-1 (ix), a
+	ld	hl, (_g_InputBufferNew)
+	ld	b, #0x00
+	add	hl, bc
+	ld	a, (hl)
+	pop	hl
+	push	hl
+	ld	(hl), a
+;C:\msx\projetos\MSXgl\engine/src/input.c:295: g_InputBufferNew[i] = Keyboard_Read(i);
+	ld	hl, (_g_InputBufferNew)
+	ld	b, #0x00
+	add	hl, bc
+	push	hl
+	ld	l, c
+;	spillPairReg hl
+;	spillPairReg hl
+	call	_Keyboard_Read
+	ld	a, l
+	pop	hl
+	ld	(hl), a
+;C:\msx\projetos\MSXgl\engine/src/input.c:292: for(u8 i = INPUT_KB_UPDATE_MIN; i <= INPUT_KB_UPDATE_MAX; ++i)	
+	inc	c
+	jp	00103$
+00105$:
+;C:\msx\projetos\MSXgl\engine/src/input.c:297: }
+	ld	sp, ix
+	pop	ix
+	ret
+;C:\msx\projetos\MSXgl\engine/src/input.c:301: bool Keyboard_IsKeyPressed(u8 key)
 ;	---------------------------------
 ; Function Keyboard_IsKeyPressed
 ; ---------------------------------
 _Keyboard_IsKeyPressed::
-;E:\MSXgl\engine/src/input.c:322: return (Keyboard_Read(KEY_ROW(key)) & (1 << KEY_IDX(key))) == 0;
+;C:\msx\projetos\MSXgl\engine/src/input.c:303: return (g_InputBufferNew[KEY_ROW(key)] & (1 << KEY_IDX(key))) == 0;
 	ld	e, a
 	and	a, #0x0f
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-	call	_Keyboard_Read
-	ld	c, l
+	ld	c, a
+	ld	b, #0x00
+	ld	iy, (_g_InputBufferNew)
+	add	iy, bc
+	ld	c, 0 (iy)
 	srl	e
 	srl	e
 	srl	e
@@ -526,8 +583,72 @@ _Keyboard_IsKeyPressed::
 	ld	a, #0x01
 	ret	Z
 	xor	a, a
-;E:\MSXgl\engine/src/input.c:323: }
+;C:\msx\projetos\MSXgl\engine/src/input.c:304: }
+	ret
+;C:\msx\projetos\MSXgl\engine/src/input.c:308: bool Keyboard_IsKeyPushed(u8 key)
+;	---------------------------------
+; Function Keyboard_IsKeyPushed
+; ---------------------------------
+_Keyboard_IsKeyPushed::
+;C:\msx\projetos\MSXgl\engine/src/input.c:310: u8 flag = 1 << KEY_IDX(key);
+	ld	e, a
+	rlca
+	rlca
+	rlca
+	rlca
+	and	a, #0x0f
+	ld	b, a
+	ld	c, #0x01
+	inc	b
+	jp	00112$
+00111$:
+	sla	c
+00112$:
+	djnz	00111$
+;C:\msx\projetos\MSXgl\engine/src/input.c:311: u8 newKey = (g_InputBufferNew[KEY_ROW(key)] & flag) == 0;
+	ld	a, e
+	and	a, #0x0f
+	ld	e, a
+	ld	d, #0x00
+	ld	iy, (_g_InputBufferNew)
+	add	iy, de
+	ld	a, 0 (iy)
+	and	a,c
+	ld	a, #0x01
+	jr	Z, 00114$
+	xor	a, a
+00114$:
+	ld	b, a
+;C:\msx\projetos\MSXgl\engine/src/input.c:312: u8 oldKey = (g_InputBufferOld[KEY_ROW(key)] & flag) == 0;
+	ld	a, (_g_InputBufferOld+0)
+	add	a, e
+	ld	e, a
+	ld	a, (_g_InputBufferOld+1)
+	adc	a, d
+	ld	d, a
+	ld	a, (de)
+	and	a,c
+	ld	a, #0x01
+	jr	Z, 00116$
+	xor	a, a
+00116$:
+;C:\msx\projetos\MSXgl\engine/src/input.c:313: return newKey && !oldKey;
+	inc	b
+	dec	b
+	jr	Z, 00103$
+	or	a, a
+	jr	Z, 00104$
+00103$:
+	xor	a, a
+	ret
+00104$:
+	ld	a, #0x01
+;C:\msx\projetos\MSXgl\engine/src/input.c:314: }
 	ret
 	.area _CODE
 	.area _INITIALIZER
+__xinit__g_InputBufferNew:
+	.dw _g_NEWKEY
+__xinit__g_InputBufferOld:
+	.dw _g_OLDKEY
 	.area _CABS (ABS)

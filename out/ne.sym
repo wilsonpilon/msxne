@@ -7,11 +7,11 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-    _DOS_StringOutput                                               ******** GX
+    _DOS_CharOutput                                                 ******** GX
     _DOS_TPAUpperAddr                                           =   00000006 G
-    _String_Format                                                  ******** GX
-  0 ___str_0                                                        00000041 R
-  0 ___str_1                                                        00000045 R
+    _Keyboard_IsKeyPushed                                           ******** GX
+    _Keyboard_Update                                                ******** GX
+  0 ___str_0                                                        000001ED R
     _g_ACPAGE                                                   =   0000FAF6 G
     _g_ASPCT1                                                   =   0000F40B G
     _g_ASPCT2                                                   =   0000F40D G
@@ -258,7 +258,6 @@ Symbol Table
     _g_XSAVE                                                    =   0000FAFE G
     _g_YSAVE                                                    =   0000FB00 G
   0 _main                                                           00000000 GR
-    _readKeyboard                                                   ******** GX
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 6
@@ -266,7 +265,7 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size       52   flags    0
+   0 _CODE                                      size      1F1   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8
