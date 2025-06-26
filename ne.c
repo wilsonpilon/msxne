@@ -5,15 +5,28 @@
 #include <msxgl.h>
 #include <dos.h>
 #include <input.h>
+
+#include <font/font_mgl_sample6.h>
+
+
 #include "ne.h"
 #include "extra.h"
 
 int main()
 {
 	c8 curchar = 0;
+	bool capslock = false;
+	bool capsshift = false;
 	while (1)
 	{
 		Keyboard_Update();
+		if(Keyboard_IsKeyPushed(KEY_CAPS))
+			capslock = (capslock) ? false : true;
+		
+		capsshift = false;
+		if(Keyboard_IsKeyPressed(KEY_SHIFT))
+			capsshift = true;
+
 		if(Keyboard_IsKeyPushed(KEY_SPACE))
 			curchar = ' ';
 
@@ -70,7 +83,6 @@ int main()
 		if(Keyboard_IsKeyPushed(KEY_Z))
 			curchar = 'Z';
 
-
 		if(Keyboard_IsKeyPushed(KEY_0))
 			curchar = '0';
 		if(Keyboard_IsKeyPushed(KEY_1))
@@ -91,12 +103,20 @@ int main()
 			curchar = '8';
 		if(Keyboard_IsKeyPushed(KEY_9))
 			curchar = '9';
-		if (Keyboard_IsKeyPushed(KEY_ESC))
+		
+		if(Keyboard_IsKeyPushed(KEY_ESC))
 			break;
+
 		if((curchar >= ' ') && (curchar <= 'Z'))
 		{
-			if(!g_CAPST)
-				curchar = curchar - 'A' + 'a';
+			if(curchar != ' ')
+				if(!capslock)
+					curchar = curchar - 'A' + 'a';
+				if(capsshift && capslock)
+					curchar = curchar - 'A' + 'a';
+				if(capsshift && !capslock)
+					curchar = curchar - 'a' + 'A';
+
 			DOS_CharOutput(curchar);
 			curchar = 0;
 		}

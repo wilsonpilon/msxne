@@ -11,6 +11,7 @@
 	.globl _main
 	.globl _DOS_CharOutput
 	.globl _Keyboard_IsKeyPushed
+	.globl _Keyboard_IsKeyPressed
 	.globl _Keyboard_Update
 	.globl _DOS_TPAUpperAddr
 	.globl _g_SLTSL
@@ -52,6 +53,7 @@
 	.globl _g_LINLEN
 	.globl _g_LINL32
 	.globl _g_LINL40
+	.globl _g_Font_MGL_Sample6
 	.globl _g_BDOS
 	.globl _g_MASTER
 	.globl _g_RAMAD3
@@ -309,419 +311,490 @@ _DOS_TPAUpperAddr	=	0x0006
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;./ne.c:11: int main()
+;./ne.c:15: int main()
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;./ne.c:13: c8 curchar = 0;
-	ld	c, #0x00
-;./ne.c:14: while (1)
-00183$:
-;./ne.c:16: Keyboard_Update();
+	dec	sp
+;./ne.c:17: c8 curchar = 0;
+;./ne.c:18: bool capslock = false;
+	ld	bc, #0x0
+;./ne.c:20: while (1)
+00195$:
+;./ne.c:22: Keyboard_Update();
 	push	bc
 	call	_Keyboard_Update
-	ld	a, #0x08
+	ld	a, #0x36
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00102$
-;./ne.c:18: curchar = ' ';
-	ld	c, #0x20
+;./ne.c:24: capslock = (capslock) ? false : true;
+	ld	a, b
+	or	a, a
+	jr	Z, 00199$
+	ld	de, #0x0000
+	jp	00200$
+00199$:
+	ld	de, #0x0001
+00200$:
+	ld	b, e
 00102$:
-;./ne.c:20: if(Keyboard_IsKeyPushed(KEY_A))
+;./ne.c:26: capsshift = false;
+	ld	iy, #0
+	add	iy, sp
+	ld	0 (iy), #0x00
+;./ne.c:27: if(Keyboard_IsKeyPressed(KEY_SHIFT))
+	push	bc
+	ld	a, #0x06
+	call	_Keyboard_IsKeyPressed
+	pop	bc
+	or	a, a
+	jr	Z, 00104$
+;./ne.c:28: capsshift = true;
+	ld	iy, #0
+	add	iy, sp
+	ld	0 (iy), #0x01
+00104$:
+;./ne.c:30: if(Keyboard_IsKeyPushed(KEY_SPACE))
+	push	bc
+	ld	a, #0x08
+	call	_Keyboard_IsKeyPushed
+	pop	bc
+	or	a, a
+	jr	Z, 00106$
+;./ne.c:31: curchar = ' ';
+	ld	c, #0x20
+00106$:
+;./ne.c:33: if(Keyboard_IsKeyPushed(KEY_A))
 	push	bc
 	ld	a, #0x62
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00104$
-;./ne.c:21: curchar = 'A';
+	jr	Z, 00108$
+;./ne.c:34: curchar = 'A';
 	ld	c, #0x41
-00104$:
-;./ne.c:22: if(Keyboard_IsKeyPushed(KEY_B))
+00108$:
+;./ne.c:35: if(Keyboard_IsKeyPushed(KEY_B))
 	push	bc
 	ld	a, #0x72
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00106$
-;./ne.c:23: curchar = 'B';
+	jr	Z, 00110$
+;./ne.c:36: curchar = 'B';
 	ld	c, #0x42
-00106$:
-;./ne.c:24: if(Keyboard_IsKeyPushed(KEY_C))
+00110$:
+;./ne.c:37: if(Keyboard_IsKeyPushed(KEY_C))
 	push	bc
 	ld	a, #0x03
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00108$
-;./ne.c:25: curchar = 'C';
+	jr	Z, 00112$
+;./ne.c:38: curchar = 'C';
 	ld	c, #0x43
-00108$:
-;./ne.c:26: if(Keyboard_IsKeyPushed(KEY_D))
+00112$:
+;./ne.c:39: if(Keyboard_IsKeyPushed(KEY_D))
 	push	bc
 	ld	a, #0x13
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00110$
-;./ne.c:27: curchar = 'D';
+	jr	Z, 00114$
+;./ne.c:40: curchar = 'D';
 	ld	c, #0x44
-00110$:
-;./ne.c:28: if(Keyboard_IsKeyPushed(KEY_E))
+00114$:
+;./ne.c:41: if(Keyboard_IsKeyPushed(KEY_E))
 	push	bc
 	ld	a, #0x23
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00112$
-;./ne.c:29: curchar = 'E';
+	jr	Z, 00116$
+;./ne.c:42: curchar = 'E';
 	ld	c, #0x45
-00112$:
-;./ne.c:30: if(Keyboard_IsKeyPushed(KEY_F))
+00116$:
+;./ne.c:43: if(Keyboard_IsKeyPushed(KEY_F))
 	push	bc
 	ld	a, #0x33
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00114$
-;./ne.c:31: curchar = 'F';
+	jr	Z, 00118$
+;./ne.c:44: curchar = 'F';
 	ld	c, #0x46
-00114$:
-;./ne.c:32: if(Keyboard_IsKeyPushed(KEY_G))
+00118$:
+;./ne.c:45: if(Keyboard_IsKeyPushed(KEY_G))
 	push	bc
 	ld	a, #0x43
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00116$
-;./ne.c:33: curchar = 'G';
+	jr	Z, 00120$
+;./ne.c:46: curchar = 'G';
 	ld	c, #0x47
-00116$:
-;./ne.c:34: if(Keyboard_IsKeyPushed(KEY_H))
+00120$:
+;./ne.c:47: if(Keyboard_IsKeyPushed(KEY_H))
 	push	bc
 	ld	a, #0x53
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00118$
-;./ne.c:35: curchar = 'H';
+	jr	Z, 00122$
+;./ne.c:48: curchar = 'H';
 	ld	c, #0x48
-00118$:
-;./ne.c:36: if(Keyboard_IsKeyPushed(KEY_I))
+00122$:
+;./ne.c:49: if(Keyboard_IsKeyPushed(KEY_I))
 	push	bc
 	ld	a, #0x63
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00120$
-;./ne.c:37: curchar = 'I';
+	jr	Z, 00124$
+;./ne.c:50: curchar = 'I';
 	ld	c, #0x49
-00120$:
-;./ne.c:38: if(Keyboard_IsKeyPushed(KEY_J))
+00124$:
+;./ne.c:51: if(Keyboard_IsKeyPushed(KEY_J))
 	push	bc
 	ld	a, #0x73
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00122$
-;./ne.c:39: curchar = 'J';
+	jr	Z, 00126$
+;./ne.c:52: curchar = 'J';
 	ld	c, #0x4a
-00122$:
-;./ne.c:40: if(Keyboard_IsKeyPushed(KEY_K))
+00126$:
+;./ne.c:53: if(Keyboard_IsKeyPushed(KEY_K))
 	push	bc
 	ld	a, #0x04
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00124$
-;./ne.c:41: curchar = 'K';
+	jr	Z, 00128$
+;./ne.c:54: curchar = 'K';
 	ld	c, #0x4b
-00124$:
-;./ne.c:42: if(Keyboard_IsKeyPushed(KEY_L))
+00128$:
+;./ne.c:55: if(Keyboard_IsKeyPushed(KEY_L))
 	push	bc
 	ld	a, #0x14
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00126$
-;./ne.c:43: curchar = 'L';
+	jr	Z, 00130$
+;./ne.c:56: curchar = 'L';
 	ld	c, #0x4c
-00126$:
-;./ne.c:44: if(Keyboard_IsKeyPushed(KEY_M))
+00130$:
+;./ne.c:57: if(Keyboard_IsKeyPushed(KEY_M))
 	push	bc
 	ld	a, #0x24
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00128$
-;./ne.c:45: curchar = 'M';
+	jr	Z, 00132$
+;./ne.c:58: curchar = 'M';
 	ld	c, #0x4d
-00128$:
-;./ne.c:46: if(Keyboard_IsKeyPushed(KEY_N))
+00132$:
+;./ne.c:59: if(Keyboard_IsKeyPushed(KEY_N))
 	push	bc
 	ld	a, #0x34
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00130$
-;./ne.c:47: curchar = 'N';
+	jr	Z, 00134$
+;./ne.c:60: curchar = 'N';
 	ld	c, #0x4e
-00130$:
-;./ne.c:48: if(Keyboard_IsKeyPushed(KEY_O))
+00134$:
+;./ne.c:61: if(Keyboard_IsKeyPushed(KEY_O))
 	push	bc
 	ld	a, #0x44
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00132$
-;./ne.c:49: curchar = 'O';
+	jr	Z, 00136$
+;./ne.c:62: curchar = 'O';
 	ld	c, #0x4f
-00132$:
-;./ne.c:50: if(Keyboard_IsKeyPushed(KEY_P))
+00136$:
+;./ne.c:63: if(Keyboard_IsKeyPushed(KEY_P))
 	push	bc
 	ld	a, #0x54
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00134$
-;./ne.c:51: curchar = 'P';
+	jr	Z, 00138$
+;./ne.c:64: curchar = 'P';
 	ld	c, #0x50
-00134$:
-;./ne.c:52: if(Keyboard_IsKeyPushed(KEY_Q))
+00138$:
+;./ne.c:65: if(Keyboard_IsKeyPushed(KEY_Q))
 	push	bc
 	ld	a, #0x64
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00136$
-;./ne.c:53: curchar = 'Q';
+	jr	Z, 00140$
+;./ne.c:66: curchar = 'Q';
 	ld	c, #0x51
-00136$:
-;./ne.c:54: if(Keyboard_IsKeyPushed(KEY_R))
+00140$:
+;./ne.c:67: if(Keyboard_IsKeyPushed(KEY_R))
 	push	bc
 	ld	a, #0x74
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00138$
-;./ne.c:55: curchar = 'R';
+	jr	Z, 00142$
+;./ne.c:68: curchar = 'R';
 	ld	c, #0x52
-00138$:
-;./ne.c:56: if(Keyboard_IsKeyPushed(KEY_S))
+00142$:
+;./ne.c:69: if(Keyboard_IsKeyPushed(KEY_S))
 	push	bc
 	ld	a, #0x05
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00140$
-;./ne.c:57: curchar = 'S';
+	jr	Z, 00144$
+;./ne.c:70: curchar = 'S';
 	ld	c, #0x53
-00140$:
-;./ne.c:58: if(Keyboard_IsKeyPushed(KEY_T))
+00144$:
+;./ne.c:71: if(Keyboard_IsKeyPushed(KEY_T))
 	push	bc
 	ld	a, #0x15
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00142$
-;./ne.c:59: curchar = 'T';
+	jr	Z, 00146$
+;./ne.c:72: curchar = 'T';
 	ld	c, #0x54
-00142$:
-;./ne.c:60: if(Keyboard_IsKeyPushed(KEY_U))
+00146$:
+;./ne.c:73: if(Keyboard_IsKeyPushed(KEY_U))
 	push	bc
 	ld	a, #0x25
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00144$
-;./ne.c:61: curchar = 'U';
+	jr	Z, 00148$
+;./ne.c:74: curchar = 'U';
 	ld	c, #0x55
-00144$:
-;./ne.c:62: if(Keyboard_IsKeyPushed(KEY_V))
+00148$:
+;./ne.c:75: if(Keyboard_IsKeyPushed(KEY_V))
 	push	bc
 	ld	a, #0x35
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00146$
-;./ne.c:63: curchar = 'V';
+	jr	Z, 00150$
+;./ne.c:76: curchar = 'V';
 	ld	c, #0x56
-00146$:
-;./ne.c:64: if(Keyboard_IsKeyPushed(KEY_W))
+00150$:
+;./ne.c:77: if(Keyboard_IsKeyPushed(KEY_W))
 	push	bc
 	ld	a, #0x45
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00148$
-;./ne.c:65: curchar = 'W';
+	jr	Z, 00152$
+;./ne.c:78: curchar = 'W';
 	ld	c, #0x57
-00148$:
-;./ne.c:66: if(Keyboard_IsKeyPushed(KEY_X))
+00152$:
+;./ne.c:79: if(Keyboard_IsKeyPushed(KEY_X))
 	push	bc
 	ld	a, #0x55
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00150$
-;./ne.c:67: curchar = 'X';
+	jr	Z, 00154$
+;./ne.c:80: curchar = 'X';
 	ld	c, #0x58
-00150$:
-;./ne.c:68: if(Keyboard_IsKeyPushed(KEY_Y))
+00154$:
+;./ne.c:81: if(Keyboard_IsKeyPushed(KEY_Y))
 	push	bc
 	ld	a, #0x65
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00152$
-;./ne.c:69: curchar = 'Y';
+	jr	Z, 00156$
+;./ne.c:82: curchar = 'Y';
 	ld	c, #0x59
-00152$:
-;./ne.c:70: if(Keyboard_IsKeyPushed(KEY_Z))
+00156$:
+;./ne.c:83: if(Keyboard_IsKeyPushed(KEY_Z))
 	push	bc
 	ld	a, #0x75
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00154$
-;./ne.c:71: curchar = 'Z';
+	jr	Z, 00158$
+;./ne.c:84: curchar = 'Z';
 	ld	c, #0x5a
-00154$:
-;./ne.c:74: if(Keyboard_IsKeyPushed(KEY_0))
+00158$:
+;./ne.c:86: if(Keyboard_IsKeyPushed(KEY_0))
 	push	bc
 	xor	a, a
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00156$
-;./ne.c:75: curchar = '0';
+	jr	Z, 00160$
+;./ne.c:87: curchar = '0';
 	ld	c, #0x30
-00156$:
-;./ne.c:76: if(Keyboard_IsKeyPushed(KEY_1))
+00160$:
+;./ne.c:88: if(Keyboard_IsKeyPushed(KEY_1))
 	push	bc
 	ld	a, #0x10
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00158$
-;./ne.c:77: curchar = '1';
+	jr	Z, 00162$
+;./ne.c:89: curchar = '1';
 	ld	c, #0x31
-00158$:
-;./ne.c:78: if(Keyboard_IsKeyPushed(KEY_2))
+00162$:
+;./ne.c:90: if(Keyboard_IsKeyPushed(KEY_2))
 	push	bc
 	ld	a, #0x20
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00160$
-;./ne.c:79: curchar = '2';
+	jr	Z, 00164$
+;./ne.c:91: curchar = '2';
 	ld	c, #0x32
-00160$:
-;./ne.c:80: if(Keyboard_IsKeyPushed(KEY_3))
+00164$:
+;./ne.c:92: if(Keyboard_IsKeyPushed(KEY_3))
 	push	bc
 	ld	a, #0x30
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00162$
-;./ne.c:81: curchar = '3';
+	jr	Z, 00166$
+;./ne.c:93: curchar = '3';
 	ld	c, #0x33
-00162$:
-;./ne.c:82: if(Keyboard_IsKeyPushed(KEY_4))
+00166$:
+;./ne.c:94: if(Keyboard_IsKeyPushed(KEY_4))
 	push	bc
 	ld	a, #0x40
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00164$
-;./ne.c:83: curchar = '4';
+	jr	Z, 00168$
+;./ne.c:95: curchar = '4';
 	ld	c, #0x34
-00164$:
-;./ne.c:84: if(Keyboard_IsKeyPushed(KEY_5))
+00168$:
+;./ne.c:96: if(Keyboard_IsKeyPushed(KEY_5))
 	push	bc
 	ld	a, #0x50
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00166$
-;./ne.c:85: curchar = '5';
+	jr	Z, 00170$
+;./ne.c:97: curchar = '5';
 	ld	c, #0x35
-00166$:
-;./ne.c:86: if(Keyboard_IsKeyPushed(KEY_6))
+00170$:
+;./ne.c:98: if(Keyboard_IsKeyPushed(KEY_6))
 	push	bc
 	ld	a, #0x60
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00168$
-;./ne.c:87: curchar = '6';
+	jr	Z, 00172$
+;./ne.c:99: curchar = '6';
 	ld	c, #0x36
-00168$:
-;./ne.c:88: if(Keyboard_IsKeyPushed(KEY_7))
+00172$:
+;./ne.c:100: if(Keyboard_IsKeyPushed(KEY_7))
 	push	bc
 	ld	a, #0x70
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00170$
-;./ne.c:89: curchar = '7';
+	jr	Z, 00174$
+;./ne.c:101: curchar = '7';
 	ld	c, #0x37
-00170$:
-;./ne.c:90: if(Keyboard_IsKeyPushed(KEY_8))
+00174$:
+;./ne.c:102: if(Keyboard_IsKeyPushed(KEY_8))
 	push	bc
 	ld	a, #0x01
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00172$
-;./ne.c:91: curchar = '8';
+	jr	Z, 00176$
+;./ne.c:103: curchar = '8';
 	ld	c, #0x38
-00172$:
-;./ne.c:92: if(Keyboard_IsKeyPushed(KEY_9))
+00176$:
+;./ne.c:104: if(Keyboard_IsKeyPushed(KEY_9))
 	push	bc
 	ld	a, #0x11
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	Z, 00174$
-;./ne.c:93: curchar = '9';
+	jr	Z, 00178$
+;./ne.c:105: curchar = '9';
 	ld	c, #0x39
-00174$:
-;./ne.c:94: if (Keyboard_IsKeyPushed(KEY_ESC))
+00178$:
+;./ne.c:107: if(Keyboard_IsKeyPushed(KEY_ESC))
 	push	bc
 	ld	a, #0x27
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
-	jr	NZ, 00184$
-;./ne.c:96: if((curchar >= ' ') && (curchar <= 'Z'))
+	jr	NZ, 00196$
+;./ne.c:110: if((curchar >= ' ') && (curchar <= 'Z'))
 	ld	a, c
 	sub	a, #0x20
-	jp	C, 00183$
+	jp	C, 00195$
 	ld	a, #0x5a
 	sub	a, c
-	jp	C, 00183$
-;./ne.c:98: if(!g_CAPST)
-	ld	a, (_g_CAPST+0)
+	jp	C, 00195$
+;./ne.c:112: if(curchar != ' ')
+	ld	a, c
+	sub	a, #0x20
+	jr	Z, 00184$
+;./ne.c:113: if(!capslock)
+	ld	a, b
 	or	a, a
-	jr	NZ, 00178$
-;./ne.c:99: curchar = curchar - 'A' + 'a';
+	jr	NZ, 00184$
+;./ne.c:114: curchar = curchar - 'A' + 'a';
 	ld	a, c
 	add	a, #0x20
 	ld	c, a
-00178$:
-;./ne.c:100: DOS_CharOutput(curchar);
+00184$:
+;./ne.c:115: if(capsshift && capslock)
+	ld	hl, #0
+	add	hl, sp
+	ld	a, (hl)
+	or	a, a
+	jr	Z, 00186$
+	ld	a, b
+	or	a, a
+	jr	Z, 00186$
+;./ne.c:116: curchar = curchar - 'A' + 'a';
+	ld	a, c
+	add	a, #0x20
+	ld	c, a
+00186$:
+;./ne.c:117: if(capsshift && !capslock)
+	ld	hl, #0
+	add	hl, sp
+	ld	a, (hl)
+	or	a, a
+	jr	Z, 00189$
+	ld	a, b
+	or	a, a
+	jr	NZ, 00189$
+;./ne.c:118: curchar = curchar - 'a' + 'A';
+	ld	a, c
+	add	a, #0xe0
+	ld	c, a
+00189$:
+;./ne.c:120: DOS_CharOutput(curchar);
+	push	bc
 	ld	a, c
 	call	_DOS_CharOutput
-;./ne.c:101: curchar = 0;
+	pop	bc
+;./ne.c:121: curchar = 0;
 	ld	c, #0x00
-	jp	00183$
-00184$:
-;./ne.c:104: return 0;
+	jp	00195$
+00196$:
+;./ne.c:124: return 0;
 	ld	de, #0x0000
-;./ne.c:105: }
+;./ne.c:125: }
+	inc	sp
 	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -892,6 +965,1547 @@ ___str_0:
 	.db 0x0d
 	.ascii "$"
 	.db 0x00
+_g_Font_MGL_Sample6:
+	.db #0x88	; 136
+	.db #0x68	; 104	'h'
+	.db #0x00	; 0
+	.db #0xbf	; 191
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0xc8	; 200
+	.db #0xc8	; 200
+	.db #0xc0	; 192
+	.db #0x80	; 128
+	.db #0x94	; 148
+	.db #0x94	; 148
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x70	; 112	'p'
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0x30	; 48	'0'
+	.db #0x20	; 32
+	.db #0x64	; 100	'd'
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0xc8	; 200
+	.db #0x88	; 136
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x88	; 136
+	.db #0xc8	; 200
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x00	; 0
+	.db #0x68	; 104	'h'
+	.db #0x88	; 136
+	.db #0xa8	; 168
+	.db #0x6c	; 108	'l'
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0xc0	; 192
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0xc0	; 192
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x48	; 72	'H'
+	.db #0x48	; 72	'H'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x48	; 72	'H'
+	.db #0x84	; 132
+	.db #0x84	; 132
+	.db #0x48	; 72	'H'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x78	; 120	'x'
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x78	; 120	'x'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0x84	; 132
+	.db #0x84	; 132
+	.db #0x84	; 132
+	.db #0x84	; 132
+	.db #0xfc	; 252
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0x84	; 132
+	.db #0xb4	; 180
+	.db #0xb4	; 180
+	.db #0x84	; 132
+	.db #0xfc	; 252
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x08	; 8
+	.db #0x44	; 68	'D'
+	.db #0xd4	; 212
+	.db #0xd4	; 212
+	.db #0xd4	; 212
+	.db #0x44	; 68	'D'
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x40	; 64
+	.db #0xd4	; 212
+	.db #0xc8	; 200
+	.db #0xd4	; 212
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0xf0	; 240
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x3f	; 63
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0xff	; 255
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x1f	; 31
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x1f	; 31
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0xf0	; 240
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xaa	; 170
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x24	; 36
+	.db #0x24	; 36
+	.db #0x48	; 72	'H'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x28	; 40
+	.db #0x7c	; 124
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x7c	; 124
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x50	; 80	'P'
+	.db #0x38	; 56	'8'
+	.db #0x14	; 20
+	.db #0x54	; 84	'T'
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x64	; 100	'd'
+	.db #0x68	; 104	'h'
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x2c	; 44
+	.db #0x4c	; 76	'L'
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x48	; 72	'H'
+	.db #0x48	; 72	'H'
+	.db #0x30	; 48	'0'
+	.db #0x54	; 84	'T'
+	.db #0x48	; 72	'H'
+	.db #0x34	; 52	'4'
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x4c	; 76	'L'
+	.db #0x54	; 84	'T'
+	.db #0x64	; 100	'd'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x30	; 48	'0'
+	.db #0x50	; 80	'P'
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x04	; 4
+	.db #0x18	; 24
+	.db #0x20	; 32
+	.db #0x40	; 64
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x04	; 4
+	.db #0x18	; 24
+	.db #0x04	; 4
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x48	; 72	'H'
+	.db #0x7c	; 124
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x40	; 64
+	.db #0x78	; 120	'x'
+	.db #0x04	; 4
+	.db #0x04	; 4
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x40	; 64
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x04	; 4
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x04	; 4
+	.db #0x34	; 52	'4'
+	.db #0x54	; 84	'T'
+	.db #0x54	; 84	'T'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x7c	; 124
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x48	; 72	'H'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x48	; 72	'H'
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x70	; 112	'p'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x70	; 112	'p'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x4c	; 76	'L'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x7c	; 124
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x3c	; 60
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x48	; 72	'H'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x48	; 72	'H'
+	.db #0x50	; 80	'P'
+	.db #0x60	; 96
+	.db #0x50	; 80	'P'
+	.db #0x48	; 72	'H'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x6c	; 108	'l'
+	.db #0x54	; 84	'T'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x64	; 100	'd'
+	.db #0x64	; 100	'd'
+	.db #0x54	; 84	'T'
+	.db #0x4c	; 76	'L'
+	.db #0x4c	; 76	'L'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x54	; 84	'T'
+	.db #0x48	; 72	'H'
+	.db #0x34	; 52	'4'
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x40	; 64
+	.db #0x38	; 56	'8'
+	.db #0x04	; 4
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x54	; 84	'T'
+	.db #0x54	; 84	'T'
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x28	; 40
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x04	; 4
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x40	; 64
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x40	; 64
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x28	; 40
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x04	; 4
+	.db #0x3c	; 60
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x00	; 0
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x40	; 64
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x04	; 4
+	.db #0x04	; 4
+	.db #0x04	; 4
+	.db #0x3c	; 60
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x7c	; 124
+	.db #0x40	; 64
+	.db #0x3c	; 60
+	.db #0x00	; 0
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x20	; 32
+	.db #0x70	; 112	'p'
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x3c	; 60
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x04	; 4
+	.db #0x78	; 120	'x'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x08	; 8
+	.db #0x48	; 72	'H'
+	.db #0x30	; 48	'0'
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x24	; 36
+	.db #0x28	; 40
+	.db #0x30	; 48	'0'
+	.db #0x28	; 40
+	.db #0x24	; 36
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x68	; 104	'h'
+	.db #0x54	; 84	'T'
+	.db #0x54	; 84	'T'
+	.db #0x54	; 84	'T'
+	.db #0x54	; 84	'T'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x58	; 88	'X'
+	.db #0x64	; 100	'd'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x78	; 120	'x'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x3c	; 60
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x04	; 4
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x58	; 88	'X'
+	.db #0x64	; 100	'd'
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x3c	; 60
+	.db #0x40	; 64
+	.db #0x38	; 56	'8'
+	.db #0x04	; 4
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x78	; 120	'x'
+	.db #0x20	; 32
+	.db #0x20	; 32
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x4c	; 76	'L'
+	.db #0x34	; 52	'4'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x54	; 84	'T'
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x28	; 40
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x44	; 68	'D'
+	.db #0x3c	; 60
+	.db #0x04	; 4
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x18	; 24
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x20	; 32
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x08	; 8
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x14	; 20
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x30	; 48	'0'
+	.db #0x38	; 56	'8'
+	.db #0x30	; 48	'0'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x18	; 24
+	.db #0x38	; 56	'8'
+	.db #0x18	; 24
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x04	; 4
+	.db #0x24	; 36
+	.db #0x64	; 100	'd'
+	.db #0xfc	; 252
+	.db #0x60	; 96
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x24	; 36
+	.db #0x64	; 100	'd'
+	.db #0xfc	; 252
+	.db #0x64	; 100	'd'
+	.db #0x24	; 36
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x10	; 16
+	.db #0x10	; 16
+	.db #0x7c	; 124
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x78	; 120	'x'
+	.db #0xfc	; 252
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0xfc	; 252
+	.db #0x78	; 120	'x'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x18	; 24
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x18	; 24
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x60	; 96
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x60	; 96
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x28	; 40
+	.db #0x6c	; 108	'l'
+	.db #0x6c	; 108	'l'
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x7c	; 124
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x7c	; 124
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0xef	; 239
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0xef	; 239
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0xe8	; 232
+	.db #0x08	; 8
+	.db #0xe8	; 232
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x50	; 80	'P'
+	.db #0x50	; 80	'P'
+	.db #0x5f	; 95
+	.db #0x40	; 64
+	.db #0x5f	; 95
+	.db #0x50	; 80	'P'
+	.db #0x50	; 80	'P'
+	.db #0x50	; 80	'P'
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0xef	; 239
+	.db #0x00	; 0
+	.db #0xef	; 239
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x3f	; 63
+	.db #0x20	; 32
+	.db #0x2f	; 47
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0x08	; 8
+	.db #0xe8	; 232
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0x2f	; 47
+	.db #0x20	; 32
+	.db #0x3f	; 63
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x28	; 40
+	.db #0x28	; 40
+	.db #0xe8	; 232
+	.db #0x08	; 8
+	.db #0xf8	; 248
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x22	; 34
+	.db #0x88	; 136
+	.db #0x22	; 34
+	.db #0x88	; 136
+	.db #0x22	; 34
+	.db #0x88	; 136
+	.db #0x22	; 34
+	.db #0x88	; 136
+	.db #0xaa	; 170
+	.db #0x55	; 85	'U'
+	.db #0xaa	; 170
+	.db #0x55	; 85	'U'
+	.db #0xaa	; 170
+	.db #0x55	; 85	'U'
+	.db #0xaa	; 170
+	.db #0x55	; 85	'U'
+	.db #0xee	; 238
+	.db #0xbb	; 187
+	.db #0xee	; 238
+	.db #0xbb	; 187
+	.db #0xee	; 238
+	.db #0xbb	; 187
+	.db #0xee	; 238
+	.db #0xbb	; 187
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xe0	; 224
+	.db #0xe0	; 224
+	.db #0xe0	; 224
+	.db #0xe0	; 224
+	.db #0xe0	; 224
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0xf0	; 240
+	.db #0xf0	; 240
+	.db #0xf0	; 240
+	.db #0xf0	; 240
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0xfc	; 252
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xfe	; 254
+	.db #0xfe	; 254
+	.db #0xfe	; 254
+	.db #0xfe	; 254
+	.db #0xfe	; 254
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x81	; 129
+	.db #0x42	; 66	'B'
+	.db #0x24	; 36
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x24	; 36
+	.db #0x42	; 66	'B'
+	.db #0x81	; 129
+	.db #0x04	; 4
+	.db #0x0c	; 12
+	.db #0x0c	; 12
+	.db #0x14	; 20
+	.db #0x24	; 36
+	.db #0x24	; 36
+	.db #0x44	; 68	'D'
+	.db #0x87	; 135
+	.db #0x87	; 135
+	.db #0x44	; 68	'D'
+	.db #0x24	; 36
+	.db #0x24	; 36
+	.db #0x14	; 20
+	.db #0x0c	; 12
+	.db #0x0c	; 12
+	.db #0x04	; 4
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xff	; 255
+	.db #0xff	; 255
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x80	; 128
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x07	; 7
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0x88	; 136
+	.db #0xd8	; 216
+	.db #0x50	; 80	'P'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0x88	; 136
+	.db #0x98	; 152
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0x08	; 8
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x98	; 152
+	.db #0x88	; 136
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x50	; 80	'P'
+	.db #0xd8	; 216
+	.db #0x88	; 136
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xc8	; 200
+	.db #0x88	; 136
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0x80	; 128
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0x88	; 136
+	.db #0xc8	; 200
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x88	; 136
+	.db #0xc8	; 200
+	.db #0xe8	; 232
+	.db #0xc8	; 200
+	.db #0x88	; 136
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x88	; 136
+	.db #0x98	; 152
+	.db #0xb8	; 184
+	.db #0x98	; 152
+	.db #0x88	; 136
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x90	; 144
+	.db #0xd8	; 216
+	.db #0xfc	; 252
+	.db #0xd8	; 216
+	.db #0x90	; 144
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x24	; 36
+	.db #0x6c	; 108	'l'
+	.db #0xfc	; 252
+	.db #0x6c	; 108	'l'
+	.db #0x24	; 36
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x7c	; 124
+	.db #0x88	; 136
+	.db #0x00	; 0
+	.db #0x44	; 68	'D'
+	.db #0xf8	; 248
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x4c	; 76	'L'
+	.db #0xa0	; 160
+	.db #0x20	; 32
+	.db #0x28	; 40
+	.db #0x9c	; 156
+	.db #0x08	; 8
+	.db #0x00	; 0
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)
