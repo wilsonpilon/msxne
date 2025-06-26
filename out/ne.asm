@@ -8,8 +8,15 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _banner
 	.globl _main
 	.globl _DOS_CharOutput
+	.globl _Print_SetColor
+	.globl _Print_DrawText
+	.globl _Print_SetTextFont
+	.globl _VDP_RegWriteBakMask
+	.globl _VDP_SetMode
+	.globl _VDP_ClearVRAM
 	.globl _Keyboard_IsKeyPushed
 	.globl _Keyboard_IsKeyPressed
 	.globl _Keyboard_Update
@@ -320,9 +327,13 @@ _main::
 ;./ne.c:17: c8 curchar = 0;
 ;./ne.c:18: bool capslock = false;
 	ld	bc, #0x0
-;./ne.c:20: while (1)
+;./ne.c:20: banner();
+	push	bc
+	call	_banner
+	pop	bc
+;./ne.c:21: while (1)
 00195$:
-;./ne.c:22: Keyboard_Update();
+;./ne.c:23: Keyboard_Update();
 	push	bc
 	call	_Keyboard_Update
 	ld	a, #0x36
@@ -330,7 +341,7 @@ _main::
 	pop	bc
 	or	a, a
 	jr	Z, 00102$
-;./ne.c:24: capslock = (capslock) ? false : true;
+;./ne.c:25: capslock = (capslock) ? false : true;
 	ld	a, b
 	or	a, a
 	jr	Z, 00199$
@@ -341,420 +352,420 @@ _main::
 00200$:
 	ld	b, e
 00102$:
-;./ne.c:26: capsshift = false;
+;./ne.c:27: capsshift = false;
 	ld	iy, #0
 	add	iy, sp
 	ld	0 (iy), #0x00
-;./ne.c:27: if(Keyboard_IsKeyPressed(KEY_SHIFT))
+;./ne.c:28: if(Keyboard_IsKeyPressed(KEY_SHIFT))
 	push	bc
 	ld	a, #0x06
 	call	_Keyboard_IsKeyPressed
 	pop	bc
 	or	a, a
 	jr	Z, 00104$
-;./ne.c:28: capsshift = true;
+;./ne.c:29: capsshift = true;
 	ld	iy, #0
 	add	iy, sp
 	ld	0 (iy), #0x01
 00104$:
-;./ne.c:30: if(Keyboard_IsKeyPushed(KEY_SPACE))
+;./ne.c:31: if(Keyboard_IsKeyPushed(KEY_SPACE))
 	push	bc
 	ld	a, #0x08
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00106$
-;./ne.c:31: curchar = ' ';
+;./ne.c:32: curchar = ' ';
 	ld	c, #0x20
 00106$:
-;./ne.c:33: if(Keyboard_IsKeyPushed(KEY_A))
+;./ne.c:34: if(Keyboard_IsKeyPushed(KEY_A))
 	push	bc
 	ld	a, #0x62
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00108$
-;./ne.c:34: curchar = 'A';
+;./ne.c:35: curchar = 'A';
 	ld	c, #0x41
 00108$:
-;./ne.c:35: if(Keyboard_IsKeyPushed(KEY_B))
+;./ne.c:36: if(Keyboard_IsKeyPushed(KEY_B))
 	push	bc
 	ld	a, #0x72
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00110$
-;./ne.c:36: curchar = 'B';
+;./ne.c:37: curchar = 'B';
 	ld	c, #0x42
 00110$:
-;./ne.c:37: if(Keyboard_IsKeyPushed(KEY_C))
+;./ne.c:38: if(Keyboard_IsKeyPushed(KEY_C))
 	push	bc
 	ld	a, #0x03
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00112$
-;./ne.c:38: curchar = 'C';
+;./ne.c:39: curchar = 'C';
 	ld	c, #0x43
 00112$:
-;./ne.c:39: if(Keyboard_IsKeyPushed(KEY_D))
+;./ne.c:40: if(Keyboard_IsKeyPushed(KEY_D))
 	push	bc
 	ld	a, #0x13
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00114$
-;./ne.c:40: curchar = 'D';
+;./ne.c:41: curchar = 'D';
 	ld	c, #0x44
 00114$:
-;./ne.c:41: if(Keyboard_IsKeyPushed(KEY_E))
+;./ne.c:42: if(Keyboard_IsKeyPushed(KEY_E))
 	push	bc
 	ld	a, #0x23
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00116$
-;./ne.c:42: curchar = 'E';
+;./ne.c:43: curchar = 'E';
 	ld	c, #0x45
 00116$:
-;./ne.c:43: if(Keyboard_IsKeyPushed(KEY_F))
+;./ne.c:44: if(Keyboard_IsKeyPushed(KEY_F))
 	push	bc
 	ld	a, #0x33
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00118$
-;./ne.c:44: curchar = 'F';
+;./ne.c:45: curchar = 'F';
 	ld	c, #0x46
 00118$:
-;./ne.c:45: if(Keyboard_IsKeyPushed(KEY_G))
+;./ne.c:46: if(Keyboard_IsKeyPushed(KEY_G))
 	push	bc
 	ld	a, #0x43
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00120$
-;./ne.c:46: curchar = 'G';
+;./ne.c:47: curchar = 'G';
 	ld	c, #0x47
 00120$:
-;./ne.c:47: if(Keyboard_IsKeyPushed(KEY_H))
+;./ne.c:48: if(Keyboard_IsKeyPushed(KEY_H))
 	push	bc
 	ld	a, #0x53
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00122$
-;./ne.c:48: curchar = 'H';
+;./ne.c:49: curchar = 'H';
 	ld	c, #0x48
 00122$:
-;./ne.c:49: if(Keyboard_IsKeyPushed(KEY_I))
+;./ne.c:50: if(Keyboard_IsKeyPushed(KEY_I))
 	push	bc
 	ld	a, #0x63
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00124$
-;./ne.c:50: curchar = 'I';
+;./ne.c:51: curchar = 'I';
 	ld	c, #0x49
 00124$:
-;./ne.c:51: if(Keyboard_IsKeyPushed(KEY_J))
+;./ne.c:52: if(Keyboard_IsKeyPushed(KEY_J))
 	push	bc
 	ld	a, #0x73
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00126$
-;./ne.c:52: curchar = 'J';
+;./ne.c:53: curchar = 'J';
 	ld	c, #0x4a
 00126$:
-;./ne.c:53: if(Keyboard_IsKeyPushed(KEY_K))
+;./ne.c:54: if(Keyboard_IsKeyPushed(KEY_K))
 	push	bc
 	ld	a, #0x04
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00128$
-;./ne.c:54: curchar = 'K';
+;./ne.c:55: curchar = 'K';
 	ld	c, #0x4b
 00128$:
-;./ne.c:55: if(Keyboard_IsKeyPushed(KEY_L))
+;./ne.c:56: if(Keyboard_IsKeyPushed(KEY_L))
 	push	bc
 	ld	a, #0x14
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00130$
-;./ne.c:56: curchar = 'L';
+;./ne.c:57: curchar = 'L';
 	ld	c, #0x4c
 00130$:
-;./ne.c:57: if(Keyboard_IsKeyPushed(KEY_M))
+;./ne.c:58: if(Keyboard_IsKeyPushed(KEY_M))
 	push	bc
 	ld	a, #0x24
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00132$
-;./ne.c:58: curchar = 'M';
+;./ne.c:59: curchar = 'M';
 	ld	c, #0x4d
 00132$:
-;./ne.c:59: if(Keyboard_IsKeyPushed(KEY_N))
+;./ne.c:60: if(Keyboard_IsKeyPushed(KEY_N))
 	push	bc
 	ld	a, #0x34
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00134$
-;./ne.c:60: curchar = 'N';
+;./ne.c:61: curchar = 'N';
 	ld	c, #0x4e
 00134$:
-;./ne.c:61: if(Keyboard_IsKeyPushed(KEY_O))
+;./ne.c:62: if(Keyboard_IsKeyPushed(KEY_O))
 	push	bc
 	ld	a, #0x44
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00136$
-;./ne.c:62: curchar = 'O';
+;./ne.c:63: curchar = 'O';
 	ld	c, #0x4f
 00136$:
-;./ne.c:63: if(Keyboard_IsKeyPushed(KEY_P))
+;./ne.c:64: if(Keyboard_IsKeyPushed(KEY_P))
 	push	bc
 	ld	a, #0x54
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00138$
-;./ne.c:64: curchar = 'P';
+;./ne.c:65: curchar = 'P';
 	ld	c, #0x50
 00138$:
-;./ne.c:65: if(Keyboard_IsKeyPushed(KEY_Q))
+;./ne.c:66: if(Keyboard_IsKeyPushed(KEY_Q))
 	push	bc
 	ld	a, #0x64
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00140$
-;./ne.c:66: curchar = 'Q';
+;./ne.c:67: curchar = 'Q';
 	ld	c, #0x51
 00140$:
-;./ne.c:67: if(Keyboard_IsKeyPushed(KEY_R))
+;./ne.c:68: if(Keyboard_IsKeyPushed(KEY_R))
 	push	bc
 	ld	a, #0x74
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00142$
-;./ne.c:68: curchar = 'R';
+;./ne.c:69: curchar = 'R';
 	ld	c, #0x52
 00142$:
-;./ne.c:69: if(Keyboard_IsKeyPushed(KEY_S))
+;./ne.c:70: if(Keyboard_IsKeyPushed(KEY_S))
 	push	bc
 	ld	a, #0x05
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00144$
-;./ne.c:70: curchar = 'S';
+;./ne.c:71: curchar = 'S';
 	ld	c, #0x53
 00144$:
-;./ne.c:71: if(Keyboard_IsKeyPushed(KEY_T))
+;./ne.c:72: if(Keyboard_IsKeyPushed(KEY_T))
 	push	bc
 	ld	a, #0x15
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00146$
-;./ne.c:72: curchar = 'T';
+;./ne.c:73: curchar = 'T';
 	ld	c, #0x54
 00146$:
-;./ne.c:73: if(Keyboard_IsKeyPushed(KEY_U))
+;./ne.c:74: if(Keyboard_IsKeyPushed(KEY_U))
 	push	bc
 	ld	a, #0x25
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00148$
-;./ne.c:74: curchar = 'U';
+;./ne.c:75: curchar = 'U';
 	ld	c, #0x55
 00148$:
-;./ne.c:75: if(Keyboard_IsKeyPushed(KEY_V))
+;./ne.c:76: if(Keyboard_IsKeyPushed(KEY_V))
 	push	bc
 	ld	a, #0x35
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00150$
-;./ne.c:76: curchar = 'V';
+;./ne.c:77: curchar = 'V';
 	ld	c, #0x56
 00150$:
-;./ne.c:77: if(Keyboard_IsKeyPushed(KEY_W))
+;./ne.c:78: if(Keyboard_IsKeyPushed(KEY_W))
 	push	bc
 	ld	a, #0x45
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00152$
-;./ne.c:78: curchar = 'W';
+;./ne.c:79: curchar = 'W';
 	ld	c, #0x57
 00152$:
-;./ne.c:79: if(Keyboard_IsKeyPushed(KEY_X))
+;./ne.c:80: if(Keyboard_IsKeyPushed(KEY_X))
 	push	bc
 	ld	a, #0x55
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00154$
-;./ne.c:80: curchar = 'X';
+;./ne.c:81: curchar = 'X';
 	ld	c, #0x58
 00154$:
-;./ne.c:81: if(Keyboard_IsKeyPushed(KEY_Y))
+;./ne.c:82: if(Keyboard_IsKeyPushed(KEY_Y))
 	push	bc
 	ld	a, #0x65
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00156$
-;./ne.c:82: curchar = 'Y';
+;./ne.c:83: curchar = 'Y';
 	ld	c, #0x59
 00156$:
-;./ne.c:83: if(Keyboard_IsKeyPushed(KEY_Z))
+;./ne.c:84: if(Keyboard_IsKeyPushed(KEY_Z))
 	push	bc
 	ld	a, #0x75
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00158$
-;./ne.c:84: curchar = 'Z';
+;./ne.c:85: curchar = 'Z';
 	ld	c, #0x5a
 00158$:
-;./ne.c:86: if(Keyboard_IsKeyPushed(KEY_0))
+;./ne.c:87: if(Keyboard_IsKeyPushed(KEY_0))
 	push	bc
 	xor	a, a
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00160$
-;./ne.c:87: curchar = '0';
+;./ne.c:88: curchar = '0';
 	ld	c, #0x30
 00160$:
-;./ne.c:88: if(Keyboard_IsKeyPushed(KEY_1))
+;./ne.c:89: if(Keyboard_IsKeyPushed(KEY_1))
 	push	bc
 	ld	a, #0x10
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00162$
-;./ne.c:89: curchar = '1';
+;./ne.c:90: curchar = '1';
 	ld	c, #0x31
 00162$:
-;./ne.c:90: if(Keyboard_IsKeyPushed(KEY_2))
+;./ne.c:91: if(Keyboard_IsKeyPushed(KEY_2))
 	push	bc
 	ld	a, #0x20
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00164$
-;./ne.c:91: curchar = '2';
+;./ne.c:92: curchar = '2';
 	ld	c, #0x32
 00164$:
-;./ne.c:92: if(Keyboard_IsKeyPushed(KEY_3))
+;./ne.c:93: if(Keyboard_IsKeyPushed(KEY_3))
 	push	bc
 	ld	a, #0x30
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00166$
-;./ne.c:93: curchar = '3';
+;./ne.c:94: curchar = '3';
 	ld	c, #0x33
 00166$:
-;./ne.c:94: if(Keyboard_IsKeyPushed(KEY_4))
+;./ne.c:95: if(Keyboard_IsKeyPushed(KEY_4))
 	push	bc
 	ld	a, #0x40
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00168$
-;./ne.c:95: curchar = '4';
+;./ne.c:96: curchar = '4';
 	ld	c, #0x34
 00168$:
-;./ne.c:96: if(Keyboard_IsKeyPushed(KEY_5))
+;./ne.c:97: if(Keyboard_IsKeyPushed(KEY_5))
 	push	bc
 	ld	a, #0x50
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00170$
-;./ne.c:97: curchar = '5';
+;./ne.c:98: curchar = '5';
 	ld	c, #0x35
 00170$:
-;./ne.c:98: if(Keyboard_IsKeyPushed(KEY_6))
+;./ne.c:99: if(Keyboard_IsKeyPushed(KEY_6))
 	push	bc
 	ld	a, #0x60
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00172$
-;./ne.c:99: curchar = '6';
+;./ne.c:100: curchar = '6';
 	ld	c, #0x36
 00172$:
-;./ne.c:100: if(Keyboard_IsKeyPushed(KEY_7))
+;./ne.c:101: if(Keyboard_IsKeyPushed(KEY_7))
 	push	bc
 	ld	a, #0x70
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00174$
-;./ne.c:101: curchar = '7';
+;./ne.c:102: curchar = '7';
 	ld	c, #0x37
 00174$:
-;./ne.c:102: if(Keyboard_IsKeyPushed(KEY_8))
+;./ne.c:103: if(Keyboard_IsKeyPushed(KEY_8))
 	push	bc
 	ld	a, #0x01
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00176$
-;./ne.c:103: curchar = '8';
+;./ne.c:104: curchar = '8';
 	ld	c, #0x38
 00176$:
-;./ne.c:104: if(Keyboard_IsKeyPushed(KEY_9))
+;./ne.c:105: if(Keyboard_IsKeyPushed(KEY_9))
 	push	bc
 	ld	a, #0x11
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	Z, 00178$
-;./ne.c:105: curchar = '9';
+;./ne.c:106: curchar = '9';
 	ld	c, #0x39
 00178$:
-;./ne.c:107: if(Keyboard_IsKeyPushed(KEY_ESC))
+;./ne.c:108: if(Keyboard_IsKeyPushed(KEY_ESC))
 	push	bc
 	ld	a, #0x27
 	call	_Keyboard_IsKeyPushed
 	pop	bc
 	or	a, a
 	jr	NZ, 00196$
-;./ne.c:110: if((curchar >= ' ') && (curchar <= 'Z'))
+;./ne.c:111: if((curchar >= ' ') && (curchar <= 'Z'))
 	ld	a, c
 	sub	a, #0x20
 	jp	C, 00195$
 	ld	a, #0x5a
 	sub	a, c
 	jp	C, 00195$
-;./ne.c:112: if(curchar != ' ')
+;./ne.c:113: if(curchar != ' ')
 	ld	a, c
 	sub	a, #0x20
 	jr	Z, 00184$
-;./ne.c:113: if(!capslock)
+;./ne.c:114: if(!capslock)
 	ld	a, b
 	or	a, a
 	jr	NZ, 00184$
-;./ne.c:114: curchar = curchar - 'A' + 'a';
+;./ne.c:115: curchar = curchar - 'A' + 'a';
 	ld	a, c
 	add	a, #0x20
 	ld	c, a
 00184$:
-;./ne.c:115: if(capsshift && capslock)
+;./ne.c:116: if(capsshift && capslock)
 	ld	hl, #0
 	add	hl, sp
 	ld	a, (hl)
@@ -763,12 +774,12 @@ _main::
 	ld	a, b
 	or	a, a
 	jr	Z, 00186$
-;./ne.c:116: curchar = curchar - 'A' + 'a';
+;./ne.c:117: curchar = curchar - 'A' + 'a';
 	ld	a, c
 	add	a, #0x20
 	ld	c, a
 00186$:
-;./ne.c:117: if(capsshift && !capslock)
+;./ne.c:118: if(capsshift && !capslock)
 	ld	hl, #0
 	add	hl, sp
 	ld	a, (hl)
@@ -777,23 +788,23 @@ _main::
 	ld	a, b
 	or	a, a
 	jr	NZ, 00189$
-;./ne.c:118: curchar = curchar - 'a' + 'A';
+;./ne.c:119: curchar = curchar - 'a' + 'A';
 	ld	a, c
 	add	a, #0xe0
 	ld	c, a
 00189$:
-;./ne.c:120: DOS_CharOutput(curchar);
+;./ne.c:121: DOS_CharOutput(curchar);
 	push	bc
 	ld	a, c
 	call	_DOS_CharOutput
 	pop	bc
-;./ne.c:121: curchar = 0;
+;./ne.c:122: curchar = 0;
 	ld	c, #0x00
 	jp	00195$
 00196$:
-;./ne.c:124: return 0;
+;./ne.c:125: return 0;
 	ld	de, #0x0000
-;./ne.c:125: }
+;./ne.c:126: }
 	inc	sp
 	ret
 _g_RDPRIM	=	0xf380
@@ -2506,6 +2517,147 @@ _g_Font_MGL_Sample6:
 	.db #0x9c	; 156
 	.db #0x08	; 8
 	.db #0x00	; 0
+;./ne.c:128: void banner(void)
+;	---------------------------------
+; Function banner
+; ---------------------------------
+_banner::
+;./ne.c:130: VDP_SetMode(VDP_MODE_SCREEN0);
+	xor	a, a
+	call	_VDP_SetMode
+;C:/msx/projetos/MSXgl/engine/src/vdp.h:710: inline void VDP_EnableVBlank(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_IE0, enable ? R01_IE0 : 0); }
+	ld	a, #0x20
+	push	af
+	inc	sp
+	ld	l, #0xdf
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x01
+	call	_VDP_RegWriteBakMask
+;./ne.c:132: VDP_ClearVRAM();
+	call	_VDP_ClearVRAM
+;./ne.c:134: Print_SetTextFont(g_Font_MGL_Sample6, 1);
+	ld	a, #0x01
+	push	af
+	inc	sp
+	ld	hl, #_g_Font_MGL_Sample6
+	call	_Print_SetTextFont
+;./ne.c:135: Print_SetColor(COLOR_WHITE, COLOR_BLACK);
+	ld	l, #0x01
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x0f
+	call	_Print_SetColor
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	bc, #_g_PrintData + 5
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x00
+;./ne.c:137: Print_DrawText("Enter file name:");
+	push	bc
+	ld	hl, #___str_1
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x01
+;./ne.c:139: Print_DrawText("\0x01___________________________");
+	push	bc
+	ld	hl, #___str_2
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x03
+;./ne.c:141: Print_DrawText("+-------------------------------------+");
+	push	bc
+	ld	hl, #___str_3
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x04
+;./ne.c:143: Print_DrawText("|      The Norton Classic Editor      |");
+	push	bc
+	ld	hl, #___str_4
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x05
+;./ne.c:145: Print_DrawText("|  A Programmer's Full-Screen Editor  |");
+	push	bc
+	ld	hl, #___str_5
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x06
+;./ne.c:147: Print_DrawText("|       Version 1.5 -- 11/28/90       |");
+	push	bc
+	ld	hl, #___str_6
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x07
+;./ne.c:149: Print_DrawText("|(C) Copyright 2025, Cybernostra, Inc.|");
+	push	bc
+	ld	hl, #___str_7
+	call	_Print_DrawText
+	pop	bc
+;C:/msx/projetos/MSXgl/engine/src/print.h:223: g_PrintData.CursorX = x;
+	xor	a, a
+	ld	(bc), a
+;C:/msx/projetos/MSXgl/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 6)
+	ld	(hl), #0x08
+;./ne.c:151: Print_DrawText("+-------------------------------------+");
+	ld	hl, #___str_3
+;./ne.c:153: }
+	jp	_Print_DrawText
+___str_1:
+	.ascii "Enter file name:"
+	.db 0x00
+___str_2:
+	.db 0x00
+	.ascii "x01___________________________"
+	.db 0x00
+___str_3:
+	.ascii "+-------------------------------------+"
+	.db 0x00
+___str_4:
+	.ascii "|      The Norton Classic Editor      |"
+	.db 0x00
+___str_5:
+	.ascii "|  A Programmer's Full-Screen Editor  |"
+	.db 0x00
+___str_6:
+	.ascii "|       Version 1.5 -- 11/28/90       |"
+	.db 0x00
+___str_7:
+	.ascii "|(C) Copyright 2025, Cybernostra, Inc.|"
+	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

@@ -6,7 +6,7 @@
 #include <dos.h>
 #include <input.h>
 
-#include <font/font_mgl_sample6.h>
+#include "font/font_mgl_sample6.h"
 
 
 #include "ne.h"
@@ -17,6 +17,7 @@ int main()
 	c8 curchar = 0;
 	bool capslock = false;
 	bool capsshift = false;
+	banner();
 	while (1)
 	{
 		Keyboard_Update();
@@ -122,4 +123,33 @@ int main()
 		}
 	}
 	return 0;
+}
+
+void banner()
+{
+
+	VDP_SetMode(VDP_MODE_SCREEN7);
+	VDP_SetColor(COLOR_BLACK);
+	VDP_EnableVBlank(TRUE);
+	VDP_ClearVRAM();
+
+	Print_SetBitmapFont(g_Font_MGL_Sample6);
+	Print_SetColor(COLOR_WHITE, COLOR_BLACK);
+	Print_SetPosition(0, 0);
+	Print_DrawText("Enter file name:");
+	Print_SetPosition(0, 1);
+	Print_DrawText("___________________________");
+	Print_SetPosition(0, 3);
+	Print_DrawText("+-------------------------------------+");
+	Print_SetPosition(0, 4);
+	Print_DrawText("|      The Norton Classic Editor      |");
+	Print_SetPosition(0, 5);
+	Print_DrawText("|  A Programmer's Full-Screen Editor  |");
+	Print_SetPosition(0, 6);
+	Print_DrawText("|       Version 1.5 -- 11/28/90       |");
+	Print_SetPosition(0, 7);
+	Print_DrawText("|(C) Copyright 2025, Cybernostra, Inc.|");
+	Print_SetPosition(0, 8);
+	Print_DrawText("+-------------------------------------+");
+
 }
