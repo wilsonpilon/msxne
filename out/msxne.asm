@@ -10,8 +10,9 @@
 ;--------------------------------------------------------
 	.globl _Print_SetColor
 	.globl _Print_DrawText
-	.globl _Print_DrawChar
 	.globl _Print_SetBitmapFont
+	.globl _Draw_Box
+	.globl _Draw_LineH
 	.globl _VDP_RegWriteBakMask
 	.globl _VDP_RegWrite
 	.globl _VDP_SetMode
@@ -222,6 +223,7 @@
 	.globl _g_WRPRIM
 	.globl _g_RDPRIM
 	.globl _ne
+	.globl _banner
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -321,18 +323,8 @@ _g_SLTSL	=	0xffff
 ; Function ne
 ; ---------------------------------
 _ne::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-	push	af
-;./msxne.c:15: const u8 g_ChrAnim[] = { '-', '/', '|', '\\' };
-	ld	-4 (ix), #0x2d
-	ld	-3 (ix), #0x2f
-	ld	-2 (ix), #0x7c
-	ld	-1 (ix), #0x5c
-;./msxne.c:17: VDP_SetMode(VDP_MODE_SCREEN5);
-	ld	a, #0x06
+;./msxne.c:16: VDP_SetMode(VDP_MODE_SCREEN6);
+	ld	a, #0x07
 	call	_VDP_SetMode
 ;C:/msx/engine/src/vdp.h:717: inline void VDP_SetColor(u8 color) { VDP_RegWrite(7, color); }
 	ld	l, #0x01
@@ -349,12 +341,12 @@ _ne::
 ;	spillPairReg hl
 	ld	a, #0x01
 	call	_VDP_RegWriteBakMask
-;./msxne.c:20: VDP_ClearVRAM();
+;./msxne.c:19: VDP_ClearVRAM();
 	call	_VDP_ClearVRAM
-;./msxne.c:22: Print_SetBitmapFont(g_Font_Oxygene);
+;./msxne.c:21: Print_SetBitmapFont(g_Font_Oxygene);
 	ld	hl, #_g_Font_Oxygene
 	call	_Print_SetBitmapFont
-;./msxne.c:23: Print_SetColor(COLOR_WHITE, COLOR_BLACK);
+;./msxne.c:22: Print_SetColor(COLOR_WHITE, COLOR_BLACK);
 	ld	l, #0x01
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -366,47 +358,36 @@ _ne::
 ;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
 	ld	hl, #(_g_PrintData + 7)
 	ld	(hl), #0x00
-;./msxne.c:25: Print_DrawText(MSX_GL" The MSX Game Library");
+;./msxne.c:24: Print_DrawText("Enter the file name:");
 	ld	hl, #___str_0
 	call	_Print_DrawText
-;./msxne.c:28: while(!Keyboard_IsKeyPressed(KEY_ESC))
-	ld	c, #0x00
+;./msxne.c:25: Draw_LineH(0,511,16,COLOR_WHITE,0);
+	xor	a, a
+	ld	h, a
+	ld	l, #0x0f
+	push	hl
+	ld	a, #0x10
+	push	af
+	inc	sp
+	ld	de, #0x01ff
+	ld	hl, #0x0000
+	call	_Draw_LineH
+;./msxne.c:27: banner();
+	call	_banner
+;./msxne.c:30: while(!Keyboard_IsKeyPressed(KEY_ESC))
 00101$:
-	push	bc
 	ld	a, #0x27
 	call	_Keyboard_IsKeyPressed
-	pop	bc
 	or	a, a
 	jr	NZ, 00103$
 ;C:/msx/engine/src/system.h:140: inline void Halt() { __asm__("halt"); }
 	halt
-;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
-	ld	hl, #0x00f7
-	ld	((_g_PrintData + 5)), hl
-;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
-	ld	hl, #(_g_PrintData + 7)
-	ld	(hl), #0x00
-;./msxne.c:32: Print_DrawChar(g_ChrAnim[count++ % 4]);
-	inc	c
-	ld	a, c
-	and	a, #0x03
-	ld	e, a
-	ld	d, #0x00
-	ld	hl, #0
-	add	hl, sp
-	add	hl, de
-	ld	b, (hl)
-	push	bc
-	ld	a, b
-	call	_Print_DrawChar
-	pop	bc
+;./msxne.c:32: Halt(); // Wait V-Blank
 	jp	00101$
 00103$:
 ;./msxne.c:35: return 0;
 	xor	a, a
 ;./msxne.c:36: }
-	ld	sp, ix
-	pop	ix
 	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -1082,13 +1063,91 @@ _g_Font_Oxygene:
 	.db #0x78	; 120	'x'
 	.db #0x00	; 0
 ___str_0:
-	.db 0x01
-	.db 0x02
-	.db 0x03
-	.db 0x04
-	.db 0x05
-	.db 0x06
-	.ascii " The MSX Game Library"
+	.ascii "Enter the file name:"
+	.db 0x00
+;./msxne.c:38: void banner()
+;	---------------------------------
+; Function banner
+; ---------------------------------
+_banner::
+;./msxne.c:40: Draw_Box(64,32,384,82,COLOR_WHITE,0);
+	xor	a, a
+	ld	h, a
+	ld	l, #0x0f
+	push	hl
+	ld	a, #0x52
+	push	af
+	inc	sp
+	ld	hl, #0x0180
+	push	hl
+	ld	a, #0x20
+	push	af
+	inc	sp
+	ld	hl, #0x0040
+	call	_Draw_Box
+;./msxne.c:41: Draw_Box(66,34,382,80,COLOR_WHITE,0);
+	xor	a, a
+	ld	h, a
+	ld	l, #0x0f
+	push	hl
+	ld	a, #0x50
+	push	af
+	inc	sp
+	ld	hl, #0x017e
+	push	hl
+	ld	a, #0x22
+	push	af
+	inc	sp
+	ld	hl, #0x0042
+	call	_Draw_Box
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x006c
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x28
+;./msxne.c:43: Print_DrawText("The Norton Classic Editor");
+	ld	hl, #___str_1
+	call	_Print_DrawText
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x0058
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x32
+;./msxne.c:45: Print_DrawText("A Programer's Full-Screen Editor");
+	ld	hl, #___str_2
+	call	_Print_DrawText
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x0074
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x3c
+;./msxne.c:47: Print_DrawText("Version 1.5 -- 06/30/25");
+	ld	hl, #___str_3
+	call	_Print_DrawText
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x0050
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x46
+;./msxne.c:49: Print_DrawText("(C) Copyright 2025, Cybernostra, Inc.");
+	ld	hl, #___str_4
+;./msxne.c:50: }
+	jp	_Print_DrawText
+___str_1:
+	.ascii "The Norton Classic Editor"
+	.db 0x00
+___str_2:
+	.ascii "A Programer's Full-Screen Editor"
+	.db 0x00
+___str_3:
+	.ascii "Version 1.5 -- 06/30/25"
+	.db 0x00
+___str_4:
+	.ascii "(C) Copyright 2025, Cybernostra, Inc."
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

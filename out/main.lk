@@ -1,14 +1,14 @@
 -mjwx
--i C:\msx\projects\msxne2/out/main.ihx
+-i C:\msx\projects\msxne/out/main.ihx
 -b _CODE = 0x4000
 -b _DATA = 0xc000
 -k C:\msx\tools/sdcc/lib/z80
 -k C:\msx\tools/sdcc/bin\..\lib\z80
--l C:\msx\projects\msxne2/out/msxgl.lib
+-l C:\msx\projects\msxne/out/msxgl.lib
 -l z80
-C:\msx\projects\msxne2/out/crt0_rom32.rel
-C:\msx\projects\msxne2/out/main.rel
-C:\msx\projects\msxne2/out/msxne.rel
-C:\msx\projects\msxne2/out/nekeys.rel
+C:\msx\projects\msxne/out/crt0_rom32.rel
+C:\msx\projects\msxne/out/main.rel
+C:\msx\projects\msxne/out/msxne.rel
+C:\msx\projects\msxne/out/nekeys.rel
 
 -e

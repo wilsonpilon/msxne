@@ -9,3 +9,4 @@
 
 
 u8 ne();
+void banner();
