@@ -162,9 +162,10 @@ Hexadecimal [32-Bits]
                          00000001     3 DOS_PARSEARG=1
                          00000001     4 APP_SIGN=1
                          00004C47     5 APP_SIGN_NAME="GL"
-                         00003154     6 APP_SIGN_ID="T1"
+                         00003254     6 APP_SIGN_ID="T2"
                                       7 .macro ROM_SIGN_MACRO
-                                      8 .endm
+                                      8 	.ascii "ROM_32P1"
+                                      9 .endm
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 6
 Hexadecimal [32-Bits]
 
@@ -1343,7 +1344,7 @@ Hexadecimal [32-Bits]
                                       1 
     00000000                          2 	crt0_rom_header::
     00000000 41 42                    3 		.ascii	"AB"
-    00000002 14 00                    4 		.dw		crt0_init
+    00000002 1C 00                    4 		.dw		crt0_init
     00000004 00 00                    5 		.dw		0x0000
     00000006 00 00                    6 		.dw		0x0000
     00000008 00 00                    7 		.dw		0x0000
@@ -1352,11 +1353,13 @@ Hexadecimal [32-Bits]
     0000000E 00 00                   10 		.dw		0x0000
                                      11 
     00000010                         12 		ROM_SIGN_MACRO ; empty if AddROMSignature build option is set to false
+    00000010 52 4F 4D 5F 33 32 50     1 	.ascii "ROM_32P1"
+             31
                                      13 
                          00000001    14 	.if APP_SIGN
-    00000010                         15 	_g_AppSignature::
-    00000010 47 4C                   16 		.dw		APP_SIGN_NAME
-    00000012 54 31                   17 		.dw		APP_SIGN_ID
+    00000018                         15 	_g_AppSignature::
+    00000018 47 4C                   16 		.dw		APP_SIGN_NAME
+    0000001A 54 32                   17 		.dw		APP_SIGN_ID
                                      18 	.endif
                                      19 	; .ifdef APP_SIGN_EXTRA
                                      20 		; .db		APP_SIGN_EXTRA
@@ -1365,9 +1368,9 @@ Hexadecimal [32-Bits]
                                      33 
                                      34 ;------------------------------------------------------------------------------
                                      35 ; Initialization code
-    00000014                         36 crt0_init:
+    0000001C                         36 crt0_init:
                                      37 	; Check for skip key press (if ROM_SKIP is set to 1)
-    00000014                         38 	SKIP_BOOT
+    0000001C                         38 	SKIP_BOOT
                          00000000     1 	.if ROM_SKIP
                                       2 	; Check for 'ESC' key press
                                       3 	ctr0_check_rom_skip:
@@ -1377,16 +1380,16 @@ Hexadecimal [32-Bits]
                                       7 		out		(PPI_C), a
                                       8 		in		a, (PPI_B)				; read row into A
                                       9 		and		#ROM_SKIP_KEY
-                                     10 		ret		z
-                                     11 	.endif
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                           Page 27
 Hexadecimal [32-Bits]
 
 
 
+                                     10 		ret		z
+                                     11 	.endif
                                      39 
                                      40 	; Delay startup using STKE hook (if ROM_DELAY is set to 1)
-    00000014                         41 	DELAY_BOOT
+    0000001C                         41 	DELAY_BOOT
                          00000000     1 	.if ROM_DELAY
                                       2 	; Setup the hook H.STKE to run the ROM with disk support
                                       3 	crt0_bdos_install::
@@ -1410,47 +1413,47 @@ Hexadecimal [32-Bits]
                                      21 		ld		(H_STKE), a
                                      22 	.endif
                                      42 
-    00000014 F3               [ 4]   43 	di
+    0000001C F3               [ 4]   43 	di
                                      44 	; Set stack address at the top of free memory
-    00000015 ED 7B 4A FC      [20]   45 	ld		sp, (HIMEM)
+    0000001D ED 7B 4A FC      [20]   45 	ld		sp, (HIMEM)
                                      46 
                                      47 	; Initialize heap address
-    00000019 21 00 00         [10]   48 	ld		hl, #s__HEAP
-    0000001C 22 00 00         [16]   49 	ld		(#_g_HeapStartAddress), hl
+    00000021 21 00 00         [10]   48 	ld		hl, #s__HEAP
+    00000024 22 00 00         [16]   49 	ld		(#_g_HeapStartAddress), hl
                                      50 
                                      51 	; Set Page 2 slot equal to Page 1 slot
-    0000001F                         52 	INIT_P1_TO_P2
+    00000027                         52 	INIT_P1_TO_P2
                                       1 
-    0000001F                          2 	crt0_p1_to_p2::
-    0000001F DB A8            [11]    3 		in		a, (PPI_A)				; A=[P3|P2|P1|P0] Get primary slots info
-    00000021 0F               [ 4]    4 		rrca
-    00000022 0F               [ 4]    5 		rrca							; A=[P0|P3|P2|P1]
-    00000023 E6 03            [ 7]    6 		and		a, #0b00000011			; A=[00|00|00|P1] Save Page 1 primary slot
-    00000025 4F               [ 4]    7 		ld		c, a					; C=[00|00|00|P1]
-    00000026 21 C1 FC         [10]    8 		ld		hl, #EXPTBL				; HL=&EXPTBL
-    00000029 85               [ 4]    9 		add		a, l
-    0000002A 6F               [ 4]   10 		ld		l, a
-    0000002B 7E               [ 7]   11 		ld		a, (hl)					; A=EXPTBL[P1]    See if the slot is expanded or not
-    0000002C E6 80            [ 7]   12 		and		a, #0x80				; A=[X|000|00|00] Keep only expansion flag
-    0000002E B1               [ 4]   13 		or		a, c					; A=[X|000|00|P1] Set MSB if so
-    0000002F 4F               [ 4]   14 		ld		c, a					; C=[X|000|00|P1] Save it to [C]
-    00000030 2C               [ 4]   15 		inc		l						;                 Point to primary slot's SLTTBL entry
-    00000031 2C               [ 4]   16 		inc		l
-    00000032 2C               [ 4]   17 		inc		l
-    00000033 2C               [ 4]   18 		inc		l
-    00000034 7E               [ 7]   19 		ld		a, (hl)					; A=SLTTBL[P1]    Get what is currently output to expansion slot register
+    00000027                          2 	crt0_p1_to_p2::
+    00000027 DB A8            [11]    3 		in		a, (PPI_A)				; A=[P3|P2|P1|P0] Get primary slots info
+    00000029 0F               [ 4]    4 		rrca
+    0000002A 0F               [ 4]    5 		rrca							; A=[P0|P3|P2|P1]
+    0000002B E6 03            [ 7]    6 		and		a, #0b00000011			; A=[00|00|00|P1] Save Page 1 primary slot
+    0000002D 4F               [ 4]    7 		ld		c, a					; C=[00|00|00|P1]
+    0000002E 21 C1 FC         [10]    8 		ld		hl, #EXPTBL				; HL=&EXPTBL
+    00000031 85               [ 4]    9 		add		a, l
+    00000032 6F               [ 4]   10 		ld		l, a
+    00000033 7E               [ 7]   11 		ld		a, (hl)					; A=EXPTBL[P1]    See if the slot is expanded or not
+    00000034 E6 80            [ 7]   12 		and		a, #0x80				; A=[X|000|00|00] Keep only expansion flag
+    00000036 B1               [ 4]   13 		or		a, c					; A=[X|000|00|P1] Set MSB if so
+    00000037 4F               [ 4]   14 		ld		c, a					; C=[X|000|00|P1] Save it to [C]
+    00000038 2C               [ 4]   15 		inc		l						;                 Point to primary slot's SLTTBL entry
+    00000039 2C               [ 4]   16 		inc		l
+    0000003A 2C               [ 4]   17 		inc		l
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                           Page 28
 Hexadecimal [32-Bits]
 
 
 
-    00000035 E6 0C            [ 7]   20 		and		a, #0b00001100			; A=[00|00|S1|00]
-    00000037 B1               [ 4]   21 		or		c						; A=[X|000|S1|P1] Finally form slot address
-    00000038 26 80            [ 7]   22 		ld		h, #0x80				; H=Page 2
-    0000003A CD 24 00         [17]   23 		call	ENASLT					;                 Enable page 1's slot in page 2
+    0000003B 2C               [ 4]   18 		inc		l
+    0000003C 7E               [ 7]   19 		ld		a, (hl)					; A=SLTTBL[P1]    Get what is currently output to expansion slot register
+    0000003D E6 0C            [ 7]   20 		and		a, #0b00001100			; A=[00|00|S1|00]
+    0000003F B1               [ 4]   21 		or		c						; A=[X|000|S1|P1] Finally form slot address
+    00000040 26 80            [ 7]   22 		ld		h, #0x80				; H=Page 2
+    00000042 CD 24 00         [17]   23 		call	ENASLT					;                 Enable page 1's slot in page 2
                                      53 
                                      54 	; Install ISR in RAM (if ROM_RAMISR is set)
-    0000003D                         55 	INSTALL_RAM_ISR
+    00000045                         55 	INSTALL_RAM_ISR
                          00000000     1 	.ifne ROM_RAMISR-RAM0_NONE
                                       2 
                                       3 	crt0_select_ram::
@@ -1497,13 +1500,13 @@ Hexadecimal [32-Bits]
                                      44 				ld		(BANK2_ADDR), a ; Segment 4 in Bank 2
                                      45 				inc		a
                                      46 				ld		(BANK3_ADDR), a ; Segment 5 in Bank 3
-                                     47 			.endif
-                                     48 			.ifeq ROM_MAPPER-ROM_NEO8
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                           Page 29
 Hexadecimal [32-Bits]
 
 
 
+                                     47 			.endif
+                                     48 			.ifeq ROM_MAPPER-ROM_NEO8
                                      49 				ld		a, #6
                                      50 				ld		(BANK4_ADDR), a ; Segment 6 in Bank 4
                                      51 				inc		a
@@ -1534,36 +1537,36 @@ Hexadecimal [32-Bits]
                                      76 	.endif
                                      56 
                                      57 	; Initialize globals
-    0000003D                         58 	INIT_GLOBALS
+    00000045                         58 	INIT_GLOBALS
                                       1 
-    0000003D                          2 	crt0_init_globals:
-    0000003D 01 00 00         [10]    3 		ld		bc, #l__INITIALIZER
-    00000040 78               [ 4]    4 		ld		a, b
-    00000041 B1               [ 4]    5 		or		a, c
-    00000042 CA 4D 00         [10]    6 		jp		z, crt0_skip_globals
-    00000045 11 00 00         [10]    7 		ld		de, #s__INITIALIZED
-    00000048 21 00 00         [10]    8 		ld		hl, #s__INITIALIZER
-    0000004B ED B0            [21]    9 		ldir
-    0000004D                         10 	crt0_skip_globals:
+    00000045                          2 	crt0_init_globals:
+    00000045 01 00 00         [10]    3 		ld		bc, #l__INITIALIZER
+    00000048 78               [ 4]    4 		ld		a, b
+    00000049 B1               [ 4]    5 		or		a, c
+    0000004A CA 55 00         [10]    6 		jp		z, crt0_skip_globals
+    0000004D 11 00 00         [10]    7 		ld		de, #s__INITIALIZED
+    00000050 21 00 00         [10]    8 		ld		hl, #s__INITIALIZER
+    00000053 ED B0            [21]    9 		ldir
+    00000055                         10 	crt0_skip_globals:
                                      11 
                                      59 	
-    0000004D                         60 crt0_start:
+    00000055                         60 crt0_start:
                                      61 	; start main() function
-    0000004D FB               [ 4]   62 	ei
-    0000004E CD 00 00         [17]   63 	call	_main
-    00000051 C7               [11]   64 	rst		0
+    00000055 FB               [ 4]   62 	ei
+    00000056 CD 00 00         [17]   63 	call	_main
+    00000059 C7               [11]   64 	rst		0
                                      65 
                                      66 ;------------------------------------------------------------------------------
                                      67 ; Ordering of segments for the linker
                                      68 	.area	_RODATA
                                      69 	.area	_INITIALIZER 
-                                     70 	.area	_GSINIT
-                                     71 	.area	_GSFINAL
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                           Page 30
 Hexadecimal [32-Bits]
 
 
 
+                                     70 	.area	_GSINIT
+                                     71 	.area	_GSFINAL
     00000000                         72 _g_LastAddr::
                                      73 
                                      74 ;==============================================================================

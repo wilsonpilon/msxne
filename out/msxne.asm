@@ -8,16 +8,15 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
-	.globl _sleep
-	.globl _Bios_PrintTextAt
-	.globl _Char_IsControl
-	.globl ___itoa
-	.globl _Bios_SetCursorPosition
-	.globl _Bios_ClearScreen
-	.globl _Bios_ChangeColor
-	.globl _Bios_Exit
-	.globl _E
+	.globl _Print_SetColor
+	.globl _Print_DrawText
+	.globl _Print_DrawChar
+	.globl _Print_SetBitmapFont
+	.globl _VDP_RegWriteBakMask
+	.globl _VDP_RegWrite
+	.globl _VDP_SetMode
+	.globl _VDP_ClearVRAM
+	.globl _Keyboard_IsKeyPressed
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -57,6 +56,7 @@
 	.globl _g_LINLEN
 	.globl _g_LINL32
 	.globl _g_LINL40
+	.globl _g_Font_Oxygene
 	.globl _g_BDOS
 	.globl _g_MASTER
 	.globl _g_RAMAD3
@@ -221,12 +221,7 @@
 	.globl _g_CLPRIM
 	.globl _g_WRPRIM
 	.globl _g_RDPRIM
-	.globl _die
-	.globl _process_control
-	.globl _refresh_screen
-	.globl _draw_rows
-	.globl _startUp
-	.globl _drawFrame
+	.globl _ne
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -238,6 +233,8 @@ _g_VDP_DataPort	=	0x0098
 _g_VDP_RegPort	=	0x0099
 _g_VDP_AddrPort	=	0x0099
 _g_VDP_StatPort	=	0x0099
+_g_VDP_PalPort	=	0x009a
+_g_VDP_IRegPort	=	0x009b
 _g_PSG_RegPort	=	0x00a0
 _g_PSG_DataPort	=	0x00a1
 _g_PSG_StatPort	=	0x00a2
@@ -295,8 +292,6 @@ _g_LOGOPR	=	0xfb02
 _g_GRPACX	=	0xfcb7
 _g_GRPACY	=	0xfcb9
 _g_SLTSL	=	0xffff
-_E::
-	.ds 34
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -321,56 +316,98 @@ _E::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;./msxne.c:19: void main()
+;./msxne.c:13: u8 ne()
 ;	---------------------------------
-; Function main
+; Function ne
 ; ---------------------------------
-_main::
-;./msxne.c:21: startUp();
-	call	_startUp
-;./msxne.c:23: while(1)
-00105$:
-;./msxne.c:25: c8 key = Bios_GetCharacter();
-	call	0x009f
-	ld	c, a
-;./msxne.c:26: if (!Char_IsControl(key))
+_ne::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	push	af
+	push	af
+;./msxne.c:15: const u8 g_ChrAnim[] = { '-', '/', '|', '\\' };
+	ld	-4 (ix), #0x2d
+	ld	-3 (ix), #0x2f
+	ld	-2 (ix), #0x7c
+	ld	-1 (ix), #0x5c
+;./msxne.c:17: VDP_SetMode(VDP_MODE_SCREEN5);
+	ld	a, #0x06
+	call	_VDP_SetMode
+;C:/msx/engine/src/vdp.h:717: inline void VDP_SetColor(u8 color) { VDP_RegWrite(7, color); }
+	ld	l, #0x01
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x07
+	call	_VDP_RegWrite
+;C:/msx/engine/src/vdp.h:710: inline void VDP_EnableVBlank(bool enable) { VDP_RegWriteBakMask(1, (u8)~R01_IE0, enable ? R01_IE0 : 0); }
+	ld	a, #0x20
+	push	af
+	inc	sp
+	ld	l, #0xdf
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x01
+	call	_VDP_RegWriteBakMask
+;./msxne.c:20: VDP_ClearVRAM();
+	call	_VDP_ClearVRAM
+;./msxne.c:22: Print_SetBitmapFont(g_Font_Oxygene);
+	ld	hl, #_g_Font_Oxygene
+	call	_Print_SetBitmapFont
+;./msxne.c:23: Print_SetColor(COLOR_WHITE, COLOR_BLACK);
+	ld	l, #0x01
+;	spillPairReg hl
+;	spillPairReg hl
+	ld	a, #0x0f
+	call	_Print_SetColor
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x0000
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x00
+;./msxne.c:25: Print_DrawText(MSX_GL" The MSX Game Library");
+	ld	hl, #___str_0
+	call	_Print_DrawText
+;./msxne.c:28: while(!Keyboard_IsKeyPressed(KEY_ESC))
+	ld	c, #0x00
+00101$:
 	push	bc
-	ld	a, c
-	call	_Char_IsControl
+	ld	a, #0x27
+	call	_Keyboard_IsKeyPressed
 	pop	bc
 	or	a, a
-	jr	NZ, 00102$
-;./msxne.c:28: Bios_SetCursorPosition(E.cursorx, E.cursory);
-	ld	hl, #_E + 33
-	ld	l, (hl)
-;	spillPairReg hl
-	ld	de, #_E + 32
-	ld	a, (de)
-	ld	b, a
+	jr	NZ, 00103$
+;C:/msx/engine/src/system.h:140: inline void Halt() { __asm__("halt"); }
+	halt
+;C:/msx/engine/src/print.h:223: g_PrintData.CursorX = x;
+	ld	hl, #0x00f7
+	ld	((_g_PrintData + 5)), hl
+;C:/msx/engine/src/print.h:224: g_PrintData.CursorY = y;
+	ld	hl, #(_g_PrintData + 7)
+	ld	(hl), #0x00
+;./msxne.c:32: Print_DrawChar(g_ChrAnim[count++ % 4]);
+	inc	c
+	ld	a, c
+	and	a, #0x03
+	ld	e, a
+	ld	d, #0x00
+	ld	hl, #0
+	add	hl, sp
+	add	hl, de
+	ld	b, (hl)
 	push	bc
-	push	de
 	ld	a, b
-	call	_Bios_SetCursorPosition
-	pop	de
+	call	_Print_DrawChar
 	pop	bc
-;E:/MSXgl/engine/src/bios.h:339: inline void Bios_TextPrintChar(c8 chr) { ((void(*)(u8))R_CHPUT)(chr); }
-	push	de
-	ld	a, c
-	call	0x00a2
-	pop	de
-;./msxne.c:30: E.cursorx += 1;
-	ld	a, (de)
-	inc	a
-	ld	(de), a
-;./msxne.c:31: drawFrame();
-	call	_drawFrame
-	jp	00105$
-00102$:
-;./msxne.c:34: process_control(key);
-	ld	a, c
-	call	_process_control
+	jp	00101$
+00103$:
+;./msxne.c:35: return 0;
+	xor	a, a
 ;./msxne.c:36: }
-	jp	00105$
+	ld	sp, ix
+	pop	ix
+	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
 _g_CLPRIM	=	0xf38c
@@ -535,297 +572,523 @@ _g_RAMAD2	=	0xf343
 _g_RAMAD3	=	0xf344
 _g_MASTER	=	0xf348
 _g_BDOS	=	0xf37d
-;./msxne.c:38: void die(const c8* s)
-;	---------------------------------
-; Function die
-; ---------------------------------
-_die::
-;./msxne.c:41: Bios_PrintTextAt(msgx, msgy, s);
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_PrintTextAt
-;./msxne.c:42: sleep(2000);
-	ld	a, #0xd0
-	call	_sleep
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x00c0
-;./msxne.c:44: Bios_ClearScreen();
-	call	_Bios_ClearScreen
-;./msxne.c:45: Bios_Exit(0);
-	xor	a, a
-;./msxne.c:46: }
-	jp	_Bios_Exit
-;./msxne.c:48: bool process_control(c8 chr)
-;	---------------------------------
-; Function process_control
-; ---------------------------------
-_process_control::
-;./msxne.c:50: switch(chr)
-	ld	c, a
-	sub	a, #0x0d
-	jr	Z, 00102$
-	ld	a, c
-	sub	a, #0x11
-	jr	NZ, 00103$
-;./msxne.c:53: die("Encerrando");
-	ld	hl, #___str_0
-	call	_die
-;./msxne.c:54: break;
-	jp	00104$
-;./msxne.c:55: case 13:
-00102$:
-;./msxne.c:56: E.cursory += 1;
-	ld	bc, #_E + 33
-	ld	a, (bc)
-	inc	a
-	ld	(bc), a
-;./msxne.c:57: E.cursorx = 2;
-	ld	hl, #(_E + 32)
-	ld	(hl), #0x02
-;./msxne.c:58: break;
-	jp	00104$
-;./msxne.c:59: default:
-00103$:
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x00c0
-;./msxne.c:61: }
-00104$:
-;./msxne.c:62: Bios_SetCursorPosition(E.cursorx, E.cursory);
-	ld	hl, #_E + 33
-	ld	c, (hl)
-	ld	hl, #_E + 32
-	ld	b, (hl)
-	ld	l, c
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, b
-	call	_Bios_SetCursorPosition
-;./msxne.c:63: return true;
-	ld	a, #0x01
-;./msxne.c:64: }
-	ret
+_g_Font_Oxygene:
+	.db #0x88	; 136
+	.db #0x88	; 136
+	.db #0x21	; 33
+	.db #0x5f	; 95
+	.db #0x70	; 112	'p'
+	.db #0x70	; 112	'p'
+	.db #0x70	; 112	'p'
+	.db #0x60	; 96
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x48	; 72	'H'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x2c	; 44
+	.db #0x6c	; 108	'l'
+	.db #0xfe	; 254
+	.db #0x6c	; 108	'l'
+	.db #0xfe	; 254
+	.db #0x6c	; 108	'l'
+	.db #0x48	; 72	'H'
+	.db #0x00	; 0
+	.db #0x20	; 32
+	.db #0x70	; 112	'p'
+	.db #0xc0	; 192
+	.db #0xf8	; 248
+	.db #0x18	; 24
+	.db #0x70	; 112	'p'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0xc8	; 200
+	.db #0xd8	; 216
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0xd8	; 216
+	.db #0x98	; 152
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x50	; 80	'P'
+	.db #0xf8	; 248
+	.db #0xd0	; 208
+	.db #0xf8	; 248
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x08	; 8
+	.db #0x40	; 64
+	.db #0x60	; 96
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x28	; 40
+	.db #0x10	; 16
+	.db #0x28	; 40
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x38	; 56	'8'
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x08	; 8
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0xc0	; 192
+	.db #0x80	; 128
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x30	; 48	'0'
+	.db #0x70	; 112	'p'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x10	; 16
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0xd8	; 216
+	.db #0x18	; 24
+	.db #0x70	; 112	'p'
+	.db #0xc0	; 192
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x48	; 72	'H'
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0xc0	; 192
+	.db #0xf0	; 240
+	.db #0xf8	; 248
+	.db #0x18	; 24
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0xc0	; 192
+	.db #0xf0	; 240
+	.db #0xf8	; 248
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0x38	; 56	'8'
+	.db #0x38	; 56	'8'
+	.db #0x70	; 112	'p'
+	.db #0xe0	; 224
+	.db #0xc0	; 192
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x6c	; 108	'l'
+	.db #0xfc	; 252
+	.db #0xcc	; 204
+	.db #0xfc	; 252
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0x78	; 120	'x'
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x98	; 152
+	.db #0x38	; 56	'8'
+	.db #0x70	; 112	'p'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0xfc	; 252
+	.db #0xc4	; 196
+	.db #0xdc	; 220
+	.db #0xd4	; 212
+	.db #0xdc	; 220
+	.db #0xc0	; 192
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0xd8	; 216
+	.db #0xc8	; 200
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xf0	; 240
+	.db #0xf8	; 248
+	.db #0xd8	; 216
+	.db #0xf0	; 240
+	.db #0x60	; 96
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0xf0	; 240
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0x6c	; 108	'l'
+	.db #0x6c	; 108	'l'
+	.db #0x6c	; 108	'l'
+	.db #0x6c	; 108	'l'
+	.db #0x78	; 120	'x'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0xc0	; 192
+	.db #0xf0	; 240
+	.db #0xc0	; 192
+	.db #0xd0	; 208
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0xc0	; 192
+	.db #0xf0	; 240
+	.db #0xf0	; 240
+	.db #0xc0	; 192
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x60	; 96
+	.db #0xc0	; 192
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0x68	; 104	'h'
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x90	; 144
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0xd8	; 216
+	.db #0x48	; 72	'H'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x18	; 24
+	.db #0x58	; 88	'X'
+	.db #0x78	; 120	'x'
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x48	; 72	'H'
+	.db #0xd8	; 216
+	.db #0xf0	; 240
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xc8	; 200
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x48	; 72	'H'
+	.db #0xec	; 236
+	.db #0xf4	; 244
+	.db #0xd4	; 212
+	.db #0xc4	; 196
+	.db #0x84	; 132
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xcc	; 204
+	.db #0xec	; 236
+	.db #0xfc	; 252
+	.db #0xdc	; 220
+	.db #0xc8	; 200
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0xd8	; 216
+	.db #0xcc	; 204
+	.db #0xcc	; 204
+	.db #0x7c	; 124
+	.db #0x38	; 56	'8'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0xf0	; 240
+	.db #0xc0	; 192
+	.db #0xc0	; 192
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0xdc	; 220
+	.db #0xcc	; 204
+	.db #0xec	; 236
+	.db #0xf8	; 248
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xd8	; 216
+	.db #0xf8	; 248
+	.db #0xf0	; 240
+	.db #0xd8	; 216
+	.db #0xc8	; 200
+	.db #0x40	; 64
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0xc0	; 192
+	.db #0xf8	; 248
+	.db #0xf8	; 248
+	.db #0x18	; 24
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xf8	; 248
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0xd0	; 208
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x78	; 120	'x'
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x98	; 152
+	.db #0xd8	; 216
+	.db #0xd8	; 216
+	.db #0x70	; 112	'p'
+	.db #0x20	; 32
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x84	; 132
+	.db #0xc4	; 196
+	.db #0xd4	; 212
+	.db #0xf4	; 244
+	.db #0xec	; 236
+	.db #0x48	; 72	'H'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x88	; 136
+	.db #0xdc	; 220
+	.db #0x78	; 120	'x'
+	.db #0x30	; 48	'0'
+	.db #0x78	; 120	'x'
+	.db #0x6c	; 108	'l'
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x40	; 64
+	.db #0xc8	; 200
+	.db #0xe8	; 232
+	.db #0x78	; 120	'x'
+	.db #0x18	; 24
+	.db #0x78	; 120	'x'
+	.db #0x30	; 48	'0'
+	.db #0x00	; 0
+	.db #0xf0	; 240
+	.db #0xb8	; 184
+	.db #0x30	; 48	'0'
+	.db #0x60	; 96
+	.db #0xc0	; 192
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x60	; 96
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x80	; 128
+	.db #0xc0	; 192
+	.db #0x60	; 96
+	.db #0x30	; 48	'0'
+	.db #0x18	; 24
+	.db #0x08	; 8
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x70	; 112	'p'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x30	; 48	'0'
+	.db #0x70	; 112	'p'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x10	; 16
+	.db #0x30	; 48	'0'
+	.db #0x68	; 104	'h'
+	.db #0x44	; 68	'D'
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x00	; 0
+	.db #0x78	; 120	'x'
+	.db #0x00	; 0
 ___str_0:
-	.ascii "Encerrando"
-	.db 0x00
-;./msxne.c:66: void refresh_screen()
-;	---------------------------------
-; Function refresh_screen
-; ---------------------------------
-_refresh_screen::
-;./msxne.c:68: Bios_ClearScreen();
-	call	_Bios_ClearScreen
-;./msxne.c:69: Bios_SetCursorPosition(1,1);
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
-	call	_Bios_SetCursorPosition
-;./msxne.c:70: draw_rows();
-	call	_draw_rows
-;./msxne.c:71: Bios_SetCursorPosition(1,1);
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a,#0x01
-	ld	l,a
-;./msxne.c:72: }
-	jp	_Bios_SetCursorPosition
-;./msxne.c:74: void draw_rows()
-;	---------------------------------
-; Function draw_rows
-; ---------------------------------
-_draw_rows::
-;./msxne.c:76: for(u8 y=2; y<23; y++)
-	ld	l, #0x02
-;	spillPairReg hl
-;	spillPairReg hl
-00103$:
-	ld	a, l
-	sub	a, #0x17
-	ret	NC
-;./msxne.c:78: Bios_SetCursorPosition(1,y);
-	push	hl
-	ld	a, #0x01
-	call	_Bios_SetCursorPosition
-	pop	hl
-;./msxne.c:76: for(u8 y=2; y<23; y++)
-	inc	l
-;./msxne.c:80: }
-	jp	00103$
-;./msxne.c:82: void startUp()
-;	---------------------------------
-; Function startUp
-; ---------------------------------
-_startUp::
-;./msxne.c:84: __builtin_strcpy(E.name,"MSX Norton Editor");
-	ld	de, #_E
-	ld	hl, #___str_1
-	xor	a, a
-00107$:
-	cp	a, (hl)
-	ldi
-	jr	NZ, 00107$
-;E:/MSXgl/engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
-	call	0x006c
-	call	0x0078
-;./msxne.c:87: Bios_ChangeColor(COLOR_BLACK,COLOR_MEDIUM_GREEN,COLOR_MEDIUM_GREEN);
-	ld	a, #0x02
-	push	af
-	inc	sp
-	ld	l, #0x02
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_ChangeColor
-;./msxne.c:88: refresh_screen();
-	call	_refresh_screen
-;./msxne.c:89: E.cursorx=1, E.cursory=1;
-	ld	hl, #(_E + 32)
-	ld	(hl), #0x01
-	ld	hl, #(_E + 33)
-	ld	(hl), #0x01
-;./msxne.c:90: }
-	ret
-___str_1:
-	.ascii "MSX Norton Editor"
-	.db 0x00
-;./msxne.c:92: void drawFrame()
-;	---------------------------------
-; Function drawFrame
-; ---------------------------------
-_drawFrame::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	ld	hl, #-6
-	add	hl, sp
-	ld	sp, hl
-;./msxne.c:96: __itoa(E.cursorx,x,10);
-	ld	hl, #0
-	add	hl, sp
-	ex	de, hl
-	ld	a, (#(_E + 32) + 0)
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	h, #0x00
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0a
-	push	af
-	inc	sp
-	call	___itoa
-;./msxne.c:97: __itoa(E.cursorx,y,10);
-	ld	hl, #3
-	add	hl, sp
-	ex	de, hl
-	ld	a, (#(_E + 32) + 0)
-	ld	l, a
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	h, #0x00
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0a
-	push	af
-	inc	sp
-	call	___itoa
-;./msxne.c:98: Bios_SetCursorPosition(2,24);
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x02
-	call	_Bios_SetCursorPosition
-;./msxne.c:99: Bios_PrintTextAt(1,24,"Lin=");
-	ld	hl, #___str_2
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x01
-	call	_Bios_PrintTextAt
-;./msxne.c:100: Bios_PrintTextAt(5,24,x);
-	ld	hl, #0
-	add	hl, sp
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x05
-	call	_Bios_PrintTextAt
-;./msxne.c:101: Bios_PrintTextAt(8,24,"Col=");
-	ld	hl, #___str_3
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x08
-	call	_Bios_PrintTextAt
-;./msxne.c:102: Bios_PrintTextAt(12,24,y);
-	ld	hl, #3
-	add	hl, sp
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0c
-	call	_Bios_PrintTextAt
-;./msxne.c:103: Bios_PrintTextAt(15,24,"a:\\arquivo.bas");
-	ld	hl, #___str_4
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x0f
-	call	_Bios_PrintTextAt
-;./msxne.c:104: Bios_PrintTextAt(33,24,"Ins");
-	ld	hl, #___str_5
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x21
-	call	_Bios_PrintTextAt
-;./msxne.c:105: Bios_PrintTextAt(37,24,"WW");
-	ld	hl, #___str_6
-	push	hl
-	ld	l, #0x18
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, #0x25
-	call	_Bios_PrintTextAt
-;./msxne.c:106: Bios_SetCursorPosition(E.cursorx,E.cursory);
-	ld	hl, #_E + 33
-	ld	c, (hl)
-	ld	hl, #(_E + 32)
-	ld	b, (hl)
-	ld	l, c
-;	spillPairReg hl
-;	spillPairReg hl
-	ld	a, b
-	call	_Bios_SetCursorPosition
-;./msxne.c:107: }
-	ld	sp, ix
-	pop	ix
-	ret
-___str_2:
-	.ascii "Lin="
-	.db 0x00
-___str_3:
-	.ascii "Col="
-	.db 0x00
-___str_4:
-	.ascii "a:"
-	.db 0x5c
-	.ascii "arquivo.bas"
-	.db 0x00
-___str_5:
-	.ascii "Ins"
-	.db 0x00
-___str_6:
-	.ascii "WW"
+	.db 0x01
+	.db 0x02
+	.db 0x03
+	.db 0x04
+	.db 0x05
+	.db 0x06
+	.ascii " The MSX Game Library"
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

@@ -5,7 +5,7 @@ Symbol Table
 
     .__.$$$.=   00002710 L   |     .__.ABS.=   00000000 G   |     .__.CPU.=   00000000 L
     .__.H$L.=   00000000 L   |     ADDR_BOO=   00004000     |     APP_SIGN=   00000001 
-    APP_SIGN=   00003154     |     APP_SIGN=   00004C47     |     DOS_ISR =   00000000 
+    APP_SIGN=   00003254     |     APP_SIGN=   00004C47     |     DOS_ISR =   00000000 
     DOS_PARS=   00000001     |     ENASLT  =   00000024     |     EXPTBL  =   0000FCC1 
     HIMEM   =   0000FC4A     |     H_STKE  =   0000FEDA     |     ISR_ALL =   00000001 
     ISR_NONE=   00000000     |     ISR_SET_=   00000000     |     ISR_V999=   00000004 
@@ -26,11 +26,11 @@ Symbol Table
     VDP_S   =   00000099     |     YAMA_CFG=   00007FFD     |     YAMA_CFG=   00000002 
     YAMA_CFG=   00000008     |     YAMA_CFG=   00000001     |     YAMA_CFG=   00000004 
     YAMA_ENA=   00007FFF     |     YAMA_ENA=   00000001     |     YAMA_ENA=   00000010 
-    YAMA_OFF=   00007FFE     |   0 _g_AppSi    00000010 GR  |   0 _g_First    00000000 GR
+    YAMA_OFF=   00007FFE     |   0 _g_AppSi    00000018 GR  |   0 _g_First    00000000 GR
   0 _g_Heade    00000000 GR  |   8 _g_HeapS    00000000 GR  |   7 _g_LastA    00000000 GR
-    _main       ******** GX  |   0 crt0_ini    00000014 R   |   0 crt0_ini    0000003D R
-  0 crt0_p1_    0000001F GR  |   0 crt0_rom    00000000 GR  |   0 crt0_ski    0000004D R
-  0 crt0_sta    0000004D R   |     l__INITI    ******** GX  |     s__GSFIN    ******** GX
+    _main       ******** GX  |   0 crt0_ini    0000001C R   |   0 crt0_ini    00000045 R
+  0 crt0_p1_    00000027 GR  |   0 crt0_rom    00000000 GR  |   0 crt0_ski    00000055 R
+  0 crt0_sta    00000055 R   |     l__INITI    ******** GX  |     s__GSFIN    ******** GX
     s__HEADE    ******** GX  |     s__HEAP     ******** GX  |     s__INITI    ******** GX
     s__INITI    ******** GX
 
@@ -39,7 +39,7 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE      size       52   flags    0
+   0 _CODE      size       5A   flags    0
    1 _HEADER    size        0   flags    8
    2 _HEADER0   size        0   flags    8
    3 _HOME      size        0   flags    0

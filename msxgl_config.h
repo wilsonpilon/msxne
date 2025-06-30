@@ -70,26 +70,26 @@
 // VRAM addressing unit
 // - VDP_VRAM_ADDR_14 ............. Use 14-bits 16K VRAM addressing for MSX1 (u16)
 // - VDP_VRAM_ADDR_17 ............. Use 17-bits 128K VRAM addressing for MSX2/2+/turbo R (u32)
-#define VDP_VRAM_ADDR				VDP_VRAM_ADDR_14
+#define VDP_VRAM_ADDR				VDP_VRAM_ADDR_17
 
 // VDP X/Y units
 // - VDP_UNIT_U8 .................. X and Y use 8-bits values
 // - VDP_UNIT_X16 ................. X use 16-bits and Y use 8-bits values
 // - VDP_UNIT_Y16 ................. X use 8-bits and Y use 16-bits values
 // - VDP_UNIT_U16 ................. X and Y use 16-bits values
-#define VDP_UNIT					VDP_UNIT_U8
+#define VDP_UNIT					VDP_UNIT_X16
 
 // VDP screen modes (additionnal limitations come from the selected MSX_VERSION)
 #define VDP_USE_MODE_T1				TRUE	// MSX1		Screen 0 Width 40
 #define VDP_USE_MODE_G1				TRUE	// MSX1		Screen 1
 #define VDP_USE_MODE_G2				TRUE	// MSX1		Screen 2
 #define VDP_USE_MODE_MC				TRUE	// MSX1		Screen 3
-#define VDP_USE_MODE_T2				FALSE	// MSX2		Screen 0 Width 80
-#define VDP_USE_MODE_G3				FALSE	// MSX2		Screen 4
-#define VDP_USE_MODE_G4				FALSE	// MSX2		Screen 5
-#define VDP_USE_MODE_G5				FALSE	// MSX2		Screen 6
-#define VDP_USE_MODE_G6				FALSE	// MSX2		Screen 7
-#define VDP_USE_MODE_G7				FALSE	// MSX2/2+	Screen 8, 10, 11 & 12
+#define VDP_USE_MODE_T2				TRUE	// MSX2		Screen 0 Width 80
+#define VDP_USE_MODE_G3				TRUE	// MSX2		Screen 4
+#define VDP_USE_MODE_G4				TRUE	// MSX2		Screen 5
+#define VDP_USE_MODE_G5				TRUE	// MSX2		Screen 6
+#define VDP_USE_MODE_G6				TRUE	// MSX2		Screen 7
+#define VDP_USE_MODE_G7				TRUE	// MSX2/2+	Screen 8, 10, 11 & 12
 
 #define VDP_USE_VRAM16K				TRUE	// Use 16K VRAM access functions on MSX2
 #define VDP_USE_SPRITE				TRUE	// Use sprite handling functions
@@ -202,30 +202,30 @@
 
 // Print module setting
 #define PRINT_USE_TEXT				TRUE	// Allow use of Text font (T1-T2, G1-G3)
-#define PRINT_USE_BITMAP			FALSE	// Allow use of Bitmap font (G4-G7)
-#define PRINT_USE_VRAM				FALSE	// Allow use of VRAM stored font (G4-G7)
-#define PRINT_USE_SPRITE			FALSE	// Allow use of Sprite font (G3-G7)
-#define PRINT_USE_FX_SHADOW			FALSE	// [Bitmap] Allow use of text shadow
-#define PRINT_USE_FX_OUTLINE		FALSE	// [Bitmap] Allow use of text outline
+#define PRINT_USE_BITMAP			TRUE	// Allow use of Bitmap font (G4-G7)
+#define PRINT_USE_VRAM				TRUE	// Allow use of VRAM stored font (G4-G7)
+#define PRINT_USE_SPRITE			TRUE	// Allow use of Sprite font (G3-G7)
+#define PRINT_USE_FX_SHADOW			TRUE	// [Bitmap] Allow use of text shadow
+#define PRINT_USE_FX_OUTLINE		TRUE	// [Bitmap] Allow use of text outline
 #define PRINT_USE_2_PASS_FX			FALSE	// [Bitmap] Allow use 2-pass FX render to prevent character overlap
 #define PRINT_USE_GRAPH				TRUE	// Allow use of character lines and boxes
 #define PRINT_USE_VALIDATOR			TRUE	// Add validator character code
 #define PRINT_USE_UNIT				FALSE	// Display integer type (h: hexadecimal, b: binary)
 #define PRINT_USE_FORMAT			TRUE	// Add printf type function
 #define PRINT_USE_32B				TRUE	// Allow to print 32-bits integers
-#define PRINT_SKIP_SPACE			FALSE	// Skill space character
+#define PRINT_SKIP_SPACE			TRUE	// Skill space character
 #define PRINT_COLOR_NUM				12		// 1 color per line
 // Character width
 // - PRINT_WIDTH_1 (text mode)
 // - PRINT_WIDTH_6
 // - PRINT_WIDTH_8
 // - PRINT_WIDTH_X (variable)
-#define PRINT_WIDTH					PRINT_WIDTH_1
+#define PRINT_WIDTH					PRINT_WIDTH_X
 // Character height
 // - PRINT_HEIGHT_1 (text mode)
 // - PRINT_HEIGHT_8
 // - PRINT_HEIGHT_X (variable)
-#define PRINT_HEIGHT				PRINT_HEIGHT_1
+#define PRINT_HEIGHT				PRINT_HEIGHT_X
 
 //-----------------------------------------------------------------------------
 // SPRITE FX MODULE
@@ -276,13 +276,13 @@
 // - GAMEPAWN_BORDER_UP
 // - GAMEPAWN_BORDER_RIGHT
 // - GAMEPAWN_BORDER_LEFT
-#define GAMEPAWN_BORDER_EVENT		(GAMEPAWN_BORDER_DOWN|GAMEPAWN_BORDER_RIGHT)
-#define GAMEPAWN_BORDER_BLOCK		(GAMEPAWN_BORDER_UP|GAMEPAWN_BORDER_LEFT)
+#define GAMEPAWN_BORDER_EVENT		(GAMEPAWN_BORDER_DOWN|GAMEPAWN_BORDER_UP|GAMEPAWN_BORDER_RIGHT|GAMEPAWN_BORDER_LEFT)
+#define GAMEPAWN_BORDER_BLOCK		(GAMEPAWN_BORDER_DOWN|GAMEPAWN_BORDER_UP|GAMEPAWN_BORDER_RIGHT|GAMEPAWN_BORDER_LEFT)
 // Top/bottom border position (in pixel)
 #define GAMEPAWN_BORDER_MIN_Y		0		// High border Y coordinade
-#define GAMEPAWN_BORDER_MAX_Y		191		// Low border Y coordinate
+#define GAMEPAWN_BORDER_MAX_Y		211		// Low border Y coordinate
 #define GAMEPAWN_TILEMAP_WIDTH		32		// Width of the tiles map
-#define GAMEPAWN_TILEMAP_HEIGHT		24		// Height of the tiles map
+#define GAMEPAWN_TILEMAP_HEIGHT		27		// Height of the tiles map
 // Collision tilemap source
 // - GAMEPAWN_TILEMAP_SRC_AUTO .... Backward compatibility option
 // - GAMEPAWN_TILEMAP_SRC_RAM ..... Tilemap located in a buffer in RAM (best for performance)
@@ -295,7 +295,7 @@
 // - GAMEPAWN_SPT_MODE_MSX2 ....... Sprite Mode 2 (MSX2 screens)
 // - GAMEPAWN_SPT_MODE_V9_P1 ...... V9990 sprite in P1 mode
 // - GAMEPAWN_SPT_MODE_V9_P2 ...... V9990 sprite in P2 mode
-#define GAMEPAWN_SPT_MODE			GAMEPAWN_SPT_MODE_MSX1
+#define GAMEPAWN_SPT_MODE			GAMEPAWN_SPT_MODE_MSX2
 
 //-----------------------------------------------------------------------------
 // GAME MENU MODULE
@@ -363,10 +363,10 @@
 // Allow scroll data looping (only for horizontal scrolling)
 #define SCROLL_WRAP					TRUE
 // Use screen position adjust register (allow per-pixel scrolling) [MSX2]
-#define SCROLL_ADJUST				FALSE	// Global ajustement
-#define SCROLL_ADJUST_SPLIT			FALSE	// Destination windows ajustement using screen split
+#define SCROLL_ADJUST				TRUE	// Global ajustement
+#define SCROLL_ADJUST_SPLIT			TRUE	// Destination windows ajustement using screen split
 // Use sprite mask (allow smooth per-pixel scrolling) [MSX2]
-#define SCROLL_MASK					FALSE	// Use sprite to mask
+#define SCROLL_MASK					TRUE	// Use sprite to mask
 #define SCROLL_MASK_ID				0		// First sprite ID to use
 #define SCROLL_MASK_COLOR			COLOR_BLACK // Must be the same than border color
 #define SCROLL_MASK_PATTERN			0		// Sprite pattern to use
@@ -585,7 +585,7 @@
 #define QRCODE_TINY_MASK 			QRCODE_MASK_0
 
 //-----------------------------------------------------------------------------
-// DEBUG & PROFILE
+// DEBUG
 //-----------------------------------------------------------------------------
 
 // Debugger options

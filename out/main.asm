@@ -2,15 +2,15 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 4.2.0 #13081 (MINGW64)
 ;--------------------------------------------------------
-	.module input
+	.module main
 	.optsdcc -mz80
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _Input_Detect
-	.globl _g_InputBufferOld
-	.globl _g_InputBufferNew
+	.globl _main
+	.globl _ne
+	.globl _Bios_Exit
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -50,6 +50,25 @@
 	.globl _g_LINLEN
 	.globl _g_LINL32
 	.globl _g_LINL40
+	.globl _g_BDOS
+	.globl _g_MASTER
+	.globl _g_RAMAD3
+	.globl _g_RAMAD2
+	.globl _g_RAMAD1
+	.globl _g_RAMAD0
+	.globl _g_BREAKV
+	.globl _g_DISKVE
+	.globl _g_KANJTABLE
+	.globl _g_STRSRC
+	.globl _g_SUBRID
+	.globl _g_CHAR_16
+	.globl _g_MSXMID
+	.globl _g_MSXVER
+	.globl _g_ROMVersion
+	.globl _g_BASRVN
+	.globl _g_VDP_DW
+	.globl _g_VDP_DR
+	.globl _g_CGTABL
 	.globl _g_SVFFFD
 	.globl _g_RG27SAV
 	.globl _g_RG26SAV
@@ -195,11 +214,6 @@
 	.globl _g_CLPRIM
 	.globl _g_WRPRIM
 	.globl _g_RDPRIM
-	.globl _Joystick_Read
-	.globl _Keyboard_Read
-	.globl _Keyboard_Update
-	.globl _Keyboard_IsKeyPressed
-	.globl _Keyboard_IsKeyPushed
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -274,10 +288,6 @@ _g_SLTSL	=	0xffff
 ; ram data
 ;--------------------------------------------------------
 	.area _INITIALIZED
-_g_InputBufferNew::
-	.ds 2
-_g_InputBufferOld::
-	.ds 2
 ;--------------------------------------------------------
 ; absolute external ram data
 ;--------------------------------------------------------
@@ -298,29 +308,17 @@ _g_InputBufferOld::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;C:\msx\engine/src/input.c:27: u8 Input_Detect(enum INPUT_PORT port)
+;./main.c:30: void main()
 ;	---------------------------------
-; Function Input_Detect
+; Function main
 ; ---------------------------------
-_Input_Detect::
-;C:\msx\engine/src/input.c:49: __endasm;
-	ld	h, a
-	and	#0b11001111
-	ld	l, a
-	ld	a, #15
-	out	(0xA0), a
-	ld	a, l
-	out	(0xA1), a
-	ld	a, #15
-	out	(0xA0), a
-	ld	a, h
-	out	(0xA1), a
-	ld	a, #14
-	out	(0xA0), a
-	in	a, (0xA2)
-	and	#0x3F
-;C:\msx\engine/src/input.c:50: }
-	ret
+_main::
+;./main.c:32: u8 editor = ne();
+	call	_ne
+;./main.c:34: Bios_Exit(0);
+	xor	a, a
+;./main.c:35: }
+	jp	_Bios_Exit
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
 _g_CLPRIM	=	0xf38c
@@ -466,191 +464,25 @@ _g_RG25SAV	=	0xfffa
 _g_RG26SAV	=	0xfffb
 _g_RG27SAV	=	0xfffc
 _g_SVFFFD	=	0xfffd
-;C:\msx\engine/src/input.c:69: u8 Joystick_Read(u8 port) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
-;	---------------------------------
-; Function Joystick_Read
-; ---------------------------------
-_Joystick_Read::
-;C:\msx\engine/src/input.c:91: __endasm;
-	ld	a, #15
-	di
-	out	(0xA0), a
-	ld	a, l
-	out	(0xA1), a
-	ld	a, #14
-	out	(0xA0), a
-	ei
-	in	a, (0xA2)
-	ld	l, a
-;C:\msx\engine/src/input.c:92: }
-	ret
-;C:\msx\engine/src/input.c:268: u8 Keyboard_Read(u8 row) __FASTCALL __PRESERVES(b, c, d, e, h, iyl, iyh)
-;	---------------------------------
-; Function Keyboard_Read
-; ---------------------------------
-_Keyboard_Read::
-;C:\msx\engine/src/input.c:278: __endasm;
-	in	a, (0xAA)
-	and	#0xF0
-	or	l
-	out	(0xAA), a
-	in	a, (0xA9)
-	ld	l, a
-;C:\msx\engine/src/input.c:279: }
-	ret
-;C:\msx\engine/src/input.c:290: void Keyboard_Update()
-;	---------------------------------
-; Function Keyboard_Update
-; ---------------------------------
-_Keyboard_Update::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-;C:\msx\engine/src/input.c:292: for(u8 i = INPUT_KB_UPDATE_MIN; i <= INPUT_KB_UPDATE_MAX; ++i)	
-	ld	c, #0x00
-00103$:
-	ld	a, #0x08
-	sub	a, c
-	jr	C, 00105$
-;C:\msx\engine/src/input.c:294: g_InputBufferOld[i] = g_InputBufferNew[i];
-	ld	a, (_g_InputBufferOld+0)
-	add	a, c
-	ld	-2 (ix), a
-	ld	a, (_g_InputBufferOld+1)
-	adc	a, #0x00
-	ld	-1 (ix), a
-	ld	hl, (_g_InputBufferNew)
-	ld	b, #0x00
-	add	hl, bc
-	ld	a, (hl)
-	pop	hl
-	push	hl
-	ld	(hl), a
-;C:\msx\engine/src/input.c:295: g_InputBufferNew[i] = Keyboard_Read(i);
-	ld	hl, (_g_InputBufferNew)
-	ld	b, #0x00
-	add	hl, bc
-	push	hl
-	ld	l, c
-;	spillPairReg hl
-;	spillPairReg hl
-	call	_Keyboard_Read
-	ld	a, l
-	pop	hl
-	ld	(hl), a
-;C:\msx\engine/src/input.c:292: for(u8 i = INPUT_KB_UPDATE_MIN; i <= INPUT_KB_UPDATE_MAX; ++i)	
-	inc	c
-	jp	00103$
-00105$:
-;C:\msx\engine/src/input.c:297: }
-	ld	sp, ix
-	pop	ix
-	ret
-;C:\msx\engine/src/input.c:301: bool Keyboard_IsKeyPressed(u8 key)
-;	---------------------------------
-; Function Keyboard_IsKeyPressed
-; ---------------------------------
-_Keyboard_IsKeyPressed::
-;C:\msx\engine/src/input.c:303: return (g_InputBufferNew[KEY_ROW(key)] & (1 << KEY_IDX(key))) == 0;
-	ld	e, a
-	and	a, #0x0f
-	ld	c, a
-	ld	b, #0x00
-	ld	iy, (_g_InputBufferNew)
-	add	iy, bc
-	ld	c, 0 (iy)
-	srl	e
-	srl	e
-	srl	e
-	srl	e
-	ld	hl, #0x0001
-	inc	e
-	jp	00104$
-00103$:
-	add	hl, hl
-00104$:
-	dec	e
-	jr	NZ,00103$
-	ld	b, #0x00
-	ld	a, l
-	and	a, c
-	ld	c, a
-	ld	a, h
-	and	a, b
-	ld	b, a
-	ld	a, c
-	or	a, a
-	or	a, b
-	ld	a, #0x01
-	ret	Z
-	xor	a, a
-;C:\msx\engine/src/input.c:304: }
-	ret
-;C:\msx\engine/src/input.c:308: bool Keyboard_IsKeyPushed(u8 key)
-;	---------------------------------
-; Function Keyboard_IsKeyPushed
-; ---------------------------------
-_Keyboard_IsKeyPushed::
-;C:\msx\engine/src/input.c:310: u8 flag = 1 << KEY_IDX(key);
-	ld	e, a
-	rlca
-	rlca
-	rlca
-	rlca
-	and	a, #0x0f
-	ld	b, a
-	ld	c, #0x01
-	inc	b
-	jp	00112$
-00111$:
-	sla	c
-00112$:
-	djnz	00111$
-;C:\msx\engine/src/input.c:311: u8 newKey = (g_InputBufferNew[KEY_ROW(key)] & flag) == 0;
-	ld	a, e
-	and	a, #0x0f
-	ld	e, a
-	ld	d, #0x00
-	ld	iy, (_g_InputBufferNew)
-	add	iy, de
-	ld	a, 0 (iy)
-	and	a,c
-	ld	a, #0x01
-	jr	Z, 00114$
-	xor	a, a
-00114$:
-	ld	b, a
-;C:\msx\engine/src/input.c:312: u8 oldKey = (g_InputBufferOld[KEY_ROW(key)] & flag) == 0;
-	ld	a, (_g_InputBufferOld+0)
-	add	a, e
-	ld	e, a
-	ld	a, (_g_InputBufferOld+1)
-	adc	a, d
-	ld	d, a
-	ld	a, (de)
-	and	a,c
-	ld	a, #0x01
-	jr	Z, 00116$
-	xor	a, a
-00116$:
-;C:\msx\engine/src/input.c:313: return newKey && !oldKey;
-	inc	b
-	dec	b
-	jr	Z, 00103$
-	or	a, a
-	jr	Z, 00104$
-00103$:
-	xor	a, a
-	ret
-00104$:
-	ld	a, #0x01
-;C:\msx\engine/src/input.c:314: }
-	ret
+_g_CGTABL	=	0x0004
+_g_VDP_DR	=	0x0006
+_g_VDP_DW	=	0x0007
+_g_BASRVN	=	0x002b
+_g_ROMVersion	=	0x002b
+_g_MSXVER	=	0x002d
+_g_MSXMID	=	0x002e
+_g_CHAR_16	=	0x0034
+_g_SUBRID	=	0x0000
+_g_STRSRC	=	0x0002
+_g_KANJTABLE	=	0xf30f
+_g_DISKVE	=	0xf323
+_g_BREAKV	=	0xf325
+_g_RAMAD0	=	0xf341
+_g_RAMAD1	=	0xf342
+_g_RAMAD2	=	0xf343
+_g_RAMAD3	=	0xf344
+_g_MASTER	=	0xf348
+_g_BDOS	=	0xf37d
 	.area _CODE
 	.area _INITIALIZER
-__xinit__g_InputBufferNew:
-	.dw _g_NEWKEY
-__xinit__g_InputBufferOld:
-	.dw _g_OLDKEY
 	.area _CABS (ABS)

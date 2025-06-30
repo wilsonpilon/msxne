@@ -43,7 +43,7 @@ Emulator  = `${ToolsDir}openMSX/openmsx`;
 //*****************************************************************************
 
 //-- Project name (string). Will be use for output filename
-ProjName = "ne";
+ProjName = "main";
 
 //-- List of project modules to build (array). If empty, ProjName will be added
 ProjModules = [ ProjName ];
@@ -52,10 +52,10 @@ ProjModules = [ ProjName ];
 // ProjSegments = ProjName;
 
 //-- List of library modules to build (array)
-LibModules = [ "system", "bios", "vdp", "print", "input", "memory", "dos", "string" ];
+LibModules = [ "system", "bios", "vdp", "print", "input", "memory" ];
 
 //-- Additional sources to be compiled and linked with the project (array)
-AddSources = ["extra.c"];
+AddSources = [ "msxne.c", "nekeys.c" ];
 
 //-- Target MSX machine version (string)
 //   - 1        MSX1
@@ -68,7 +68,7 @@ AddSources = ["extra.c"];
 //   - 0        MSX0
 //   - TR       MSX turbo R
 //   - 3        MSX3 (reserved)
-Machine = "1";
+Machine = "2";
 
 //-- Target program format (string)
 //   - BIN              .bin    BASIC binary program (starting at 8000h)
@@ -94,7 +94,7 @@ Machine = "1";
 //   - ROM_KONAMI_SCC   .rom    Konami MegaROM SCC (aka Konami5): 8 KB segments for a total of 64 KB to 2 MB
 //   - ROM_NEO8         .rom    NEO-8: 8 KB segments for a total of 1 MB to 32 MB
 //   - ROM_NEO16        .rom    NEO-16: 16 KB segments for a total of 1 MB to 64 MB
-Target = "DOS1";
+Target = "ROM_32K";
 
 //-- ROM mapper total size in KB (number). Must be a multiple of 8 or 16 depending on the mapper type (from 64 to 4096)
 // ROMSize = 128;
@@ -117,7 +117,7 @@ Target = "DOS1";
 // ROMDelayBoot = false;
 
 //-- Add a ROM signature to help flasher and emulator to detect the ROM type properly (boolean)
-// AddROMSignature = false;
+AddROMSignature = true;
 
 //-- Select RAM in slot 0 and install ISR and optional code there (string). For MSX with at least 64 KB of RAM
 //   - RAM0_NONE       Don't install anything in RAM 
@@ -162,10 +162,10 @@ Target = "DOS1";
 AppSignature = true;
 
 //-- Application company (*). Can be 2 character string or 16-bits integer (0~65535)
-AppCompany = "WP";
+AppCompany = "GL";
 
 //-- Application ID. Can be 2 character string or 16-bits integer (0~65535)
-AppID = "E1";
+AppID = "T2";
 
 //-- Application extra data (array). Comma-separated bytes starting with data size
 // AppExtra = [];
@@ -204,7 +204,7 @@ AppID = "E1";
 //   - Optimized	   50000
 //   - Ultra		  200000
 //   - Insane		10000000
-// CompileComplexity = "Default";
+CompileComplexity = "Default";
 
 //-- Additionnal compilation options (string)
 // CompileOpt = "";

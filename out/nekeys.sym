@@ -7,31 +7,10 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-  0 _Bios_ChangeColor                                               000000A9 GR
-  0 _Bios_ClearScreen                                               00000214 GR
-  0 _Bios_Exit                                                      00000000 GR
-  0 _Bios_FillVRAM                                                  00000074 GR
-  0 _Bios_GetAttributeTableAddress                                  000001D8 GR
-  0 _Bios_GetPatternTableAddress                                    000001D3 GR
-  0 _Bios_GraphPrintCharEx                                          000001DD GR
-  0 _Bios_HasCharacter                                              00000209 GR
-  0 _Bios_InitScreen0Ex                                             000000C2 GR
-  0 _Bios_InitScreen1Ex                                             000000F2 GR
-  0 _Bios_InitScreen2Ex                                             0000013D GR
-  0 _Bios_InitScreen3Ex                                             00000188 GR
-  0 _Bios_InterSlotCall                                             00000042 GR
-  0 _Bios_InterSlotRead                                             00000027 GR
-  0 _Bios_InterSlotWrite                                            0000002D GR
-  0 _Bios_SetCursorPosition                                         00000219 GR
-  0 _Bios_SetHookCallback                                           00000008 GR
-  0 _Bios_SwitchSlot                                                00000054 GR
-  0 _Bios_TransfertRAMtoVRAM                                        00000097 GR
-  0 _Bios_TransfertVRAMtoRAM                                        00000085 GR
-  0 _Bios_WritePSG                                                  00000204 GR
-  0 _Bios_WriteVDP                                                  0000005F GR
-  0 _Bios_WriteVRAM                                                 00000065 GR
-    _Sys_GetPageSlot                                                ******** GX
-  0 ___str_0                                                        00000004 R
+    _Keyboard_IsKeyPressed                                          ******** GX
+    _Keyboard_IsKeyPushed                                           ******** GX
+    _Keyboard_Update                                                ******** GX
+    _Print_DrawChar                                                 ******** GX
     _g_ACPAGE                                                   =   0000FAF6 G
     _g_ASPCT1                                                   =   0000F40B G
     _g_ASPCT2                                                   =   0000F40D G
@@ -58,11 +37,6 @@ Symbol Table
     _g_CMASK                                                    =   0000F92C G
     _g_CNSDFG                                                   =   0000F3DE G
     _g_CODSAV                                                   =   0000FBCC G
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
-Hexadecimal [32-Bits]
-
-Symbol Table
-
     _g_COMMSK                                                   =   0000FB1D G
     _g_CRTCNT                                                   =   0000F3B1 G
     _g_CS120                                                    =   0000F3FC G
@@ -84,6 +58,11 @@ Symbol Table
     _g_ESTBLS                                                   =   0000FB1C G
     _g_EXBRSA                                                   =   0000FAF8 G
     _g_EXPTBL                                                   =   0000FCC1 G
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 2
+Hexadecimal [32-Bits]
+
+Symbol Table
+
     _g_FLAGS                                                    =   0000FB1B G
     _g_FLBMEM                                                   =   0000FCAE G
     _g_FNKFLG                                                   =   0000FBCE G
@@ -118,11 +97,6 @@ Symbol Table
     _g_LINL32                                                   =   0000F3AF G
     _g_LINL40                                                   =   0000F3AE G
     _g_LINLEN                                                   =   0000F3B0 G
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
-Hexadecimal [32-Bits]
-
-Symbol Table
-
     _g_LINTTB                                                   =   0000FBB2 G
     _g_LINWRK                                                   =   0000FC18 G
     _g_LOGOPR                                                   =   0000FB02 G
@@ -144,6 +118,11 @@ Symbol Table
     _g_MLTPAT                                                   =   0000F3D9 G
     _g_MNROM                                                    =   0000FCC1 G
     _g_MODE                                                     =   0000FAFC G
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 3
+Hexadecimal [32-Bits]
+
+Symbol Table
+
     _g_MSXAudio_DataPort                                        =   000000C1 
     _g_MSXAudio_DataPort2                                       =   000000C3 
     _g_MSXAudio_IndexPort                                       =   000000C0 
@@ -178,11 +157,6 @@ Symbol Table
     _g_PortPrimarySlot                                          =   000000A8 
     _g_PortReadKeyboard                                         =   000000A9 
     _g_QUEBAK                                                   =   0000F971 G
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 4
-Hexadecimal [32-Bits]
-
-Symbol Table
-
     _g_QUETAB                                                   =   0000F959 G
     _g_QUEUEN                                                   =   0000FB3E G
     _g_QUEUES                                                   =   0000F3F3 G
@@ -204,6 +178,11 @@ Symbol Table
     _g_RG16SAV                                                  =   0000FFEF G
     _g_RG17SAV                                                  =   0000FFF0 G
     _g_RG18SAV                                                  =   0000FFF1 G
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 4
+Hexadecimal [32-Bits]
+
+Symbol Table
+
     _g_RG19SAV                                                  =   0000FFF2 G
     _g_RG1SAV                                                   =   0000F3E0 G
     _g_RG20SAV                                                  =   0000FFF3 G
@@ -238,11 +217,6 @@ Symbol Table
     _g_SLTWRK                                                   =   0000FD09 G
     _g_STATFL                                                   =   0000F3E7 G
     _g_STRSRC                                                   =   00000002 G
-ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 5
-Hexadecimal [32-Bits]
-
-Symbol Table
-
     _g_SUBRID                                                   =   00000000 G
     _g_SVFFF8                                                   =   0000FFF8 G
     _g_SVFFFD                                                   =   0000FFFD G
@@ -264,6 +238,11 @@ Symbol Table
     _g_VCBB                                                     =   0000FB66 G
     _g_VCBC                                                     =   0000FB8B G
     _g_VDP_AddrPort                                             =   00000099 
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 5
+Hexadecimal [32-Bits]
+
+Symbol Table
+
     _g_VDP_DR                                                   =   00000006 G
     _g_VDP_DW                                                   =   00000007 G
     _g_VDP_DataPort                                             =   00000098 
@@ -279,6 +258,7 @@ Symbol Table
     _g_WRPRIM                                                   =   0000F385 G
     _g_XSAVE                                                    =   0000FAFE G
     _g_YSAVE                                                    =   0000FB00 G
+  0 _procKeys                                                       00000000 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180 / ZX-Next / eZ80 / R800)                          Page 6
@@ -286,7 +266,7 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      21E   flags    0
+   0 _CODE                                      size      248   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

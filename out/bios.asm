@@ -9,7 +9,6 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _Sys_GetPageSlot
-	.globl _DOS_TPAUpperAddr
 	.globl _g_SLTSL
 	.globl _g_GRPACY
 	.globl _g_GRPACX
@@ -247,6 +246,8 @@ _g_VDP_DataPort	=	0x0098
 _g_VDP_RegPort	=	0x0099
 _g_VDP_AddrPort	=	0x0099
 _g_VDP_StatPort	=	0x0099
+_g_VDP_PalPort	=	0x009a
+_g_VDP_IRegPort	=	0x009b
 _g_PSG_RegPort	=	0x00a0
 _g_PSG_DataPort	=	0x00a1
 _g_PSG_StatPort	=	0x00a2
@@ -304,7 +305,6 @@ _g_LOGOPR	=	0xfb02
 _g_GRPACX	=	0xfcb7
 _g_GRPACY	=	0xfcb9
 _g_SLTSL	=	0xffff
-_DOS_TPAUpperAddr	=	0x0006
 ;--------------------------------------------------------
 ; ram data
 ;--------------------------------------------------------
@@ -329,27 +329,14 @@ _DOS_TPAUpperAddr	=	0x0006
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;C:\msx\projetos\MSXgl\engine/src/bios.c:27: void Bios_Exit(u8 ret)
+;C:\msx\engine/src/bios.c:27: void Bios_Exit(u8 ret)
 ;	---------------------------------
 ; Function Bios_Exit
 ; ---------------------------------
 _Bios_Exit::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:51: __endasm;
-	push	af
-	ld	a, #2
-	ld	ix, #0x005F
-	ld	iy, (0xFCC1 -1)
-	call	0x001C
-	ld	ix, #0x00D2
-	ld	iy, (0xFCC1 -1)
-	call	0x001C
-	pop	af
-	ld	b, a
-	ld	c, #0x62
-	call	0x0005
-	ld	c, #0x00
-	jp	0x0005
-;C:\msx\projetos\MSXgl\engine/src/bios.c:76: }
+;C:\msx\engine/src/bios.c:73: __endasm;
+	call	0x0000
+;C:\msx\engine/src/bios.c:76: }
 	ret
 _g_RDPRIM	=	0xf380
 _g_WRPRIM	=	0xf385
@@ -520,14 +507,14 @@ ___str_0:
 	.db 0x0d
 	.ascii "$"
 	.db 0x00
-;C:\msx\projetos\MSXgl\engine/src/bios.c:81: void Bios_SetHookCallback(u16 hook, callback cb)
+;C:\msx\engine/src/bios.c:81: void Bios_SetHookCallback(u16 hook, callback cb)
 ;	---------------------------------
 ; Function Bios_SetHookCallback
 ; ---------------------------------
 _Bios_SetHookCallback::
 	ld	c, l
 	ld	b, h
-;C:\msx\projetos\MSXgl\engine/src/bios.c:83: u8 slot = Sys_GetPageSlot((u16)cb >> 14);
+;C:\msx\engine/src/bios.c:83: u8 slot = Sys_GetPageSlot((u16)cb >> 14);
 ;	spillPairReg hl
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -547,8 +534,8 @@ _Bios_SetHookCallback::
 	call	_Sys_GetPageSlot
 	pop	de
 	pop	bc
-;C:\msx\projetos\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
-;C:\msx\projetos\MSXgl\engine/src/bios_hook.h:50: *((u8*)hook) = 0xF7; // RST #30
+;C:\msx\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
+;C:\msx\engine/src/bios_hook.h:50: *((u8*)hook) = 0xF7; // RST #30
 	ld	l, c
 ;	spillPairReg hl
 ;	spillPairReg hl
@@ -556,7 +543,7 @@ _Bios_SetHookCallback::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	(hl), #0xf7
-;C:\msx\projetos\MSXgl\engine/src/bios_hook.h:51: *((u8*)++hook) = slot; // Slot ID
+;C:\msx\engine/src/bios_hook.h:51: *((u8*)++hook) = slot; // Slot ID
 	inc	bc
 	ld	l, c
 ;	spillPairReg hl
@@ -565,33 +552,33 @@ _Bios_SetHookCallback::
 ;	spillPairReg hl
 ;	spillPairReg hl
 	ld	(hl), a
-;C:\msx\projetos\MSXgl\engine/src/bios_hook.h:52: *((callback*)++hook) = cb; // Callback address
+;C:\msx\engine/src/bios_hook.h:52: *((callback*)++hook) = cb; // Callback address
 	inc	bc
 	ld	a, e
 	ld	(bc), a
 	inc	bc
 	ld	a, d
 	ld	(bc), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:85: }
+;C:\msx\engine/src/bios.c:84: Bios_SetHookInterSlotCallback(hook, slot, cb);
+;C:\msx\engine/src/bios.c:85: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:134: u8 Bios_InterSlotRead(u8 slot, u16 addr)
+;C:\msx\engine/src/bios.c:134: u8 Bios_InterSlotRead(u8 slot, u16 addr)
 ;	---------------------------------
 ; Function Bios_InterSlotRead
 ; ---------------------------------
 _Bios_InterSlotRead::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:143: __endasm;
+;C:\msx\engine/src/bios.c:143: __endasm;
 	ld	l, e
 	ld	h, d
 	call	0x000C
-;C:\msx\projetos\MSXgl\engine/src/bios.c:144: }
+;C:\msx\engine/src/bios.c:144: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:172: void Bios_InterSlotWrite(u8 slot, u16 addr, u8 value)
+;C:\msx\engine/src/bios.c:172: void Bios_InterSlotWrite(u8 slot, u16 addr, u8 value)
 ;	---------------------------------
 ; Function Bios_InterSlotWrite
 ; ---------------------------------
 _Bios_InterSlotWrite::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:188: __endasm;
+;C:\msx\engine/src/bios.c:188: __endasm;
 	push	iy
 	ld	iy, #4
 	add	iy, sp
@@ -600,16 +587,16 @@ _Bios_InterSlotWrite::
 	ld	e, 0(iy)
 	call	0x0014
 	pop	iy
-;C:\msx\projetos\MSXgl\engine/src/bios.c:189: }
+;C:\msx\engine/src/bios.c:189: }
 	pop	hl
 	inc	sp
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:208: void Bios_InterSlotCall(u8 slot, u16 addr)
+;C:\msx\engine/src/bios.c:208: void Bios_InterSlotCall(u8 slot, u16 addr)
 ;	---------------------------------
 ; Function Bios_InterSlotCall
 ; ---------------------------------
 _Bios_InterSlotCall::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:227: __endasm;
+;C:\msx\engine/src/bios.c:227: __endasm;
 	push	ix
 	ld	l, #0
 	ld	h, a
@@ -620,14 +607,14 @@ _Bios_InterSlotCall::
 	call	0x001C
 	ei
 	pop	ix
-;C:\msx\projetos\MSXgl\engine/src/bios.c:228: }
+;C:\msx\engine/src/bios.c:228: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:248: void Bios_SwitchSlot(u8 page, u8 slot)
+;C:\msx\engine/src/bios.c:248: void Bios_SwitchSlot(u8 page, u8 slot)
 ;	---------------------------------
 ; Function Bios_SwitchSlot
 ; ---------------------------------
 _Bios_SwitchSlot::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:260: __endasm;
+;C:\msx\engine/src/bios.c:260: __endasm;
 	rrca	
 	rrca 
 	and a, #0xC0
@@ -635,85 +622,85 @@ _Bios_SwitchSlot::
 	ld	h, a
 	ld	a, b
 	call	0x0024
-;C:\msx\projetos\MSXgl\engine/src/bios.c:261: }
+;C:\msx\engine/src/bios.c:261: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:341: void Bios_WriteVDP(u8 reg, u8 value)
+;C:\msx\engine/src/bios.c:341: void Bios_WriteVDP(u8 reg, u8 value)
 ;	---------------------------------
 ; Function Bios_WriteVDP
 ; ---------------------------------
 _Bios_WriteVDP::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:350: __endasm;
+;C:\msx\engine/src/bios.c:350: __endasm;
 	ld	c, a
 	ld	b, l
 	call	0x0047
-;C:\msx\projetos\MSXgl\engine/src/bios.c:351: }
+;C:\msx\engine/src/bios.c:351: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:372: void Bios_WriteVRAM(u16 addr, u8 value)
+;C:\msx\engine/src/bios.c:372: void Bios_WriteVRAM(u16 addr, u8 value)
 ;	---------------------------------
 ; Function Bios_WriteVRAM
 ; ---------------------------------
 _Bios_WriteVRAM::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:383: __endasm;
+;C:\msx\engine/src/bios.c:383: __endasm;
 	ld	iy, #4
 	add	iy, sp
 	ld	a, 0(iy)
 	call	0x004D
-;C:\msx\projetos\MSXgl\engine/src/bios.c:384: }
+;C:\msx\engine/src/bios.c:384: }
 	pop	hl
 	inc	sp
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:416: void Bios_FillVRAM(u16 addr, u16 length, u8 value)
+;C:\msx\engine/src/bios.c:416: void Bios_FillVRAM(u16 addr, u16 length, u8 value)
 ;	---------------------------------
 ; Function Bios_FillVRAM
 ; ---------------------------------
 _Bios_FillVRAM::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:430: __endasm;
+;C:\msx\engine/src/bios.c:430: __endasm;
 	ld	iy, #4
 	add	iy, sp
 	ld	c, e
 	ld	b, d
 	ld	a, 0(iy)
 	call	0x0056
-;C:\msx\projetos\MSXgl\engine/src/bios.c:431: }
+;C:\msx\engine/src/bios.c:431: }
 	pop	hl
 	inc	sp
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:442: void Bios_TransfertVRAMtoRAM(u16 vram, u16 ram, u16 length)
+;C:\msx\engine/src/bios.c:442: void Bios_TransfertVRAMtoRAM(u16 vram, u16 ram, u16 length)
 ;	---------------------------------
 ; Function Bios_TransfertVRAMtoRAM
 ; ---------------------------------
 _Bios_TransfertVRAMtoRAM::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:455: __endasm;
+;C:\msx\engine/src/bios.c:455: __endasm;
 	ld	iy, #4
 	add	iy, sp
 	ld	c, 0(iy)
 	ld	b, 1(iy)
 	call	0x0059
-;C:\msx\projetos\MSXgl\engine/src/bios.c:456: }
+;C:\msx\engine/src/bios.c:456: }
 	pop	hl
 	pop	af
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:467: void Bios_TransfertRAMtoVRAM(u16 ram, u16 vram, u16 length)
+;C:\msx\engine/src/bios.c:467: void Bios_TransfertRAMtoVRAM(u16 ram, u16 vram, u16 length)
 ;	---------------------------------
 ; Function Bios_TransfertRAMtoVRAM
 ; ---------------------------------
 _Bios_TransfertRAMtoVRAM::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:480: __endasm;
+;C:\msx\engine/src/bios.c:480: __endasm;
 	ld	iy, #4
 	add	iy, sp
 	ld	c, 0(iy)
 	ld	b, 1(iy)
 	call	0x005C
-;C:\msx\projetos\MSXgl\engine/src/bios.c:481: }
+;C:\msx\engine/src/bios.c:481: }
 	pop	hl
 	pop	af
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:502: void Bios_ChangeColor(u8 text, u8 back, u8 border)
+;C:\msx\engine/src/bios.c:502: void Bios_ChangeColor(u8 text, u8 back, u8 border)
 ;	---------------------------------
 ; Function Bios_ChangeColor
 ; ---------------------------------
 _Bios_ChangeColor::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:517: __endasm;
+;C:\msx\engine/src/bios.c:517: __endasm;
 	ld	iy, #4
 	add	iy, sp
 	ld	(0xF3E9), a
@@ -722,42 +709,42 @@ _Bios_ChangeColor::
 	ld	a, 0(iy)
 	ld	(0xF3EB), a
 	call	0x0062
-;C:\msx\projetos\MSXgl\engine/src/bios.c:518: }
+;C:\msx\engine/src/bios.c:518: }
 	pop	hl
 	inc	sp
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:544: void Bios_InitScreen0Ex(u16 pnt, u16 pgt, u8 width, u8 text, u8 bg, u8 border)
+;C:\msx\engine/src/bios.c:544: void Bios_InitScreen0Ex(u16 pnt, u16 pgt, u8 width, u8 text, u8 bg, u8 border)
 ;	---------------------------------
 ; Function Bios_InitScreen0Ex
 ; ---------------------------------
 _Bios_InitScreen0Ex::
 	ld	(_g_TXTNAM), hl
 	ld	(_g_TXTCGP), de
-;C:\msx\projetos\MSXgl\engine/src/bios.c:548: g_LINL40 = width;  // Character per line
+;C:\msx\engine/src/bios.c:548: g_LINL40 = width;  // Character per line
 	ld	iy, #2
 	add	iy, sp
 	ld	a, 0 (iy)
 	ld	(_g_LINL40+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:549: g_FORCLR = text;   // Text color
+;C:\msx\engine/src/bios.c:549: g_FORCLR = text;   // Text color
 	ld	a, 1 (iy)
 	inc	iy
 	ld	(_g_FORCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:550: g_BAKCLR = bg;     // Background color
+;C:\msx\engine/src/bios.c:550: g_BAKCLR = bg;     // Background color
 	ld	a, 1 (iy)
 	inc	iy
 	ld	(_g_BAKCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:551: g_BDRCLR = border; // Border colour
+;C:\msx\engine/src/bios.c:551: g_BDRCLR = border; // Border colour
 	ld	a, 1 (iy)
 	ld	(_g_BDRCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+;C:\msx\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
 	call	0x006c
-;C:\msx\projetos\MSXgl\engine/src/bios.c:552: Call(R_INITXT);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:553: }
+;C:\msx\engine/src/bios.c:552: Call(R_INITXT);
+;C:\msx\engine/src/bios.c:553: }
 	pop	hl
 	pop	af
 	pop	af
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:569: void Bios_InitScreen1Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+;C:\msx\engine/src/bios.c:569: void Bios_InitScreen1Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
 ;	---------------------------------
 ; Function Bios_InitScreen1Ex
 ; ---------------------------------
@@ -767,38 +754,38 @@ _Bios_InitScreen1Ex::
 	add	ix,sp
 	ld	(_g_T32NAM), hl
 	ld	(_g_T32COL), de
-;C:\msx\projetos\MSXgl\engine/src/bios.c:573: g_T32CGP = pgt;    // Address of pattern generator table
+;C:\msx\engine/src/bios.c:573: g_T32CGP = pgt;    // Address of pattern generator table
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	(_g_T32CGP), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:574: g_T32ATR = sat;    // Address of sprite attribute table
+;C:\msx\engine/src/bios.c:574: g_T32ATR = sat;    // Address of sprite attribute table
 	ld	l, 6 (ix)
 	ld	h, 7 (ix)
 	ld	(_g_T32ATR), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:575: g_T32PAT = sgt;    // Address of sprite generator table
+;C:\msx\engine/src/bios.c:575: g_T32PAT = sgt;    // Address of sprite generator table
 	ld	l, 8 (ix)
 	ld	h, 9 (ix)
 	ld	(_g_T32PAT), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:576: g_FORCLR = text;   // Text color
+;C:\msx\engine/src/bios.c:576: g_FORCLR = text;   // Text color
 	ld	a, 10 (ix)
 	ld	(_g_FORCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:577: g_BAKCLR = bg;     // Background color
+;C:\msx\engine/src/bios.c:577: g_BAKCLR = bg;     // Background color
 	ld	a, 11 (ix)
 	ld	(_g_BAKCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:578: g_BDRCLR = border; // Border color
+;C:\msx\engine/src/bios.c:578: g_BDRCLR = border; // Border color
 	ld	a, 12 (ix)
 	ld	(_g_BDRCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+;C:\msx\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
 	call	0x006f
-;C:\msx\projetos\MSXgl\engine/src/bios.c:579: Call(R_INIT32);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:580: }
+;C:\msx\engine/src/bios.c:579: Call(R_INIT32);
+;C:\msx\engine/src/bios.c:580: }
 	pop	ix
 	pop	hl
 	ld	iy, #9
 	add	iy, sp
 	ld	sp, iy
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:596: void Bios_InitScreen2Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+;C:\msx\engine/src/bios.c:596: void Bios_InitScreen2Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
 ;	---------------------------------
 ; Function Bios_InitScreen2Ex
 ; ---------------------------------
@@ -808,38 +795,38 @@ _Bios_InitScreen2Ex::
 	add	ix,sp
 	ld	(_g_GRPNAM), hl
 	ld	(_g_GRPCOL), de
-;C:\msx\projetos\MSXgl\engine/src/bios.c:600: g_GRPCGP = pgt;    // Address of pattern generator table
+;C:\msx\engine/src/bios.c:600: g_GRPCGP = pgt;    // Address of pattern generator table
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	(_g_GRPCGP), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:601: g_GRPATR = sat;    // Address of sprite attribute table
+;C:\msx\engine/src/bios.c:601: g_GRPATR = sat;    // Address of sprite attribute table
 	ld	l, 6 (ix)
 	ld	h, 7 (ix)
 	ld	(_g_GRPATR), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:602: g_GRPPAT = sgt;    // Address of sprite generator table
+;C:\msx\engine/src/bios.c:602: g_GRPPAT = sgt;    // Address of sprite generator table
 	ld	l, 8 (ix)
 	ld	h, 9 (ix)
 	ld	(_g_GRPPAT), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:603: g_FORCLR = text;   // Text color
+;C:\msx\engine/src/bios.c:603: g_FORCLR = text;   // Text color
 	ld	a, 10 (ix)
 	ld	(_g_FORCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:604: g_BAKCLR = bg;     // Background color
+;C:\msx\engine/src/bios.c:604: g_BAKCLR = bg;     // Background color
 	ld	a, 11 (ix)
 	ld	(_g_BAKCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:605: g_BDRCLR = border; // Border color
+;C:\msx\engine/src/bios.c:605: g_BDRCLR = border; // Border color
 	ld	a, 12 (ix)
 	ld	(_g_BDRCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+;C:\msx\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
 	call	0x0072
-;C:\msx\projetos\MSXgl\engine/src/bios.c:606: Call(R_INIGRP);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:607: }
+;C:\msx\engine/src/bios.c:606: Call(R_INIGRP);
+;C:\msx\engine/src/bios.c:607: }
 	pop	ix
 	pop	hl
 	ld	iy, #9
 	add	iy, sp
 	ld	sp, iy
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:623: void Bios_InitScreen3Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
+;C:\msx\engine/src/bios.c:623: void Bios_InitScreen3Ex(u16 pnt, u16 ct, u16 pgt, u16 sat, u16 sgt, u8 text, u8 bg, u8 border)
 ;	---------------------------------
 ; Function Bios_InitScreen3Ex
 ; ---------------------------------
@@ -849,129 +836,129 @@ _Bios_InitScreen3Ex::
 	add	ix,sp
 	ld	(_g_MLTNAM), hl
 	ld	(_g_MLTCOL), de
-;C:\msx\projetos\MSXgl\engine/src/bios.c:627: g_MLTCGP = pgt;    // Address of pattern generator table
+;C:\msx\engine/src/bios.c:627: g_MLTCGP = pgt;    // Address of pattern generator table
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	ld	(_g_MLTCGP), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:628: g_MLTATR = sat;    // Address of sprite attribute table
+;C:\msx\engine/src/bios.c:628: g_MLTATR = sat;    // Address of sprite attribute table
 	ld	l, 6 (ix)
 	ld	h, 7 (ix)
 	ld	(_g_MLTATR), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:629: g_MLTPAT = sgt;    // Address of sprite generator table
+;C:\msx\engine/src/bios.c:629: g_MLTPAT = sgt;    // Address of sprite generator table
 	ld	l, 8 (ix)
 	ld	h, 9 (ix)
 	ld	(_g_MLTPAT), hl
-;C:\msx\projetos\MSXgl\engine/src/bios.c:630: g_FORCLR = text;   // Text color
+;C:\msx\engine/src/bios.c:630: g_FORCLR = text;   // Text color
 	ld	a, 10 (ix)
 	ld	(_g_FORCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:631: g_BAKCLR = bg;     // Background color
+;C:\msx\engine/src/bios.c:631: g_BAKCLR = bg;     // Background color
 	ld	a, 11 (ix)
 	ld	(_g_BAKCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:632: g_BDRCLR = border; // Border color
+;C:\msx\engine/src/bios.c:632: g_BDRCLR = border; // Border color
 	ld	a, 12 (ix)
 	ld	(_g_BDRCLR+0), a
-;C:\msx\projetos\MSXgl\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
+;C:\msx\engine/src/system.h:155: inline void Call(u16 addr) { ((void(*)(void))addr)(); }
 	call	0x0075
-;C:\msx\projetos\MSXgl\engine/src/bios.c:633: Call(R_INIMLT);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:634: }
+;C:\msx\engine/src/bios.c:633: Call(R_INIMLT);
+;C:\msx\engine/src/bios.c:634: }
 	pop	ix
 	pop	hl
 	ld	iy, #9
 	add	iy, sp
 	ld	sp, iy
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:675: u16 Bios_GetPatternTableAddress(u8 id) __FASTCALL
+;C:\msx\engine/src/bios.c:675: u16 Bios_GetPatternTableAddress(u8 id) __FASTCALL
 ;	---------------------------------
 ; Function Bios_GetPatternTableAddress
 ; ---------------------------------
 _Bios_GetPatternTableAddress::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:682: __endasm;
+;C:\msx\engine/src/bios.c:682: __endasm;
 	ld	a, l
 	call	0x0084
-;C:\msx\projetos\MSXgl\engine/src/bios.c:683: }
+;C:\msx\engine/src/bios.c:683: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:692: u16 Bios_GetAttributeTableAddress(u8 id) __FASTCALL
+;C:\msx\engine/src/bios.c:692: u16 Bios_GetAttributeTableAddress(u8 id) __FASTCALL
 ;	---------------------------------
 ; Function Bios_GetAttributeTableAddress
 ; ---------------------------------
 _Bios_GetAttributeTableAddress::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:699: __endasm;
+;C:\msx\engine/src/bios.c:699: __endasm;
 	ld	a, l
 	call	0x0087
-;C:\msx\projetos\MSXgl\engine/src/bios.c:700: }
+;C:\msx\engine/src/bios.c:700: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:724: void Bios_GraphPrintCharEx(u8 chr, u16 x, u8 y, u8 color, u8 op)
+;C:\msx\engine/src/bios.c:724: void Bios_GraphPrintCharEx(u8 chr, u16 x, u8 y, u8 color, u8 op)
 ;	---------------------------------
 ; Function Bios_GraphPrintCharEx
 ; ---------------------------------
 _Bios_GraphPrintCharEx::
 	ld	c, a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:726: g_GRPACX = x;
+;C:\msx\engine/src/bios.c:726: g_GRPACX = x;
 	ld	hl, #_g_GRPACX
 	ld	(hl), e
-;C:\msx\projetos\MSXgl\engine/src/bios.c:727: g_GRPACY = y;
+;C:\msx\engine/src/bios.c:727: g_GRPACY = y;
 	ld	iy, #2
 	add	iy, sp
 	ld	a, 0 (iy)
 	ld	(_g_GRPACY+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:728: g_ATRBYT = color;
+;C:\msx\engine/src/bios.c:728: g_ATRBYT = color;
 	ld	a, 1 (iy)
 	inc	iy
 	ld	(_g_ATRBYT+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:729: g_LOGOPR = op;
+;C:\msx\engine/src/bios.c:729: g_LOGOPR = op;
 	ld	a, 1 (iy)
 	ld	(_g_LOGOPR+0), a
-;C:\msx\projetos\MSXgl\engine/src/bios.h:271: inline void Bios_GraphPrintChar(u8 chr) { ((void(*)(u8))R_GRPPRT)(chr); }
+;C:\msx\engine/src/bios.h:271: inline void Bios_GraphPrintChar(u8 chr) { ((void(*)(u8))R_GRPPRT)(chr); }
 	ld	a, c
 	call	0x008d
-;C:\msx\projetos\MSXgl\engine/src/bios.c:730: Bios_GraphPrintChar(chr);
-;C:\msx\projetos\MSXgl\engine/src/bios.c:731: }
+;C:\msx\engine/src/bios.c:730: Bios_GraphPrintChar(chr);
+;C:\msx\engine/src/bios.c:731: }
 	pop	hl
 	pop	af
 	inc	sp
 	jp	(hl)
-;C:\msx\projetos\MSXgl\engine/src/bios.c:759: void Bios_WritePSG(u8 reg, u8 value)
+;C:\msx\engine/src/bios.c:759: void Bios_WritePSG(u8 reg, u8 value)
 ;	---------------------------------
 ; Function Bios_WritePSG
 ; ---------------------------------
 _Bios_WritePSG::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:767: __endasm;	
+;C:\msx\engine/src/bios.c:767: __endasm;	
 	ld	e, l
 	call	0x0093
-;C:\msx\projetos\MSXgl\engine/src/bios.c:768: }
+;C:\msx\engine/src/bios.c:768: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:803: u8 Bios_HasCharacter() __FASTCALL
+;C:\msx\engine/src/bios.c:803: u8 Bios_HasCharacter() __FASTCALL
 ;	---------------------------------
 ; Function Bios_HasCharacter
 ; ---------------------------------
 _Bios_HasCharacter::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:811: __endasm;
+;C:\msx\engine/src/bios.c:811: __endasm;
 	ld	l, #0
 	call	0x009C
 	ret	z
 	call	0x009F
 	ld	l, a
-;C:\msx\projetos\MSXgl\engine/src/bios.c:812: }
+;C:\msx\engine/src/bios.c:812: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:913: void Bios_ClearScreen()
+;C:\msx\engine/src/bios.c:913: void Bios_ClearScreen()
 ;	---------------------------------
 ; Function Bios_ClearScreen
 ; ---------------------------------
 _Bios_ClearScreen::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:918: __endasm;
+;C:\msx\engine/src/bios.c:918: __endasm;
 	xor	a, a
 	call	0x00C3
-;C:\msx\projetos\MSXgl\engine/src/bios.c:919: }
+;C:\msx\engine/src/bios.c:919: }
 	ret
-;C:\msx\projetos\MSXgl\engine/src/bios.c:928: void Bios_SetCursorPosition(u8 X, u8 Y)
+;C:\msx\engine/src/bios.c:928: void Bios_SetCursorPosition(u8 X, u8 Y)
 ;	---------------------------------
 ; Function Bios_SetCursorPosition
 ; ---------------------------------
 _Bios_SetCursorPosition::
-;C:\msx\projetos\MSXgl\engine/src/bios.c:936: __endasm;	
+;C:\msx\engine/src/bios.c:936: __endasm;	
 	ld	h, a
 	call	0x00C6
-;C:\msx\projetos\MSXgl\engine/src/bios.c:937: }
+;C:\msx\engine/src/bios.c:937: }
 	ret
 	.area _CODE
 	.area _INITIALIZER
